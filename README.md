@@ -17,9 +17,9 @@ npm run dev:site
 ```
 
 Open the printed local URL, or open `/demo` for the isolated sample. Build the
-static site with `npm run build:site`; it writes to `dist/site`. Build both the
-site and MV3 extension with `npm run build`. The packaged extension zip is
-copied to `dist/site/downloads/` when WXT emits one.
+static site and MV3 extension with `npm run build:site`; it writes to
+`dist/site`. The packaged extension zip is always included at
+`dist/site/downloads/bookmark-proofbook-extension.zip`.
 
 ## Test
 
@@ -33,13 +33,11 @@ The claim tests are listed in `.factory/claims.json`. The demo contract is in
 ## Privacy and limits
 
 No account is required for capture, search, or export. Records live in browser
-or extension local storage. The optional license verification contacts
-Sociobot only when a person restores a license. The extension does not bypass
-paywalls and saves only a capped text extract (12,000 characters). A link
-health check is an explicit action and can check up to 25 links in the free
-workspace.
+or extension local storage. The companion site does not send records to a
+service. The extension does not bypass paywalls and saves only a capped text
+extract (12,000 characters). A link health check is an explicit action and can
+check up to 25 links.
 
 ## License
 
-MIT. See [LICENSE](LICENSE). The optional $19 one-time license provides
-expanded archive link checks. Sociobot/Dodo is the merchant of record.
+MIT. See [LICENSE](LICENSE).

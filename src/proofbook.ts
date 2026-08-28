@@ -41,6 +41,25 @@ export function plainText(value: string, limit = 12000) {
   return value.replace(/\s+/g, ' ').trim().slice(0, limit);
 }
 
+/**
+ * Turn page markup into the stable, small evidence extract used for comparison.
+ *
+ * Browser `innerText` depends on layout, while `textContent` can join adjacent
+ * block elements.  This deliberately inserts whitespace around structural
+ * elements before removing markup, so capturing a page and fetching it again
+ * take the same path.
+ */
+export function extractTextFromHtml(html: string, limit = 12000) {
+  return plainText(
+    html
+      .replace(/<!--[\s\S]*?-->/g, ' ')
+      .replace(/<(?:script|style|noscript|template)\b[^>]*>[\s\S]*?<\/(?:script|style|noscript|template)>/gi, ' ')
+      .replace(/<\/?(?:address|article|aside|blockquote|br|dd|div|dl|dt|figcaption|figure|footer|h[1-6]|header|hr|li|main|nav|ol|p|pre|section|table|td|th|tr|ul)\b[^>]*>/gi, ' ')
+      .replace(/<[^>]*>/g, ' '),
+    limit,
+  );
+}
+
 export function hashText(value: string) {
   let hash = 2166136261;
   for (let i = 0; i < value.length; i++) {
@@ -79,6 +98,16 @@ export function exportHtml(records: BookmarkRecord[]) {
 
 export function parseBookmarksHtml(html: string): Pick<BookmarkRecord, 'url' | 'title'>[] {
   const doc = new DOMParser().parseFromString(html, 'text/html');
-  return Array.from(doc.querySelectorAll<HTMLAnchorElement>('a[href]')).map((a) => ({ url: a.href, title: plainText(a.textContent || a.href, 300) }))
-    .filter((item) => /^https?:/.test(item.url));
+  return dedupeBookmarkLinks(Array.from(doc.querySelectorAll<HTMLAnchorElement>('a[href]'))
+    .map((a) => ({ url: a.href, title: plainText(a.textContent || a.href, 300) }))
+    .filter((item) => /^https?:/.test(item.url)));
+}
+
+export function dedupeBookmarkLinks(links: Pick<BookmarkRecord, 'url' | 'title'>[]) {
+  const urls = new Set<string>();
+  return links.filter((item) => {
+    if (urls.has(item.url)) return false;
+    urls.add(item.url);
+    return true;
+  });
 }

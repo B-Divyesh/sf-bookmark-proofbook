@@ -1,4 +1,4 @@
-import { exportHtml, exportJson, hashText, sampleRecords, searchRecords } from './proofbook';
+import { dedupeBookmarkLinks, exportHtml, exportJson, extractTextFromHtml, hashText, sampleRecords, searchRecords } from './proofbook';
 import { describe, expect, it } from 'vitest';
 
 describe('Bookmark Proofbook', () => {
@@ -22,7 +22,7 @@ describe('Bookmark Proofbook', () => {
     expect(demoKey.startsWith('demo:')).toBe(true);
   });
 
-  it('@claim:no-account-required creates records without network access', () => {
+  it('creates records without network access', () => {
     const before = globalThis.fetch;
     const output = exportJson(sampleRecords);
     expect(output).toContain('Bookmark Proofbook');
@@ -32,5 +32,24 @@ describe('Bookmark Proofbook', () => {
   it('keeps evidence hashes stable for a stored extract', () => {
     expect(hashText('stable proof')).toBe(hashText('stable proof'));
     expect(hashText('stable proof')).not.toBe(hashText('changed proof'));
+  });
+
+  it('normalizes captured and re-fetched markup to the same evidence text', () => {
+    const captured = '<main><h1>Example Domain</h1><p>This domain is for use in documentation examples.</p></main>';
+    const fetched = '<!doctype html><html><body><main>\n<h1>Example Domain</h1>\n<p>This domain is for use in documentation examples.</p>\n</main></body></html>';
+    expect(extractTextFromHtml(captured)).toBe('Example Domain This domain is for use in documentation examples.');
+    expect(hashText(extractTextFromHtml(captured))).toBe(hashText(extractTextFromHtml(fetched)));
+  });
+
+  it('deduplicates repeated URLs inside one browser bookmark import', () => {
+    const links = dedupeBookmarkLinks([
+      { url: 'https://example.com/', title: 'Example' },
+      { url: 'https://example.com/', title: 'Example again' },
+      { url: 'https://www.w3.org/', title: 'W3C' },
+    ]);
+    expect(links).toEqual([
+      { url: 'https://example.com/', title: 'Example' },
+      { url: 'https://www.w3.org/', title: 'W3C' },
+    ]);
   });
 });

@@ -9,4 +9,6 @@ to `/app`, which uses the separate `proofbook:records` key. Demo storage is
 never read by the real workspace.
 
 The demo does not call a network service during normal capture, search, or
-export. It can be used after its bundled page shell has loaded.
+export. The opened workspace keeps working if the connection drops; it does
+not claim to reload while offline because this static site does not install a
+service worker.

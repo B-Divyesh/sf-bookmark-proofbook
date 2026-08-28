@@ -24,7 +24,28 @@
     "id": "no-account-required",
     "claim": "No account required.",
     "where": "landing facts, README",
-    "test": "npm test -- --grep @claim:no-account-required",
-    "sandbox": "create and export sample records with no authentication or network call"
+    "test": "npm run test:e2e -- --grep @claim:no-account-required",
+    "sandbox": "open the demo, create and export a record through the UI, and record every request"
+  },
+  {
+    "id": "local-records",
+    "claim": "Capture, search, and export work locally.",
+    "where": "landing facts, privacy page, README",
+    "test": "npm run test:e2e -- --grep @claim:local-records",
+    "sandbox": "create, search, and export a local workspace record while asserting no external request occurs"
+  },
+  {
+    "id": "offline-session",
+    "claim": "The opened workspace keeps working if the connection drops.",
+    "where": ".factory/demo.md",
+    "test": "npm run test:e2e -- --grep @claim:offline-session",
+    "sandbox": "open demo first, set the browser offline, then search and export"
+  },
+  {
+    "id": "no-record-sync",
+    "claim": "The companion site does not send your records to a service.",
+    "where": "privacy page, README",
+    "test": "npm run test:e2e -- --grep @claim:no-record-sync",
+    "sandbox": "save a record in the real workspace, inspect local storage, and record every request"
   }
 ]

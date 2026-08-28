@@ -1,6 +1,6 @@
 import '../../site/styles.css';
 import './style.css';
-import { exportHtml, exportJson, hashText, makeRecord, parseBookmarksHtml, plainText, searchRecords, type BookmarkRecord } from '../../src/proofbook';
+import { exportHtml, exportJson, extractTextFromHtml, hashText, makeRecord, parseBookmarksHtml, searchRecords, type BookmarkRecord } from '../../src/proofbook';
 
 const root = document.querySelector<HTMLElement>('#app')!;
 let records: BookmarkRecord[] = [];
@@ -24,7 +24,7 @@ async function checkLinks() {
   const notice = document.querySelector('#notice')!; if (!records.length) { notice.textContent = 'Add a bookmark before checking links.'; return; }
   notice.textContent = `Checking ${Math.min(records.length, 25)} links with your explicit permission…`;
   const checked = await Promise.all(records.slice(0, 25).map(async (record) => {
-    try { const response = await fetch(record.url, { redirect: 'follow' }); if (!response.ok) return { ...record, health: 'unreachable' as const, checkedAt: new Date().toISOString() }; const document = new DOMParser().parseFromString(await response.text(), 'text/html'); const extract = plainText(document.body?.innerText || document.body?.textContent || ''); const nextHash = hashText(extract); return { ...record, health: record.extract && nextHash !== record.contentHash ? 'changed' as const : 'alive' as const, checkedAt: new Date().toISOString() }; } catch { return { ...record, health: 'unreachable' as const, checkedAt: new Date().toISOString() }; }
+    try { const response = await fetch(record.url, { redirect: 'follow' }); if (!response.ok) return { ...record, health: 'unreachable' as const, checkedAt: new Date().toISOString() }; const extract = extractTextFromHtml(await response.text()); const nextHash = hashText(extract); return { ...record, health: record.extract && nextHash !== record.contentHash ? 'changed' as const : 'alive' as const, checkedAt: new Date().toISOString() }; } catch { return { ...record, health: 'unreachable' as const, checkedAt: new Date().toISOString() }; }
   }));
   records = [...checked, ...records.slice(25)]; await store.set(records); render(); document.querySelector('#notice')!.textContent = `Checked ${checked.length} links. A changed hash means the page text differs from the saved extract.`;
 }
