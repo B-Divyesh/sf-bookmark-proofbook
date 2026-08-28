@@ -2,7 +2,8 @@
 
 Candidate `7a8590aa2880755bf486d68ff36911eed0477539` was repaired from the
 adversarial-review base `aef2d4ec581d736b4e11e0bc85fdb9be2ef24b8c`.
-The final commit hash and deployed URL are recorded in `handoff.md`.
+The deployed code is `0c3bc485c45f0872082c0c7cbf574c369657e9db` at
+<https://bookmark-proofbook.sociobot.in>.
 
 | Finding | Change made | Evidence |
 | --- | --- | --- |
@@ -37,3 +38,14 @@ regressions: `npm test` (10), `npm run test:e2e` (27), and
 - `/opt/fleet/lib/verify-url.sh http://127.0.0.1:4173/ .factory/evidence/polish-local` passed with no console/page errors, one h1, `lang=en`, a main landmark, and no missing image alt text.
 - Playwright Axe integration passed across `/`, `/?demo=1`, `/app`, `/privacy`, `/terms`, and the direct 404 in `npm run test:e2e`.
 - The standalone Axe CLI could not launch this container’s Chrome binary; the installed Playwright Axe integration is the accessibility gate used above.
+
+## Live recheck
+
+After Static Web Apps deployment, a cold production request loaded
+`index-DQzq6Qzc.js`, the repaired landing title, and the expected CSP. A direct
+unknown address returned HTTP 404. `verify-url.sh` passed on the live landing,
+and a fresh mobile screenshot confirms the direct `/?demo=1` banner, Reset
+demo, empty-proofbook exit, three sample records, and stacked mobile layout:
+`.factory/evidence/polish-live/demo-mobile.png`. A live Playwright Axe and
+console/request smoke test reported zero serious/critical issues, console
+errors, or third-party requests for all public routes.
