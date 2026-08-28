@@ -1,0 +1,7 @@
+{
+  "slug": "bookmark-proofbook",
+  "title": "Bookmark Proofbook",
+  "summary": "Keep why links mattered and export a durable local bookmark proofbook.",
+  "artifact_class": "browser-extension",
+  "monetization": "one-time"
+}

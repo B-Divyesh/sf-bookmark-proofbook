@@ -1,0 +1,30 @@
+[
+  {
+    "id": "search-saved-context",
+    "claim": "Search the title, reason, selected words, and saved extract.",
+    "where": "demo workspace, README",
+    "test": "npm run test:e2e -- --grep @claim:search-saved-context",
+    "sandbox": "sample records; query words from the saved reason and selected text"
+  },
+  {
+    "id": "portable-export",
+    "claim": "Export a readable HTML proofbook.",
+    "where": "landing facts, export button, README",
+    "test": "npm run test:e2e -- --grep @claim:portable-export",
+    "sandbox": "sample records; inspect a generated standalone HTML document"
+  },
+  {
+    "id": "demo-namespace",
+    "claim": "Demo — sample data, nothing is saved.",
+    "where": "demo banner",
+    "test": "npm run test:e2e -- --grep @claim:demo-namespace",
+    "sandbox": "compare the demo local-storage namespace with the real namespace"
+  },
+  {
+    "id": "no-account-required",
+    "claim": "No account required.",
+    "where": "landing facts, README",
+    "test": "npm test -- --grep @claim:no-account-required",
+    "sandbox": "create and export sample records with no authentication or network call"
+  }
+]
