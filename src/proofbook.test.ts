@@ -1,4 +1,4 @@
-import { dedupeBookmarkLinks, exportHtml, exportJson, extractTextFromHtml, hashText, sampleRecords, searchRecords } from './proofbook';
+import { EXTRACT_CHARACTER_LIMIT, LINK_CHECK_LIMIT, dedupeBookmarkLinks, exportHtml, exportJson, extractTextFromHtml, hashText, makeRecord, normalizeHttpUrl, recordsForLinkCheck, sampleRecords, searchRecords } from './proofbook';
 import { describe, expect, it } from 'vitest';
 
 describe('Bookmark Proofbook', () => {
@@ -29,7 +29,7 @@ describe('Bookmark Proofbook', () => {
     expect(globalThis.fetch).toBe(before);
   });
 
-  it('keeps evidence hashes stable for a stored extract', () => {
+  it('@claim:evidence-hash keeps evidence hashes stable for a stored extract', () => {
     expect(hashText('stable proof')).toBe(hashText('stable proof'));
     expect(hashText('stable proof')).not.toBe(hashText('changed proof'));
   });
@@ -51,5 +51,25 @@ describe('Bookmark Proofbook', () => {
       { url: 'https://example.com/', title: 'Example' },
       { url: 'https://www.w3.org/', title: 'W3C' },
     ]);
+  });
+
+  it('@claim:extract-cap keeps no more than 12,000 page-text characters', () => {
+    const extract = extractTextFromHtml(`<main>${'e'.repeat(EXTRACT_CHARACTER_LIMIT + 500)}</main>`);
+    expect(extract).toHaveLength(12_000);
+    expect(makeRecord({ url: 'https://example.com', title: 'Example', reason: 'Reference', selectedText: '', extract: 'e'.repeat(12_500) }).extract).toHaveLength(12_000);
+  });
+
+  it('selects no more than 25 records for one link check', () => {
+    const records = Array.from({ length: 40 }, (_, index) => ({ ...sampleRecords[0], id: `record-${index}` }));
+    expect(LINK_CHECK_LIMIT).toBe(25);
+    expect(recordsForLinkCheck(records)).toHaveLength(25);
+    expect(recordsForLinkCheck(records)[24].id).toBe('record-24');
+  });
+
+  it('accepts only HTTP and HTTPS bookmark addresses', () => {
+    expect(normalizeHttpUrl('https://example.com/research')).toBe('https://example.com/research');
+    expect(normalizeHttpUrl('http://example.com')).toBe('http://example.com/');
+    expect(() => normalizeHttpUrl('javascript:alert(1)')).toThrow('http:// or https://');
+    expect(() => normalizeHttpUrl('ftp://example.com/file')).toThrow('http:// or https://');
   });
 });

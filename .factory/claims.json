@@ -2,50 +2,120 @@
   {
     "id": "search-saved-context",
     "claim": "Search the title, reason, selected words, and saved extract.",
-    "where": "demo workspace, README",
+    "where": "demo workspace, extension, README",
     "test": "npm run test:e2e -- --grep @claim:search-saved-context",
     "sandbox": "sample records; query words from the saved reason and selected text"
   },
   {
     "id": "portable-export",
-    "claim": "Export a readable HTML proofbook.",
-    "where": "landing facts, export button, README",
+    "claim": "Export a readable HTML or JSON proofbook.",
+    "where": "landing facts, export buttons, README",
     "test": "npm run test:e2e -- --grep @claim:portable-export",
-    "sandbox": "sample records; inspect a generated standalone HTML document"
+    "sandbox": "sample records; inspect the downloaded standalone HTML and parsed JSON"
   },
   {
     "id": "demo-namespace",
     "claim": "Demo — sample data, nothing is saved.",
     "where": "demo banner",
     "test": "npm run test:e2e -- --grep @claim:demo-namespace",
-    "sandbox": "compare the demo local-storage namespace with the real namespace"
+    "sandbox": "compare demo and real namespaces, then verify leaving demo discards demo storage"
   },
   {
     "id": "no-account-required",
     "claim": "No account required.",
     "where": "landing facts, README",
     "test": "npm run test:e2e -- --grep @claim:no-account-required",
-    "sandbox": "open the demo, create and export a record through the UI, and record every request"
+    "sandbox": "create and export a demo record without authentication or an external request"
   },
   {
     "id": "local-records",
     "claim": "Capture, search, and export work locally.",
     "where": "landing facts, privacy page, README",
     "test": "npm run test:e2e -- --grep @claim:local-records",
-    "sandbox": "create, search, and export a local workspace record while asserting no external request occurs"
+    "sandbox": "create, search, and export a real-workspace record while recording requests"
   },
   {
     "id": "offline-session",
     "claim": "The opened workspace keeps working if the connection drops.",
-    "where": ".factory/demo.md",
+    "where": ".factory/demo.md, README",
     "test": "npm run test:e2e -- --grep @claim:offline-session",
     "sandbox": "open demo first, set the browser offline, then search and export"
   },
   {
     "id": "no-record-sync",
     "claim": "The companion site does not send your records to a service.",
-    "where": "privacy page, README",
+    "where": "privacy page, README, .factory/demo.md",
     "test": "npm run test:e2e -- --grep @claim:no-record-sync",
-    "sandbox": "save a record in the real workspace, inspect local storage, and record every request"
+    "sandbox": "save a real-workspace record, inspect local storage, and record every request"
+  },
+  {
+    "id": "no-analytics",
+    "claim": "The companion site does not run analytics.",
+    "where": "privacy page, README",
+    "test": "npm run test:e2e -- --grep @claim:no-analytics",
+    "sandbox": "complete a demo search and privacy navigation while recording every request"
+  },
+  {
+    "id": "explicit-page-read",
+    "claim": "The extension reads the active page only after you press Capture this page.",
+    "where": "extension, README",
+    "test": "npm run test:extension -- --grep @claim:explicit-page-read",
+    "sandbox": "clean Chromium profile; verify no capture form or storage before click, then capture selected page text"
+  },
+  {
+    "id": "extract-cap",
+    "claim": "A saved page extract is capped at 12,000 characters.",
+    "where": "landing boundary, README",
+    "test": "npm test -- --testNamePattern @claim:extract-cap",
+    "sandbox": "pass 12,500 characters through both HTML extraction and record creation"
+  },
+  {
+    "id": "link-check-limit",
+    "claim": "The extension contacts saved addresses only after Check links and checks at most 25 at once.",
+    "where": "extension, README",
+    "test": "npm run test:extension -- --grep @claim:link-check-limit",
+    "sandbox": "clean installed extension with 26 local fixture records; count requests and stored health states"
+  },
+  {
+    "id": "packaged-extension",
+    "claim": "The production site includes the packaged Chrome MV3 extension zip.",
+    "where": "install section, README",
+    "test": "npm run test:e2e -- --grep @claim:packaged-extension",
+    "sandbox": "fresh production build; follow its download link and require a non-empty zip response"
+  },
+  {
+    "id": "unpacked-install",
+    "claim": "The downloaded extension can be loaded unpacked in Chrome or Edge.",
+    "where": "install section, README",
+    "test": "npm run test:extension -- --grep @claim:unpacked-install",
+    "sandbox": "clean Chromium profile loading the generated MV3 directory, then open and use its popup"
+  },
+  {
+    "id": "reversible-delete",
+    "claim": "Remove a record and undo it immediately.",
+    "where": "privacy page, site and extension controls",
+    "test": "npm run test:e2e -- --grep @claim:reversible-delete",
+    "sandbox": "remove a demo record, assert storage-backed count changes, then undo and restore it"
+  },
+  {
+    "id": "http-links-only",
+    "claim": "Manual entry accepts only HTTP or HTTPS bookmark addresses.",
+    "where": "workspace URL help",
+    "test": "npm run test:e2e -- --grep @claim:http-links-only",
+    "sandbox": "attempt to save a javascript URL and assert focus, validation text, zero records, and empty storage"
+  },
+  {
+    "id": "browser-html-import",
+    "claim": "Import unique HTTP or HTTPS links from a browser bookmarks HTML file.",
+    "where": "site and extension import controls",
+    "test": "npm run test:e2e -- --grep @claim:browser-html-import",
+    "sandbox": "import a fixture containing two valid links, a duplicate, a javascript URL, and an FTP URL"
+  },
+  {
+    "id": "evidence-hash",
+    "claim": "Each saved extract has a stable evidence hash.",
+    "where": "landing preview, extension, README",
+    "test": "npm test -- --testNamePattern @claim:evidence-hash",
+    "sandbox": "hash identical and changed saved-extract fixtures and compare the results"
   }
 ]

@@ -1,4 +1,6 @@
 export type Health = 'unchecked' | 'alive' | 'changed' | 'unreachable';
+export const EXTRACT_CHARACTER_LIMIT = 12_000;
+export const LINK_CHECK_LIMIT = 25;
 
 export interface BookmarkRecord {
   id: string;
@@ -37,7 +39,7 @@ export const sampleRecords: BookmarkRecord[] = [
   },
 ];
 
-export function plainText(value: string, limit = 12000) {
+export function plainText(value: string, limit = EXTRACT_CHARACTER_LIMIT) {
   return value.replace(/\s+/g, ' ').trim().slice(0, limit);
 }
 
@@ -49,7 +51,7 @@ export function plainText(value: string, limit = 12000) {
  * elements before removing markup, so capturing a page and fetching it again
  * take the same path.
  */
-export function extractTextFromHtml(html: string, limit = 12000) {
+export function extractTextFromHtml(html: string, limit = EXTRACT_CHARACTER_LIMIT) {
   return plainText(
     html
       .replace(/<!--[\s\S]*?-->/g, ' ')
@@ -78,12 +80,24 @@ export function searchRecords(records: BookmarkRecord[], query: string) {
   });
 }
 
+export function normalizeHttpUrl(value: string) {
+  const url = new URL(value);
+  if (url.protocol !== 'http:' && url.protocol !== 'https:') {
+    throw new TypeError('Bookmark addresses must start with http:// or https://.');
+  }
+  return url.href;
+}
+
 export function makeRecord(input: Pick<BookmarkRecord, 'url' | 'title' | 'reason' | 'selectedText' | 'extract'>): BookmarkRecord {
   const extract = plainText(input.extract);
   return {
-    ...input, extract, selectedText: plainText(input.selectedText, 3000), reason: plainText(input.reason, 2000),
+    ...input, url: normalizeHttpUrl(input.url), extract, selectedText: plainText(input.selectedText, 3000), reason: plainText(input.reason, 2000),
     id: crypto.randomUUID(), contentHash: hashText(extract), createdAt: new Date().toISOString(), health: 'unchecked',
   };
+}
+
+export function recordsForLinkCheck(records: BookmarkRecord[]) {
+  return records.slice(0, LINK_CHECK_LIMIT);
 }
 
 export function exportJson(records: BookmarkRecord[]) {

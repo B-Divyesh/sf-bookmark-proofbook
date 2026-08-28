@@ -41,13 +41,16 @@ button,
 .skip-link {
   position: fixed;
   left: 8px;
-  top: -80px;
+  top: 8px;
   background: var(--paper);
   padding: 10px;
   z-index: 10;
+  clip-path: inset(50%);
+  transform: translateY(-200%);
 }
 .skip-link:focus {
-  top: 8px;
+  clip-path: none;
+  transform: translateY(0);
 }
 .site-header,
 main,
@@ -88,6 +91,8 @@ footer {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
+  min-width: 44px;
+  justify-content: center;
   padding: 0 4px;
 }
 .hero {
@@ -196,7 +201,8 @@ figcaption {
 .preview,
 .how,
 .boundary,
-.license {
+.license,
+.install {
   padding: 56px 24px;
   border-top: var(--rule);
   max-width: 1180px;
@@ -213,6 +219,7 @@ figcaption {
 .how h2,
 .boundary h2,
 .license h2,
+.install h2,
 .capture h2,
 .library h2 {
   font:
@@ -287,10 +294,23 @@ figcaption {
 .license {
   background: var(--paper);
 }
+.install {
+  background: var(--paper);
+}
+.install ol {
+  padding-left: 24px;
+  max-width: 760px;
+}
+.install li {
+  padding: 8px 0 8px 8px;
+}
 details summary {
   cursor: pointer;
   font-weight: 800;
+  min-height: 44px;
   padding: 10px 0;
+  display: flex;
+  align-items: center;
 }
 .license-form {
   display: flex;
@@ -314,11 +334,17 @@ details summary {
   flex-wrap: wrap;
 }
 .demo-banner button,
+.demo-banner a,
 .text-button {
   border: 0;
   background: transparent;
   text-decoration: underline;
-  min-height: 30px;
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
 }
 .workbench {
   padding-top: 36px;
@@ -356,6 +382,11 @@ label {
   display: grid;
   gap: 5px;
   font-weight: 800;
+}
+.field-help {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 400;
 }
 label:has(textarea) {
   grid-column: span 2;
@@ -395,6 +426,11 @@ textarea {
   justify-content: space-between;
   gap: 12px;
 }
+.record h3 a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
 .status {
   font-weight: 800;
   font-size: 13px;
@@ -426,6 +462,26 @@ footer {
   display: flex;
   justify-content: space-between;
   gap: 24px;
+}
+footer nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+footer nav a {
+  display: inline-flex;
+  align-items: center;
+  min-width: 44px;
+  min-height: 44px;
+  justify-content: center;
+}
+.action-message {
+  min-height: 44px;
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 .legal {
   padding-top: 80px;
@@ -496,7 +552,8 @@ summary:focus-visible {
   .how,
   .preview,
   .boundary,
-  .license {
+  .license,
+  .install {
     padding: 36px 16px;
   }
   .how ol {
@@ -504,9 +561,11 @@ summary:focus-visible {
     gap: 28px;
   }
   .workhead,
-  .library-head,
-  footer {
+  .library-head {
     display: block;
+  }
+  footer {
+    flex-direction: column;
   }
   .toolbar {
     margin-top: 20px;

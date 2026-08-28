@@ -1,6 +1,9 @@
 {
-  "navigationFallback": { "rewrite": "/index.html", "exclude": ["/assets/*", "/downloads/*"] },
   "routes": [
+    { "route": "/demo", "rewrite": "/demo/index.html" },
+    { "route": "/app", "rewrite": "/app/index.html" },
+    { "route": "/privacy", "rewrite": "/privacy/index.html" },
+    { "route": "/terms", "rewrite": "/terms/index.html" },
     {
       "route": "/assets/*",
       "headers": { "Cache-Control": "public, max-age=31536000, immutable" }

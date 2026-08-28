@@ -1,25 +1,30 @@
 {
   "name": "bookmark-proofbook",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "type": "module",
   "scripts": {
     "dev:site": "vite --config vite.site.config.ts",
-    "build:site": "npm run build:extension && vite build --config vite.site.config.ts && node scripts/package-extension.mjs",
+    "build:site": "npm run build:extension && vite build --config vite.site.config.ts && node scripts/package-site.mjs",
     "build:extension": "wxt zip",
     "build": "npm run build:site",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
     "test": "vitest run",
     "test:e2e": "playwright test",
+    "test:extension": "xvfb-run -a playwright test --config playwright.extension.config.ts",
     "test:watch": "vitest"
   },
   "dependencies": {
-    "wxt": "^0.20.9"
+    "wxt": "0.21.4"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
-    "@playwright/test": "^1.58.2",
+    "@playwright/test": "1.58.2",
     "@types/chrome": "^0.0.303",
+    "eslint": "10.9.1",
     "typescript": "^5.7.3",
+    "typescript-eslint": "8.68.0",
     "vite": "^6.1.0",
     "vitest": "^3.0.5"
   }

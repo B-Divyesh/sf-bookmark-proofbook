@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+import { readFile } from 'node:fs/promises';
 
 function recordExternalRequests(page: import('@playwright/test').Page) {
   const external: string[] = [];
@@ -16,6 +17,15 @@ test('@claim:demo-namespace loads an isolated sample workspace without external 
   await expect(page.getByText('Demo — sample data, nothing is saved.')).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Find a saved reason' })).toBeVisible();
   await expect(page.locator('#count')).toHaveText('(3)');
+  await expect.poll(() => page.evaluate(() => localStorage.getItem('demo:bookmark-proofbook:records'))).not.toBeNull();
+  await page.locator('article[data-id="sample-sqlite"]').getByRole('button', { name: 'Remove' }).click();
+  await expect(page.locator('#count')).toHaveText('(2)');
+  await page.getByRole('button', { name: 'Reset demo' }).click();
+  await expect(page.locator('#count')).toHaveText('(3)');
+  await page.getByRole('link', { name: 'Start for real' }).click();
+  await expect(page).toHaveURL('/app');
+  await expect.poll(() => page.evaluate(() => localStorage.getItem('demo:bookmark-proofbook:records'))).toBeNull();
+  await expect.poll(() => page.evaluate(() => localStorage.getItem('proofbook:records'))).toBeNull();
   await expect.poll(() => external).toEqual([]);
 });
 
@@ -81,11 +91,40 @@ test('@claim:search-saved-context finds demo evidence by a saved reason', async 
 
 test('@claim:portable-export downloads a readable standalone proofbook', async ({ page }) => {
   await page.goto('/demo');
-  const download = page.waitForEvent('download');
+  const htmlDownload = page.waitForEvent('download');
   await page.getByRole('button', { name: 'Export HTML' }).click();
-  const file = await download;
-  expect(file.suggestedFilename()).toBe('bookmark-proofbook.html');
-  expect(await file.createReadStream()).toBeTruthy();
+  const htmlFile = await htmlDownload;
+  expect(htmlFile.suggestedFilename()).toBe('bookmark-proofbook.html');
+  const html = await readFile((await htmlFile.path())!, 'utf8');
+  expect(html).toContain('<!doctype html>');
+  expect(html).toContain('Appropriate Uses For SQLite');
+  expect(html).not.toContain('<script');
+  const jsonDownload = page.waitForEvent('download');
+  await page.getByRole('button', { name: 'Export JSON' }).click();
+  const jsonFile = await jsonDownload;
+  expect(jsonFile.suggestedFilename()).toBe('bookmark-proofbook.json');
+  const json = JSON.parse(await readFile((await jsonFile.path())!, 'utf8'));
+  expect(json.records).toHaveLength(3);
+});
+
+test('@claim:no-analytics performs a complete site workflow without analytics or third-party requests', async ({ page }) => {
+  const external = recordExternalRequests(page);
+  await page.goto('/demo');
+  await page.getByLabel('Search your proofbook').fill('database');
+  await expect(page.getByRole('heading', { name: 'Appropriate Uses For SQLite' })).toBeVisible();
+  await page.getByRole('link', { name: 'Privacy' }).first().click();
+  await expect(page.getByRole('heading', { name: 'Your bookmark evidence stays local' })).toBeVisible();
+  expect(external).toEqual([]);
+});
+
+test('@claim:reversible-delete removes a record and restores it with undo', async ({ page }) => {
+  await page.goto('/demo');
+  await page.locator('article[data-id="sample-sqlite"]').getByRole('button', { name: 'Remove' }).click();
+  await expect(page.locator('#count')).toHaveText('(2)');
+  await expect(page.getByRole('heading', { name: 'Appropriate Uses For SQLite' })).toHaveCount(0);
+  await page.getByRole('button', { name: 'Undo remove' }).click();
+  await expect(page.locator('#count')).toHaveText('(3)');
+  await expect(page.getByRole('heading', { name: 'Appropriate Uses For SQLite' })).toBeVisible();
 });
 
 test('has no serious accessibility violations on the demo', async ({ page }) => {
@@ -100,7 +139,19 @@ test('has no serious accessibility violations on the landing page', async ({ pag
   expect(results.violations.filter((item) => ['serious', 'critical'].includes(item.impact || '')).length).toBe(0);
 });
 
-test('keeps the skip link first, shows a designed focus ring, and preserves 44px mobile navigation targets', async ({ page }) => {
+for (const route of ['/app', '/privacy', '/terms', '/missing-proofbook-page']) {
+  test(`has no serious accessibility violations or console errors on ${route}`, async ({ page }) => {
+    const errors: string[] = [];
+    page.on('console', (message) => { if (message.type() === 'error') errors.push(message.text()); });
+    page.on('pageerror', (error) => errors.push(error.message));
+    await page.goto(route);
+    const results = await new AxeBuilder({ page }).analyze();
+    expect(results.violations.filter((item) => ['serious', 'critical'].includes(item.impact || ''))).toEqual([]);
+    if (route !== '/missing-proofbook-page') expect(errors).toEqual([]);
+  });
+}
+
+test('keeps the skip link first, shows a designed focus ring, and preserves 44px mobile touch targets', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');
   await page.keyboard.press('Tab');
@@ -111,15 +162,53 @@ test('keeps the skip link first, shows a designed focus ring, and preserves 44px
   await expect(page.getByRole('link', { name: 'BOOKMARK PROOFBOOK' })).toBeFocused();
   const navHeights = await page.locator('.site-header nav a').evaluateAll((links) => links.map((link) => link.getBoundingClientRect().height));
   expect(navHeights.every((height) => height >= 44)).toBe(true);
+  await page.goto('/demo');
+  const controls = page.locator('.demo-banner a, .demo-banner button, .record h3 a, .record .delete, footer a');
+  const sizes = await controls.evaluateAll((elements) => elements.map((element) => {
+    const box = element.getBoundingClientRect();
+    return { label: element.textContent?.trim(), width: box.width, height: box.height };
+  }));
+  expect(sizes.every(({ width, height }) => width >= 44 && height >= 44), JSON.stringify(sizes)).toBe(true);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
 });
 
-test('includes a linked extension zip in the static deployment output', async ({ page }) => {
+test('@claim:packaged-extension includes a linked extension zip in the static deployment output', async ({ page }) => {
   await page.goto('/');
-  const link = page.getByRole('link', { name: 'Download the browser extension' });
+  const link = page.getByRole('link', { name: 'Download the extension zip' });
   await expect(link).toHaveAttribute('href', '/downloads/bookmark-proofbook-extension.zip');
   const response = await page.request.get('/downloads/bookmark-proofbook-extension.zip');
   expect(response.status()).toBe(200);
   expect((await response.body()).byteLength).toBeGreaterThan(100_000);
+});
+
+test('gives complete unpacked installation instructions beside the extension download', async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('link', { name: 'Install the browser extension' }).click();
+  await expect(page.locator('#install')).toContainText('Extract the zip');
+  await expect(page.locator('#install')).toContainText('chrome://extensions');
+  await expect(page.locator('#install')).toContainText('Developer mode');
+  await expect(page.locator('#install')).toContainText('Load unpacked');
+});
+
+test('@claim:http-links-only rejects non-HTTP bookmark addresses before saving', async ({ page }) => {
+  await page.goto('/app');
+  await page.getByLabel('Page URL').fill('javascript:alert(1)');
+  await page.getByLabel('Page title').fill('Unsafe address');
+  await page.getByLabel('Why did this matter?').fill('This must not be stored.');
+  await page.getByRole('button', { name: 'Save this bookmark' }).click();
+  await expect(page.getByLabel('Page URL')).toBeFocused();
+  expect(await page.getByLabel('Page URL').evaluate((input: HTMLInputElement) => input.validationMessage)).toContain('http:// or https://');
+  await expect(page.locator('#count')).toHaveText('(0)');
+  expect(await page.evaluate(() => localStorage.getItem('proofbook:records'))).toBeNull();
+});
+
+test('publishes a route-specific canonical and returns a real 404 response', async ({ page }) => {
+  await page.goto('/privacy');
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://bookmark-proofbook.sociobot.in/privacy');
+  expect((await page.request.get('/missing-proofbook-page')).status()).toBe(404);
+  const response = await page.goto('/missing-proofbook-page');
+  expect(response?.status()).toBe(404);
+  await expect(page.getByRole('heading', { name: 'This page is not in the proofbook' })).toBeVisible();
 });
 
 test('does not advertise an unavailable paid checkout', async ({ page }) => {
@@ -128,12 +217,12 @@ test('does not advertise an unavailable paid checkout', async ({ page }) => {
   await expect(page.getByText('Buy the $19 license')).toHaveCount(0);
 });
 
-test('does not import duplicate URLs from a single browser HTML file', async ({ page }) => {
+test('@claim:browser-html-import imports unique HTTP(S) bookmarks and rejects unsafe or duplicate addresses', async ({ page }) => {
   await page.goto('/app');
   await page.locator('#html-file').setInputFiles({
     name: 'bookmarks.html',
     mimeType: 'text/html',
-    buffer: Buffer.from('<a href="https://example.com/">Example</a><a href="https://example.com/">Example duplicate</a><a href="https://www.w3.org/">W3C</a>'),
+    buffer: Buffer.from('<a href="https://example.com/">Example</a><a href="https://example.com/">Example duplicate</a><a href="https://www.w3.org/">W3C</a><a href="javascript:alert(1)">Unsafe</a><a href="ftp://example.com/file">FTP</a>'),
   });
   await expect(page.locator('#count')).toHaveText('(2)');
   await expect(page.locator('#form-message')).toHaveText('Imported 2 bookmarks. Add a reason when you revisit one.');
