@@ -44,13 +44,34 @@ test('@claim:unpacked-install @claim:explicit-page-read loads the MV3 artifact a
     await expect(extension.popup.locator('#reason-form')).toHaveCount(0);
     expect(await extension.worker.evaluate(() => chrome.storage.local.get('records'))).toEqual({});
     await extension.popup.getByRole('button', { name: 'Capture this page' }).click();
-    await expect(extension.popup.getByLabel('Selected words')).toHaveValue('Keep why each link mattered');
+    await expect(extension.popup.getByLabel('Selected words')).toHaveValue('Save why each link mattered');
     expect(await extension.worker.evaluate(() => chrome.storage.local.get('records'))).toEqual({});
     await extension.popup.getByLabel('Why did this matter?').fill('Keep the source for a release review.');
     await extension.popup.getByRole('button', { name: 'Save this bookmark' }).click();
     const stored = await extension.worker.evaluate(() => chrome.storage.local.get('records'));
     expect(stored.records).toHaveLength(1);
-    expect(stored.records[0].selectedText).toBe('Keep why each link mattered');
+    expect(stored.records[0].selectedText).toBe('Save why each link mattered');
+  } finally {
+    await closeExtension(extension);
+  }
+});
+
+test('@claim:extension-local-records stores a captured record only in extension local storage', async () => {
+  const extension = await installExtension();
+  try {
+    const external: string[] = [];
+    extension.context.on('request', (request) => {
+      const hostname = new URL(request.url()).hostname;
+      if (hostname !== '127.0.0.1' && hostname !== 'localhost') external.push(request.url());
+    });
+    await extension.source.locator('h1').selectText();
+    await extension.popup.getByRole('button', { name: 'Capture this page' }).click();
+    await extension.popup.getByLabel('Why did this matter?').fill('Keep the source in extension local storage.');
+    await extension.popup.getByRole('button', { name: 'Save this bookmark' }).click();
+    const stored = await extension.worker.evaluate(() => chrome.storage.local.get('records'));
+    expect(stored.records).toHaveLength(1);
+    expect(stored.records[0].reason).toContain('extension local storage');
+    expect(external).toEqual([]);
   } finally {
     await closeExtension(extension);
   }

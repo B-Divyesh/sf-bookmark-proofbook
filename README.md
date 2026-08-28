@@ -1,13 +1,13 @@
 # Bookmark Proofbook
 
-Keep why each link mattered. Bookmark Proofbook is for people with too many
-bookmarks to remember. It keeps a reason, selected words, a small page extract,
-and an evidence hash beside each link. Search that context later and export a
-readable HTML or JSON proofbook.
+Save why each link mattered. Bookmark Proofbook is for people with too many
+bookmarks to remember. It keeps a reason, selected words, and a small page
+extract beside each link. It also stores a code that identifies that extract.
+Search that context later and export a readable HTML or JSON proofbook.
 
-The Chrome MV3 extension is the main capture tool. It reads the active page
-only after you press **Capture this page**. The companion site provides a
-one-click demo and a local workspace at `/app`.
+The Chrome extension captures pages. It reads the active page only after you
+press **Capture this page**. The companion site has an isolated sample at
+`/?demo=1` and a local workspace at `/app`.
 
 ## Run
 
@@ -28,7 +28,6 @@ Run `npm run build`, or download the extension zip from the product site. Then:
 4. Choose **Load unpacked** and select the extracted folder.
 
 The generated zip is `dist/site/downloads/bookmark-proofbook-extension.zip`.
-This release is not listed in a browser store.
 
 ## Test
 
@@ -41,14 +40,14 @@ npm run build
 npm audit --omit=dev
 ```
 
-The browser-extension suite uses Xvfb and a clean Chromium profile. The exact
-public claim commands are listed in `.factory/claims.json`. The demo contract
-is in `.factory/demo.md`.
+The extension tests use a clean Chromium profile. The exact public claim
+commands are listed in `.factory/claims.json`. The demo contract is in
+`.factory/demo.md`.
 
 ## Deploy
 
 `npm run build` creates the static deployment in `dist/site`, including the
-Chrome MV3 zip. Deploy that directory with the factory's static Azure Static
+Chrome extension zip. Deploy that directory with the factory's static Azure Static
 Web Apps work order. Do not deploy `.output` or the repository root.
 
 For an authenticated factory shell:

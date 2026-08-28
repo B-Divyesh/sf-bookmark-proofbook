@@ -1,5 +1,12 @@
 [
   {
+    "id": "save-bookmark-context",
+    "claim": "Save a bookmark with its reason, selected words, small page extract, and extract code.",
+    "where": "landing, site workspace, extension, README, footer",
+    "test": "npm run test:e2e -- --grep @claim:save-bookmark-context",
+    "sandbox": "demo workspace; add a record with each field, inspect local storage and the rendered record"
+  },
+  {
     "id": "search-saved-context",
     "claim": "Search the title, reason, selected words, and saved extract.",
     "where": "demo workspace, extension, README",
@@ -21,6 +28,13 @@
     "sandbox": "compare demo and real namespaces, then verify leaving demo discards demo storage"
   },
   {
+    "id": "one-click-demo",
+    "claim": "Try it with sample data opens an isolated sample proofbook in one click.",
+    "where": "landing action, README, .factory/demo.md",
+    "test": "npm run test:e2e -- --grep @claim:one-click-demo",
+    "sandbox": "fresh landing page; activate the visible action once, then assert the demo URL, banner, and three sample records"
+  },
+  {
     "id": "no-account-required",
     "claim": "No account required.",
     "where": "landing facts, README",
@@ -29,7 +43,7 @@
   },
   {
     "id": "local-records",
-    "claim": "Capture, search, and export work locally.",
+    "claim": "Capture, search, export, and record storage work locally.",
     "where": "landing facts, privacy page, README",
     "test": "npm run test:e2e -- --grep @claim:local-records",
     "sandbox": "create, search, and export a real-workspace record while recording requests"
@@ -61,6 +75,13 @@
     "where": "extension, README",
     "test": "npm run test:extension -- --grep @claim:explicit-page-read",
     "sandbox": "clean Chromium profile; verify no capture form or storage before click, then capture selected page text"
+  },
+  {
+    "id": "extension-local-records",
+    "claim": "The extension stores records in extension local storage.",
+    "where": "privacy page, README",
+    "test": "npm run test:extension -- --grep @claim:extension-local-records",
+    "sandbox": "clean Chromium profile; capture one local fixture record, assert chrome.storage.local contains it, and record no external request"
   },
   {
     "id": "extract-cap",
@@ -113,7 +134,7 @@
   },
   {
     "id": "evidence-hash",
-    "claim": "Each saved extract has a stable evidence hash.",
+    "claim": "Each saved extract has a stable code that identifies it.",
     "where": "landing preview, extension, README",
     "test": "npm test -- --testNamePattern @claim:evidence-hash",
     "sandbox": "hash identical and changed saved-extract fixtures and compare the results"

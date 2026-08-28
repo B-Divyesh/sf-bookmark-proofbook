@@ -22,7 +22,7 @@ test('@claim:demo-namespace loads an isolated sample workspace without external 
   await expect(page.locator('#count')).toHaveText('(2)');
   await page.getByRole('button', { name: 'Reset demo' }).click();
   await expect(page.locator('#count')).toHaveText('(3)');
-  await page.getByRole('link', { name: 'Start for real' }).click();
+  await page.getByRole('link', { name: 'Open my empty proofbook' }).click();
   await expect(page).toHaveURL('/app');
   await expect.poll(() => page.evaluate(() => localStorage.getItem('demo:bookmark-proofbook:records'))).toBeNull();
   await expect.poll(() => page.evaluate(() => localStorage.getItem('proofbook:records'))).toBeNull();
@@ -41,6 +41,32 @@ test('@claim:no-account-required creates and exports a demo record without authe
   await page.getByRole('button', { name: 'Export JSON' }).click();
   expect((await download).suggestedFilename()).toBe('bookmark-proofbook.json');
   expect(external).toEqual([]);
+});
+
+test('@claim:save-bookmark-context stores the reason, selected words, extract, and its stable code', async ({ page }) => {
+  await page.goto('/demo');
+  await page.getByLabel('Page URL').fill('https://example.com/context');
+  await page.getByLabel('Page title').fill('Context record');
+  await page.getByLabel('Why did this matter?').fill('Keep the release decision beside this source.');
+  await page.getByLabel('Selected words').fill('The selected words explain the decision.');
+  await page.getByLabel('Small page extract').fill('The small page extract gives later context.');
+  await page.getByRole('button', { name: 'Save this bookmark' }).click();
+  await expect(page.getByRole('heading', { name: 'Context record' })).toBeVisible();
+  const stored = await page.evaluate(() => JSON.parse(localStorage.getItem('demo:bookmark-proofbook:records') || '[]')[0]);
+  expect(stored.reason).toContain('release decision');
+  expect(stored.selectedText).toContain('selected words');
+  expect(stored.extract).toContain('small page extract');
+  expect(stored.contentHash).toMatch(/^[a-f0-9]{8}$/);
+});
+
+test('@claim:one-click-demo opens the isolated sample proofbook from the landing page', async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('link', { name: 'Try it with sample data' }).click();
+  await expect(page).toHaveURL('/?demo=1');
+  await expect(page.getByText('Demo — sample data, nothing is saved.')).toBeVisible();
+  await expect(page.locator('#count')).toHaveText('(3)');
+  await expect.poll(() => page.evaluate(() => localStorage.getItem('demo:bookmark-proofbook:records'))).not.toBeNull();
+  await expect.poll(() => page.evaluate(() => localStorage.getItem('proofbook:records'))).toBeNull();
 });
 
 test('@claim:local-records captures, searches, and exports without sending records to a service', async ({ page }) => {
@@ -113,7 +139,7 @@ test('@claim:no-analytics performs a complete site workflow without analytics or
   await page.getByLabel('Search your proofbook').fill('database');
   await expect(page.getByRole('heading', { name: 'Appropriate Uses For SQLite' })).toBeVisible();
   await page.getByRole('link', { name: 'Privacy' }).first().click();
-  await expect(page.getByRole('heading', { name: 'Your bookmark evidence stays local' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Privacy for saved bookmarks' })).toBeVisible();
   expect(external).toEqual([]);
 });
 
@@ -202,13 +228,46 @@ test('@claim:http-links-only rejects non-HTTP bookmark addresses before saving',
   expect(await page.evaluate(() => localStorage.getItem('proofbook:records'))).toBeNull();
 });
 
-test('publishes a route-specific canonical and returns a real 404 response', async ({ page }) => {
-  await page.goto('/privacy');
-  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://bookmark-proofbook.sociobot.in/privacy');
+test('publishes route-specific metadata and returns a real 404 response', async ({ page }) => {
+  const routes = [
+    ['/', 'Bookmark Proofbook — Save bookmark context', 'https://bookmark-proofbook.sociobot.in/'],
+    ['/?demo=1', 'Demo — Bookmark Proofbook', 'https://bookmark-proofbook.sociobot.in/demo'],
+    ['/demo', 'Demo — Bookmark Proofbook', 'https://bookmark-proofbook.sociobot.in/demo'],
+    ['/app', 'My proofbook — Bookmark Proofbook', 'https://bookmark-proofbook.sociobot.in/app'],
+    ['/privacy', 'Privacy — Bookmark Proofbook', 'https://bookmark-proofbook.sociobot.in/privacy'],
+    ['/terms', 'Terms — Bookmark Proofbook', 'https://bookmark-proofbook.sociobot.in/terms'],
+  ] as const;
+  for (const [route, title, canonical] of routes) {
+    await page.goto(route);
+    await expect(page).toHaveTitle(title);
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', canonical);
+    await expect(page.locator('meta[property="og:title"]')).toHaveAttribute('content', title);
+    await expect(page.locator('meta[name="twitter:title"]')).toHaveAttribute('content', title);
+    await expect(page.locator('meta[property="og:description"]')).not.toHaveAttribute('content', '');
+    await expect(page.locator('meta[name="twitter:description"]')).not.toHaveAttribute('content', '');
+  }
   expect((await page.request.get('/missing-proofbook-page')).status()).toBe(404);
   const response = await page.goto('/missing-proofbook-page');
   expect(response?.status()).toBe(404);
   await expect(page.getByRole('heading', { name: 'This page is not in the proofbook' })).toBeVisible();
+  await expect(page).toHaveTitle('Page not found — Bookmark Proofbook');
+  await expect(page.locator('link[rel="icon"]')).toHaveAttribute('href', '/favicon.svg');
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex');
+  await expect(page.locator('meta[property="og:title"]')).toHaveAttribute('content', 'Page not found — Bookmark Proofbook');
+  await expect(page.locator('meta[name="twitter:title"]')).toHaveAttribute('content', 'Page not found — Bookmark Proofbook');
+});
+
+test('restores scroll and announces the new route after back navigation', async ({ page }) => {
+  await page.goto('/');
+  await page.evaluate(() => window.scrollTo(0, 1100));
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(1000);
+  await page.getByRole('link', { name: 'Demo' }).evaluate((link) => link.click());
+  await expect(page).toHaveURL('/demo');
+  await expect(page.locator('#route-announcer')).toHaveText('Demo — Bookmark Proofbook');
+  await page.goBack();
+  await expect(page).toHaveURL('/');
+  await expect(page.locator('#route-announcer')).toHaveText('Bookmark Proofbook');
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(1000);
 });
 
 test('does not advertise an unavailable paid checkout', async ({ page }) => {
@@ -242,6 +301,6 @@ test('loads the landing page without console errors', async ({ page }) => {
   page.on('console', (message) => { if (message.type() === 'error') errors.push(message.text()); });
   page.on('pageerror', (error) => errors.push(error.message));
   await page.goto('/');
-  await expect(page.getByRole('heading', { name: 'Keep why each link mattered' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Save why each link mattered' })).toBeVisible();
   expect(errors).toEqual([]);
 });
