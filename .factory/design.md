@@ -53,4 +53,5 @@ logos, no people, no brands, no UI screenshot, no gradients.
 
 Asset provenance: `assets/src/proofbook-hero.png` was generated with the
 factory image deployment on 2026-08-28 from the prompt above. It is original
-product artwork. Optimized WebP is shipped as `public/proofbook-hero.webp`.
+product artwork. Optimized WebP files are shipped at 1200 px and 600 px widths;
+the smaller derivative is selected for narrow screens.
