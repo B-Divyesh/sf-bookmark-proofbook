@@ -1,50 +1,75 @@
 # Copy audit
 
-The landing page was read aloud on 2026-08-28. Every sentence is at most 22
-words. No banned marketing term or unexplained product jargon remains.
+Audited 2026-08-28. The first screen says the job, audience, next action, and
+three facts in one breath. Every sentence is at most 22 words. No banned term
+appears in reader-facing copy.
 
 ## Landing page
 
 | Copy | Words | Result |
 | --- | ---: | --- |
-| Save why each link mattered | 5 | Headline, verb first |
-| For people with too many bookmarks to remember, save context and find the resource again. | 15 | Who and outcome |
-| Opens a sample proofbook with three saved notes. | 8 | Explains the primary action |
+| LOCAL BOOKMARK TOOL | 3 | Specific label |
+| Save why each link mattered | 5 | Verb-first headline |
+| For people with too many bookmarks to remember, save context and find the resource again. | 15 | Audience and outcome |
+| Try it with sample data | 5 | Primary action |
+| Opens a sample proofbook with three saved notes. | 8 | Explains the action |
 | No account required. | 3 | Tested claim |
 | Capture, search, and export work locally. | 6 | Tested claim |
 | Export a readable HTML proofbook. | 5 | Tested claim |
-| What each bookmark keeps | 5 | Useful section heading |
+| Install the browser extension | 4 | Secondary action |
+| BOOKMARK DETAILS | 2 | Specific label |
+| What each bookmark keeps | 4 | Section heading |
 | Each bookmark stores your reason, selected words, and a small page extract. | 12 | Tested claim |
 | It also stores a code that identifies that extract. | 9 | Tested claim |
-| How Bookmark Proofbook works | 4 | Useful section heading |
-| Write why it matters while you still know. | 9 | Plain instruction |
-| Find a source by the reason or extract you saved. | 10 | Tested search claim |
-| Keep a self-contained file you can open anywhere. | 9 | Tested export claim |
+| Checked once | 2 | Sample status |
+| Why I saved it: Decide when a small local database is the sensible choice. | 14 | Sample reason |
+| SQLite is not directly comparable to client/server SQL database engines. | 10 | Sample quotation |
+| THREE STEPS | 2 | Specific label |
+| How Bookmark Proofbook works | 4 | Section heading |
+| Capture a link. | 3 | Step |
+| Write why it matters while you still know. | 8 | Plain instruction |
+| Search your words. | 3 | Step |
+| Find a source by the reason or extract you saved. | 10 | Tested claim |
+| Export your proofbook. | 3 | Step |
+| Keep a self-contained file you can open anywhere. | 8 | Tested claim |
+| What it does not do | 5 | Boundary heading |
 | It stores a text extract of up to 12,000 characters. | 10 | Tested limit |
+| CHROME OR EDGE | 3 | Installation label |
+| Install the browser extension | 4 | Installation heading |
+| Download the extension zip | 4 | Tested action |
 | Extract the zip to a folder you can keep. | 9 | Installation instruction |
+| Open chrome://extensions or edge://extensions and turn on Developer mode. | 9 | Installation instruction |
 | Choose Load unpacked, then select the extracted folder. | 8 | Installation instruction |
 | Keep the folder after installation. | 5 | Installation instruction |
+| Bookmark Proofbook keeps the reason beside the link. | 8 | Product-specific footer |
 
-## Shared workspace and legal copy
+## Proofbook, extension, and legal copy
 
 | Copy | Words | Result |
 | --- | ---: | --- |
 | Demo — sample data, nothing is saved. | 6 | Tested demo claim |
 | Open my empty proofbook | 5 | Names the exit result |
-| Search the note you wrote, not only the page title. | 10 | Plain explanation |
-| The companion site stores records in browser local storage. | 9 | Tested claim |
-| The extension stores records in extension local storage. | 9 | Tested claim |
-| The companion site does not run analytics or send your records to a service. | 13 | Tested claims |
-| Remove has an immediate undo action. | 6 | Tested claim |
+| Saved bookmarks | 2 | Consistent item name |
+| Each bookmark keeps its original address and a small local extract. | 10 | Tested claim |
+| No saved bookmarks match that search | 7 | Consistent empty state |
+| Your saved bookmarks will appear here | 6 | Consistent empty state |
+| Bookmark restored. | 2 | Consistent action result |
+| The companion site stores bookmarks in browser local storage. | 9 | Tested claim |
+| The extension stores bookmarks in extension local storage. | 9 | Tested claim |
+| The companion site does not run analytics or send your bookmarks to a service. | 13 | Tested claims |
+| You can export bookmarks. | 4 | Tested claim |
 
 ## Terminology
 
-| Concept | One word used |
+| Concept | One term used |
 | --- | --- |
 | saved link plus context | bookmark |
-| exported collection | proofbook |
+| collection and working area | proofbook |
 | small stored page text | extract |
 | reason written by the person | reason |
-| saved bookmark item | record |
-| small identifier for saved extract | extract code |
+| small identifier for an extract | extract code |
 | network page status comparison | link check |
+
+The unit regression `keeps bookmark terminology consistent in reader-facing
+copy` rejects the previous names “saved evidence” and “workspace.” The site
+browser regression checks the saved-bookmark heading and both empty states.

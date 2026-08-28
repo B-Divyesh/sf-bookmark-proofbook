@@ -131,6 +131,7 @@ test('removes an extension record with an immediate undo path', async () => {
 test('has no serious or critical accessibility findings in the installed popup', async () => {
   const extension = await installExtension();
   try {
+    await expect(extension.popup.getByRole('heading', { name: 'Saved bookmarks (0)' })).toBeVisible();
     const results = await new AxeBuilder({ page: extension.popup }).analyze();
     expect(results.violations.filter((item) => ['serious', 'critical'].includes(item.impact || ''))).toEqual([]);
   } finally {

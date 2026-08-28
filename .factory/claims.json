@@ -2,23 +2,23 @@
   {
     "id": "save-bookmark-context",
     "claim": "Save a bookmark with its reason, selected words, small page extract, and extract code.",
-    "where": "landing, site workspace, extension, README, footer",
+    "where": "landing, site proofbook, extension, README, footer",
     "test": "npm run test:e2e -- --grep @claim:save-bookmark-context",
-    "sandbox": "demo workspace; add a record with each field, inspect local storage and the rendered record"
+    "sandbox": "demo proofbook; add a bookmark with each field, inspect local storage and the rendered bookmark"
   },
   {
     "id": "search-saved-context",
     "claim": "Search the title, reason, selected words, and saved extract.",
-    "where": "demo workspace, extension, README",
+    "where": "demo proofbook, extension, README",
     "test": "npm run test:e2e -- --grep @claim:search-saved-context",
-    "sandbox": "sample records; query words from the saved reason and selected text"
+    "sandbox": "sample bookmarks; query words from the saved reason and selected text"
   },
   {
     "id": "portable-export",
     "claim": "Export a readable HTML or JSON proofbook.",
     "where": "landing facts, export buttons, README",
     "test": "npm run test:e2e -- --grep @claim:portable-export",
-    "sandbox": "sample records; inspect the downloaded standalone HTML and parsed JSON"
+    "sandbox": "sample bookmarks; inspect the downloaded standalone HTML and parsed JSON"
   },
   {
     "id": "demo-namespace",
@@ -32,35 +32,35 @@
     "claim": "Try it with sample data opens an isolated sample proofbook in one click.",
     "where": "landing action, README, .factory/demo.md",
     "test": "npm run test:e2e -- --grep @claim:one-click-demo",
-    "sandbox": "fresh landing page; activate the visible action once, then assert the demo URL, banner, and three sample records"
+    "sandbox": "fresh landing page; activate the visible action once, then assert the demo URL, banner, and three sample bookmarks"
   },
   {
     "id": "no-account-required",
     "claim": "No account required.",
     "where": "landing facts, README",
     "test": "npm run test:e2e -- --grep @claim:no-account-required",
-    "sandbox": "create and export a demo record without authentication or an external request"
+    "sandbox": "create and export a demo bookmark without authentication or an external request"
   },
   {
     "id": "local-records",
-    "claim": "Capture, search, export, and record storage work locally.",
+    "claim": "Capture, search, export, and bookmark storage work locally.",
     "where": "landing facts, privacy page, README",
     "test": "npm run test:e2e -- --grep @claim:local-records",
-    "sandbox": "create, search, and export a real-workspace record while recording requests"
+    "sandbox": "create, search, and export a bookmark in the real proofbook while recording requests"
   },
   {
     "id": "offline-session",
-    "claim": "The opened workspace keeps working if the connection drops.",
+    "claim": "The opened proofbook keeps working if the connection drops.",
     "where": ".factory/demo.md, README",
     "test": "npm run test:e2e -- --grep @claim:offline-session",
     "sandbox": "open demo first, set the browser offline, then search and export"
   },
   {
     "id": "no-record-sync",
-    "claim": "The companion site does not send your records to a service.",
+    "claim": "The companion site does not send your bookmarks to a service.",
     "where": "privacy page, README, .factory/demo.md",
     "test": "npm run test:e2e -- --grep @claim:no-record-sync",
-    "sandbox": "save a real-workspace record, inspect local storage, and record every request"
+    "sandbox": "save a bookmark in the real proofbook, inspect local storage, and record every request"
   },
   {
     "id": "no-analytics",
@@ -78,24 +78,24 @@
   },
   {
     "id": "extension-local-records",
-    "claim": "The extension stores records in extension local storage.",
+    "claim": "The extension stores bookmarks in extension local storage.",
     "where": "privacy page, README",
     "test": "npm run test:extension -- --grep @claim:extension-local-records",
-    "sandbox": "clean Chromium profile; capture one local fixture record, assert chrome.storage.local contains it, and record no external request"
+    "sandbox": "clean Chromium profile; capture one local fixture bookmark, assert chrome.storage.local contains it, and record no external request"
   },
   {
     "id": "extract-cap",
     "claim": "A saved page extract is capped at 12,000 characters.",
     "where": "landing boundary, README",
     "test": "npm test -- --testNamePattern @claim:extract-cap",
-    "sandbox": "pass 12,500 characters through both HTML extraction and record creation"
+    "sandbox": "pass 12,500 characters through both HTML extraction and bookmark creation"
   },
   {
     "id": "link-check-limit",
     "claim": "The extension contacts saved addresses only after Check links and checks at most 25 at once.",
     "where": "extension, README",
     "test": "npm run test:extension -- --grep @claim:link-check-limit",
-    "sandbox": "clean installed extension with 26 local fixture records; count requests and stored health states"
+    "sandbox": "clean installed extension with 26 local fixture bookmarks; count requests and stored health states"
   },
   {
     "id": "packaged-extension",
@@ -113,17 +113,17 @@
   },
   {
     "id": "reversible-delete",
-    "claim": "Remove a record and undo it immediately.",
+    "claim": "Remove a bookmark and undo it immediately.",
     "where": "privacy page, site and extension controls",
     "test": "npm run test:e2e -- --grep @claim:reversible-delete",
-    "sandbox": "remove a demo record, assert storage-backed count changes, then undo and restore it"
+    "sandbox": "remove a demo bookmark, assert storage-backed count changes, then undo and restore it"
   },
   {
     "id": "http-links-only",
     "claim": "Manual entry accepts only HTTP or HTTPS bookmark addresses.",
-    "where": "workspace URL help",
+    "where": "proofbook URL help",
     "test": "npm run test:e2e -- --grep @claim:http-links-only",
-    "sandbox": "attempt to save a javascript URL and assert focus, validation text, zero records, and empty storage"
+    "sandbox": "attempt to save a javascript URL and assert focus, validation text, zero bookmarks, and empty storage"
   },
   {
     "id": "browser-html-import",

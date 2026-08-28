@@ -1,4 +1,5 @@
 import { EXTRACT_CHARACTER_LIMIT, LINK_CHECK_LIMIT, dedupeBookmarkLinks, exportHtml, exportJson, extractTextFromHtml, hashText, makeRecord, normalizeHttpUrl, recordsForLinkCheck, sampleRecords, searchRecords } from './proofbook';
+import { readFile } from 'node:fs/promises';
 import { describe, expect, it } from 'vitest';
 
 describe('Bookmark Proofbook', () => {
@@ -71,5 +72,14 @@ describe('Bookmark Proofbook', () => {
     expect(normalizeHttpUrl('http://example.com')).toBe('http://example.com/');
     expect(() => normalizeHttpUrl('javascript:alert(1)')).toThrow('http:// or https://');
     expect(() => normalizeHttpUrl('ftp://example.com/file')).toThrow('http:// or https://');
+  });
+
+  it('keeps bookmark terminology consistent in reader-facing copy', async () => {
+    const files = ['site/main.ts', 'entrypoints/popup/main.ts', 'README.md', '.factory/demo.md'];
+    for (const file of files) {
+      const copy = (await readFile(file, 'utf8')).toLowerCase();
+      expect(copy, file).not.toContain('saved evidence');
+      expect(copy, file).not.toContain('workspace');
+    }
   });
 });

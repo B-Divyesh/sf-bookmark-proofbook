@@ -67,6 +67,9 @@ test('@claim:one-click-demo opens the isolated sample proofbook from the landing
   await expect(page.locator('#count')).toHaveText('(3)');
   await expect.poll(() => page.evaluate(() => localStorage.getItem('demo:bookmark-proofbook:records'))).not.toBeNull();
   await expect.poll(() => page.evaluate(() => localStorage.getItem('proofbook:records'))).toBeNull();
+  await page.goBack();
+  await expect(page).toHaveURL('/');
+  await expect.poll(() => page.evaluate(() => localStorage.getItem('demo:bookmark-proofbook:records'))).toBeNull();
 });
 
 test('@claim:local-records captures, searches, and exports without sending records to a service', async ({ page }) => {
@@ -113,6 +116,19 @@ test('@claim:search-saved-context finds demo evidence by a saved reason', async 
   await page.getByLabel('Search your proofbook').fill('keyboard');
   await expect(page.getByRole('heading', { name: 'How to Meet WCAG 2.2' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Appropriate Uses For SQLite' })).toHaveCount(0);
+});
+
+test('uses bookmark consistently for saved items and proofbook for the collection', async ({ page }) => {
+  await page.goto('/demo');
+  await expect(page.getByRole('heading', { name: 'Saved bookmarks (3)' })).toBeVisible();
+  await page.getByLabel('Search your proofbook').fill('no bookmark matches this');
+  await expect(page.getByRole('heading', { name: 'No saved bookmarks match that search' })).toBeVisible();
+  await page.goto('/app');
+  await expect(page.getByRole('heading', { name: 'Your saved bookmarks will appear here' })).toBeVisible();
+  const readme = await readFile('README.md', 'utf8');
+  expect(readme).toContain('an empty proofbook at `/app`');
+  expect(readme.toLowerCase()).not.toContain('workspace');
+  expect(readme.toLowerCase()).not.toContain('saved evidence');
 });
 
 test('@claim:portable-export downloads a readable standalone proofbook', async ({ page }) => {

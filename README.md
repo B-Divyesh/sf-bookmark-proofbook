@@ -7,7 +7,7 @@ Search that context later and export a readable HTML or JSON proofbook.
 
 The Chrome extension captures pages. It reads the active page only after you
 press **Capture this page**. The companion site has an isolated sample at
-`/?demo=1` and a local workspace at `/app`.
+`/?demo=1` and an empty proofbook at `/app`.
 
 ## Run
 
@@ -64,14 +64,14 @@ The repository does not manage DNS, billing, or cloud infrastructure.
 ## Privacy and limits
 
 No account is required for capture, search, or export. The companion site
-stores records in browser local storage and does not send them to a service.
-The companion site does not run analytics. The extension stores records in
+stores bookmarks in browser local storage and does not send them to a service.
+The companion site does not run analytics. The extension stores bookmarks in
 extension local storage.
 
 Each saved page extract is capped at 12,000 characters. The extension contacts
 saved addresses only after you press **Check links**. Each check processes at
-most 25 records. Remove has an immediate undo action in both the site and
-extension. An opened workspace keeps working if the connection drops.
+most 25 bookmarks. Remove has an immediate undo action in both the site and
+extension. An opened proofbook keeps working if the connection drops.
 
 ## License
 
