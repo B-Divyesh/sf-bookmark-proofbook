@@ -1,0 +1,22 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-08-28T23:38:00Z",
+  "url": "https://bookmark-proofbook.sociobot.in",
+  "deployedAsset": "assets/index-BsiikFhk.js",
+  "assetSha256": "bf83057e9373cccd25cb4efba76e135cb2d4d9bba84fa0e823207734d8f63663",
+  "primaryActionBottomAt390x844": 715.203125,
+  "responsiveImage": "/proofbook-hero-600.webp",
+  "axeViolations": {
+    "/": 0,
+    "/demo": 0,
+    "/app": 0,
+    "/privacy": 0,
+    "/terms": 0,
+    "/404": 0
+  },
+  "restoredScrollY": 1100,
+  "extensionZipBytes": 291516,
+  "minimumTouchTargetPx": 44,
+  "externalRequests": 0,
+  "consoleErrors": 0
+}
