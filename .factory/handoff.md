@@ -77,6 +77,18 @@ Completed locally on 2026-08-28 after `npm ci`:
 - Unpacked MV3 extension smoke test against real `example.com`: a stored
   unchanged record checked as `● Reachable when checked`.
 
+## Deployment evidence
+
+Commit `e6adf11c90649507fd4bbed781771b72f668897e` was pushed to `main` and
+`dist/site` was deployed to the `sf-bookmark-proofbook` Static Web App in the
+`sociobot` resource group on 2026-08-28. Live verification at
+`https://bookmark-proofbook.sociobot.in/` returned the repaired
+`/assets/index-CMkrIOXx.js` bundle, no console/page errors, title/lang/one
+h1/main/alt-text checks, and 390px screenshots. The live extension download
+returned 200, `application/zip`, 267,602 bytes; its hashed JavaScript returned
+`Cache-Control: public, max-age=31536000, immutable`. No checkout URL or
+purchase copy is present in the live landing response.
+
 ## Known gap / next step
 
 The product intentionally has no paid checkout until the factory registers a
