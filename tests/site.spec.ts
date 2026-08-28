@@ -170,9 +170,10 @@ test('@claim:reversible-delete removes a record and restores it with undo', asyn
 });
 
 test('has no serious accessibility violations on the demo', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/demo');
   const results = await new AxeBuilder({ page }).analyze();
-  expect(results.violations.filter((item) => ['serious', 'critical'].includes(item.impact || '')).length).toBe(0);
+  expect(results.violations).toEqual([]);
 });
 
 test('has no serious accessibility violations on the landing page', async ({ page }) => {

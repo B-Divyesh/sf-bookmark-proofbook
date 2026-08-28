@@ -508,11 +508,9 @@ summary:focus-visible {
 @keyframes stamp {
   from {
     transform: translateY(-2px);
-    opacity: 0.6;
   }
   to {
     transform: translateY(0);
-    opacity: 1;
   }
 }
 @media (prefers-reduced-motion: reduce) {

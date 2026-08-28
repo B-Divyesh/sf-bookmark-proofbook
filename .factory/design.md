@@ -35,9 +35,9 @@ rules make groups feel like labeled evidence slips instead of SaaS cards.
 
 ## Interaction and motion
 
-The signature motion is a short 180ms "stamp" on saved records: it settles
-down by 2px and becomes opaque. It explains that a note has entered the
-archive. Link health has static text and icons, never color alone. Under
+The signature motion is a short 180ms "stamp" on saved bookmarks: it settles
+down by 2px at full opacity. It explains that a bookmark has entered the
+archive without lowering text contrast. Link health has static text and icons, never color alone. Under
 `prefers-reduced-motion`, transitions are removed and the stamp appears
 instantly.
 
@@ -54,4 +54,3 @@ logos, no people, no brands, no UI screenshot, no gradients.
 Asset provenance: `assets/src/proofbook-hero.png` was generated with the
 factory image deployment on 2026-08-28 from the prompt above. It is original
 product artwork. Optimized WebP is shipped as `public/proofbook-hero.webp`.
-
