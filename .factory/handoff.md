@@ -76,6 +76,10 @@ equivalent completed gate.
 
 Cold live checks confirmed the repaired first screen, `/?demo=1` banner/reset
 path, HTTP 404 response, route metadata, CSP, and only same-origin requests.
+A fresh live browser context also clicked the first-screen demo action, checked
+its three isolated records and discard-on-exit behavior, then verified Back
+restored `scrollY` above 1000 and announced each route. The live extension zip
+returned HTTP 200 as `application/zip` (268,820 bytes).
 
 ## Run and deploy
 

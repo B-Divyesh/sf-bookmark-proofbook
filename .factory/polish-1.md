@@ -48,4 +48,8 @@ and a fresh mobile screenshot confirms the direct `/?demo=1` banner, Reset
 demo, empty-proofbook exit, three sample records, and stacked mobile layout:
 `.factory/evidence/polish-live/demo-mobile.png`. A live Playwright Axe and
 console/request smoke test reported zero serious/critical issues, console
-errors, or third-party requests for all public routes.
+errors, or third-party requests for all public routes. A separate fresh live
+browser check clicked the demo action, verified the isolated three-record
+workspace and exit discard, then confirmed Back restored scroll above 1000 and
+announced the destination route. The live extension download returned HTTP 200
+`application/zip` at 268,820 bytes.
