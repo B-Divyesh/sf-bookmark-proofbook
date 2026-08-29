@@ -1,7 +1,7 @@
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
-  { ignores: ['.output/**', '.wxt/**', 'dist/**', 'node_modules/**', 'test-results/**'] },
+  { ignores: ['.factory/evidence/**', '.output/**', '.wxt/**', 'dist/**', 'node_modules/**', 'test-results/**'] },
   ...tseslint.configs.recommended,
   {
     files: ['**/*.ts'],

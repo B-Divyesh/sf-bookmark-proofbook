@@ -140,7 +140,7 @@ export function parseProofbookJson(value: string): BookmarkRecord[] {
   if (proofbook.version !== 1) return invalidProofbook('this version is not supported.');
   if (!Array.isArray(proofbook.records)) return invalidProofbook('the bookmark list is missing.');
 
-  return proofbook.records.map((item, index) => {
+  const records = proofbook.records.map((item, index) => {
     if (!item || typeof item !== 'object') return invalidProofbook(`bookmark ${index + 1} is incomplete.`);
     const record = item as Partial<BookmarkRecord>;
     const stringFields: Array<keyof BookmarkRecord> = ['id', 'url', 'title', 'reason', 'selectedText', 'extract', 'contentHash', 'createdAt'];
@@ -163,6 +163,8 @@ export function parseProofbookJson(value: string): BookmarkRecord[] {
       contentHash: record.contentHash!, createdAt: record.createdAt!, ...(record.checkedAt ? { checkedAt: record.checkedAt } : {}), health: record.health!,
     };
   });
+  if (new Set(records.map((record) => record.id)).size !== records.length) invalidProofbook('two bookmarks use the same identifier.');
+  return records;
 }
 
 /** Prepare a confirmed, lossless import. Imported URLs replace local versions;
@@ -170,14 +172,15 @@ export function parseProofbookJson(value: string): BookmarkRecord[] {
 export function planProofbookImport(existing: BookmarkRecord[], imported: BookmarkRecord[]): ProofbookImportPlan {
   const seen = new Set<string>();
   const uniqueImported = imported.filter((record) => {
-    if (seen.has(record.url)) return false;
-    seen.add(record.url);
+    const address = normalizeHttpUrl(record.url);
+    if (seen.has(address)) return false;
+    seen.add(address);
     return true;
   });
-  const existingUrls = new Set(existing.map((record) => record.url));
-  const replaced = uniqueImported.filter((record) => existingUrls.has(record.url)).length;
+  const existingUrls = new Set(existing.map((record) => normalizeHttpUrl(record.url)));
+  const replaced = uniqueImported.filter((record) => existingUrls.has(normalizeHttpUrl(record.url))).length;
   const added = uniqueImported.length - replaced;
-  return { records: [...uniqueImported, ...existing.filter((record) => !seen.has(record.url))], added, replaced };
+  return { records: [...uniqueImported, ...existing.filter((record) => !seen.has(normalizeHttpUrl(record.url)))], added, replaced };
 }
 
 export function exportHtml(records: BookmarkRecord[]) {

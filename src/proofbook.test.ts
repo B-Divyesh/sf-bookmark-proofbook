@@ -37,8 +37,11 @@ describe('Bookmark Proofbook', () => {
     expect(plan.added).toBe(2);
     expect(plan.replaced).toBe(1);
     expect(plan.records).toEqual(sampleRecords);
+    const normalizedPlan = planProofbookImport([{ ...sampleRecords[0], url: 'https://example.com/' }], [{ ...sampleRecords[0], url: 'https://example.com' }]);
+    expect(normalizedPlan).toMatchObject({ added: 0, replaced: 1 });
     expect(() => parseProofbookJson('{"format":"Bookmark Proofbook","version":2,"records":[]}')).toThrow('not supported');
     expect(() => parseProofbookJson('{"format":"Bookmark Proofbook","version":1,"records":[{"url":"javascript:alert(1)"}]}')).toThrow('missing field');
+    expect(() => parseProofbookJson(JSON.stringify({ format: 'Bookmark Proofbook', version: 1, records: [sampleRecords[0], sampleRecords[0]] }))).toThrow('same identifier');
   });
 
   it('@claim:evidence-hash keeps evidence hashes stable for a stored extract', () => {
