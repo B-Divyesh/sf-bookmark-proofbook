@@ -1,6 +1,23 @@
-# Bookmark Proofbook — polish 3 handoff
+# Bookmark Proofbook — review 4 handoff
 
-## Outcome
+## Review 4 status
+
+Reviewer-only work completed at 200f0c429fb1b1ca6431ade6ec7b083eb391cd46.
+No product source was changed. .factory/review-4.md records a **FAIL** with
+one minor finding: at 390 × 844, only the first of the three plain
+privacy/local/export fact lines is visible on the initial landing screen.
+
+Verification from a clean clone passed every exact claim command (**21/21**),
+lint, typecheck, Vitest (**12/12**), site Playwright (**30/30**), extension
+Playwright (**6/6**), build, and production-dependency audit. Fresh live
+mobile and desktop checks also covered the demo sandbox, privacy request log,
+offline session, routes, metadata, link crawl, and history focus/scroll.
+
+**Next step:** compact or reposition the mobile hero so all three fact lines
+appear at 390 × 844, then add a viewport regression. No earlier finding was
+found unfixed.
+
+## Previous release handoff
 
 Released repair commit: `05d8eccc234146b95e5f6016525ff301daed4f09`.
 It is pushed to `main` and deployed through the Static Web Apps work order to
