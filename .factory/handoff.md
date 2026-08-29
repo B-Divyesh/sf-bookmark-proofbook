@@ -1,36 +1,72 @@
-# Bookmark Proofbook review 3 handoff
+# Bookmark Proofbook — polish 3 handoff
 
 ## Outcome
 
-Adversarial review 3 is complete and recorded in `.factory/review-3.md`.
-Verdict: **FAIL** with one blocking, one high, three medium, and two minor
-findings. Product code was not modified.
+Released repair commit: `8f015cc3b32b9db842d70a68735f02dc93d93e44`.
+It is pushed to `main` and deployed through the Static Web Apps work order to
+<https://bookmark-proofbook.sociobot.in>.
 
-The blocking issue is demo presentation: after one-click entry, the first
-sample bookmark begins at y=1640 on 390 × 844 and y=1242 on 1440 × 900, so no
-realistic sample data appears in either initial viewport.
+All findings in `.factory/review-1.md`, `.factory/review-2.md`, and
+`.factory/review-3.md` are repaired. The full finding-to-evidence mapping is
+in `.factory/polish-3.md`.
 
-## Verification performed
+## What changed
 
-- Opened production cold in fresh 390 × 844 and 1440 × 900 Chromium contexts.
-- Exercised demo entry, mutation, Reset, offline search/export, exit, and real
-  data preservation with a same-origin request log.
-- Ran every exact `.factory/claims.json` command from a separate clean clone:
-  20/20 passed.
-- Crawled all site, download, and sample-source links: all returned 200; the
-  designed unknown route returned 404.
-- Checked route metadata, h1 count, landmarks, focus, polite announcements,
-  Back scroll restoration, headers, sitemap, and mobile overflow.
-- Ran live Axe on `/`, `/demo`, `/app`, `/privacy`, `/terms`, and the 404: zero
-  violations. `/opt/fleet/lib/verify-url.sh` passed production.
-- Ran `npm run lint`, `npm run typecheck`, `npm test` (11/11),
-  `npm run test:e2e` (28/28), `npm run test:extension` (5/5), and
-  `npm run build`: all passed.
-- Rechecked every finding from reviews 1 and 2 against production and source;
-  all stated earlier defects remain fixed.
+- Reworked the isolated demo so sample bookmarks appear in the first viewport;
+  the capture form and archive controls follow the seeded proofbook.
+- Added lossless, confirmed, versioned Bookmark Proofbook JSON restore to the
+  static site and Chrome extension. It validates input, previews added and
+  replaced bookmarks, preserves every field, and keeps all work local.
+- Corrected first-screen and boundary wording, consistent bookmark terms, and
+  the demo exit action for returning visitors.
+- Added route-complete Twitter images and completed the 404 canonical/OG
+  metadata.
+- Added claim and regression coverage for visible demo data, cross-surface JSON
+  restore, truthful demo exit, metadata, and terminology.
 
-## Remaining work
+## How to run and verify
 
-Resolve F-3-1 through F-3-7 in `.factory/review-3.md`, add the specified
-regressions, and repeat the cold review and clean-clone claim run. No deploy was
-performed during this review.
+```sh
+npm ci
+npm run lint
+npm run typecheck
+npm test
+npm run test:e2e
+npm run test:extension
+npm run build
+npm audit --omit=dev
+```
+
+Run every exact public claim command in `.factory/claims.json`. The demo is
+available at `/?demo=1` or `/demo`; **Reset demo** recreates the sample and
+**Open my proofbook** discards only demo data.
+
+## Exact evidence
+
+- Clean detached clone at `8f015cc`: `npm ci`; all **21/21** claim commands;
+  lint; typecheck; Vitest **12/12**; Playwright site **30/30**; installed MV3
+  extension **6/6**; build; and production-dependency audit all passed.
+- Local factory URL check: `.factory/evidence/polish-3-local/verify/verify.json`
+  reports `lang=en`, one h1, one main landmark, no missing alt text, no unnamed
+  buttons, and no browser/page errors.
+- Live factory URL check: `.factory/evidence/polish-3-live/verify/verify.json`
+  has the same clean result. Live Axe across `/`, `/demo`, `/app`, `/privacy`,
+  `/terms`, and the designed 404 is zero violations in
+  `.factory/evidence/polish-3-live/axe-live.json`.
+- Cold live route/demo/import/metadata/404 assertions are in
+  `.factory/evidence/polish-3-live/live-check.json`; mobile evidence is
+  `landing-mobile.png` and `demo-mobile.png`.
+- Live Lighthouse mobile: Performance **100**, Accessibility **100**, Best
+  Practices **100**, SEO **100**; LCP **1,401.871 ms**, TBT **0 ms**, CLS **0**
+  (`.factory/evidence/polish-3-live/lighthouse.json`).
+- Built initial JavaScript is 22.66 KB raw / 8.10 KB gzip; CSS is 8.43 KB raw /
+  2.58 KB gzip. The responsive hero remains below the 300 KB mobile budget.
+  The production JavaScript is byte-identical to the local build (SHA-256
+  `7d4d4bfc4afb614d29af1d870594adf1c8a9fbd4d18f2e6025fbda468ab545be`).
+
+## Known gaps and next steps
+
+None. Cold offline reload is intentionally not claimed because the static site
+does not register a service worker; an already opened proofbook remains usable
+when the connection drops, as tested. There is no paid tier or checkout to
+advertise until the factory registers a Sociobot license product.
