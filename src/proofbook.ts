@@ -15,6 +15,19 @@ export interface BookmarkRecord {
   health: Health;
 }
 
+export interface ProofbookExport {
+  format: 'Bookmark Proofbook';
+  version: 1;
+  exportedAt: string;
+  records: BookmarkRecord[];
+}
+
+export interface ProofbookImportPlan {
+  records: BookmarkRecord[];
+  added: number;
+  replaced: number;
+}
+
 export const sampleRecords: BookmarkRecord[] = [
   {
     id: 'sample-sqlite', url: 'https://www.sqlite.org/whentouse.html', title: 'Appropriate Uses For SQLite',
@@ -101,7 +114,70 @@ export function recordsForLinkCheck(records: BookmarkRecord[]) {
 }
 
 export function exportJson(records: BookmarkRecord[]) {
-  return JSON.stringify({ format: 'Bookmark Proofbook', version: 1, exportedAt: new Date().toISOString(), records }, null, 2);
+  const proofbook: ProofbookExport = { format: 'Bookmark Proofbook', version: 1, exportedAt: new Date().toISOString(), records };
+  return JSON.stringify(proofbook, null, 2);
+}
+
+function invalidProofbook(message: string): never {
+  throw new TypeError(`This is not a valid Bookmark Proofbook JSON file: ${message}`);
+}
+
+/**
+ * Parse the product's own versioned backup format without changing any saved
+ * bookmark fields. Browser-bookmark HTML is intentionally handled separately:
+ * it contains only links and titles, while this format is a lossless backup.
+ */
+export function parseProofbookJson(value: string): BookmarkRecord[] {
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(value);
+  } catch {
+    return invalidProofbook('the file is not JSON.');
+  }
+  if (!parsed || typeof parsed !== 'object') return invalidProofbook('the top level is missing.');
+  const proofbook = parsed as Partial<ProofbookExport>;
+  if (proofbook.format !== 'Bookmark Proofbook') return invalidProofbook('the format name is missing.');
+  if (proofbook.version !== 1) return invalidProofbook('this version is not supported.');
+  if (!Array.isArray(proofbook.records)) return invalidProofbook('the bookmark list is missing.');
+
+  return proofbook.records.map((item, index) => {
+    if (!item || typeof item !== 'object') return invalidProofbook(`bookmark ${index + 1} is incomplete.`);
+    const record = item as Partial<BookmarkRecord>;
+    const stringFields: Array<keyof BookmarkRecord> = ['id', 'url', 'title', 'reason', 'selectedText', 'extract', 'contentHash', 'createdAt'];
+    if (stringFields.some((field) => typeof record[field] !== 'string')) return invalidProofbook(`bookmark ${index + 1} has a missing field.`);
+    if (!record.id || record.id.length > 200 || record.title!.length > 300 || record.reason!.length > 2000 || record.selectedText!.length > 3000 || record.extract!.length > EXTRACT_CHARACTER_LIMIT) {
+      return invalidProofbook(`bookmark ${index + 1} has invalid text lengths.`);
+    }
+    try {
+      normalizeHttpUrl(record.url!);
+    } catch {
+      return invalidProofbook(`bookmark ${index + 1} does not have an HTTP or HTTPS address.`);
+    }
+    if (!/^[a-f0-9]{8}$/.test(record.contentHash!)) return invalidProofbook(`bookmark ${index + 1} has an invalid extract code.`);
+    if (Number.isNaN(Date.parse(record.createdAt!)) || (record.checkedAt !== undefined && (typeof record.checkedAt !== 'string' || Number.isNaN(Date.parse(record.checkedAt))))) {
+      return invalidProofbook(`bookmark ${index + 1} has an invalid date.`);
+    }
+    if (!['unchecked', 'alive', 'changed', 'unreachable'].includes(record.health || '')) return invalidProofbook(`bookmark ${index + 1} has an invalid link status.`);
+    return {
+      id: record.id!, url: record.url!, title: record.title!, reason: record.reason!, selectedText: record.selectedText!, extract: record.extract!,
+      contentHash: record.contentHash!, createdAt: record.createdAt!, ...(record.checkedAt ? { checkedAt: record.checkedAt } : {}), health: record.health!,
+    };
+  });
+}
+
+/** Prepare a confirmed, lossless import. Imported URLs replace local versions;
+ * other local bookmarks remain in place. Repeated URLs in a backup are ignored. */
+export function planProofbookImport(existing: BookmarkRecord[], imported: BookmarkRecord[]): ProofbookImportPlan {
+  const seen = new Set<string>();
+  const uniqueImported = imported.filter((record) => {
+    if (seen.has(record.url)) return false;
+    seen.add(record.url);
+    return true;
+  });
+  const existingUrls = new Set(existing.map((record) => record.url));
+  const replaced = uniqueImported.filter((record) => existingUrls.has(record.url)).length;
+  const added = uniqueImported.length - replaced;
+  return { records: [...uniqueImported, ...existing.filter((record) => !seen.has(record.url))], added, replaced };
 }
 
 export function exportHtml(records: BookmarkRecord[]) {

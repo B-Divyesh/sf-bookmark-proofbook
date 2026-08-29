@@ -368,6 +368,52 @@ details summary {
   flex-wrap: wrap;
   justify-content: flex-end;
 }
+.import-preview {
+  margin-top: 20px;
+  padding: 16px;
+  border: var(--rule);
+  background: var(--paper);
+}
+.import-preview p {
+  margin-top: 0;
+  max-width: 760px;
+}
+.import-preview .text-button {
+  margin-left: 8px;
+}
+.app-secondary {
+  margin-top: 32px;
+}
+.app-secondary > .toolbar {
+  justify-content: flex-start;
+}
+.demo-workbench {
+  padding-top: 20px;
+}
+.demo-workbench .workhead {
+  align-items: start;
+  padding-bottom: 16px;
+}
+.demo-workbench .workhead h1 {
+  font-size: clamp(38px, 4vw, 56px);
+}
+.demo-workbench .library {
+  padding-top: 24px;
+}
+.demo-workbench .library-head > div > p {
+  margin: 8px 0 0;
+}
+.demo-workbench .record {
+  padding: 14px;
+  margin-bottom: 12px;
+}
+.demo-workbench .record p {
+  margin: 7px 0;
+}
+.demo-workbench .record blockquote {
+  margin: 10px 0;
+  padding: 8px 12px;
+}
 .capture {
   margin-top: 32px;
   padding: 24px;
@@ -569,6 +615,15 @@ summary:focus-visible {
   .toolbar {
     margin-top: 20px;
     justify-content: flex-start;
+  }
+  .demo-workbench .library-head {
+    display: block;
+  }
+  .demo-workbench .search-label {
+    margin-top: 12px;
+  }
+  .import-preview .text-button {
+    margin-left: 0;
   }
   form {
     grid-template-columns: 1fr;

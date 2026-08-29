@@ -1,5 +1,5 @@
 import './styles.css';
-import { exportHtml, exportJson, hashText, makeRecord, normalizeHttpUrl, parseBookmarksHtml, sampleRecords, searchRecords, type BookmarkRecord } from '../src/proofbook';
+import { exportHtml, exportJson, hashText, makeRecord, normalizeHttpUrl, parseBookmarksHtml, parseProofbookJson, planProofbookImport, sampleRecords, searchRecords, type BookmarkRecord } from '../src/proofbook';
 
 const APP = document.querySelector<HTMLDivElement>('#app')!;
 const isDemoRoute = () => location.pathname === '/demo' || new URLSearchParams(location.search).get('demo') === '1';
@@ -9,6 +9,7 @@ const REAL_STORE_KEY = 'proofbook:records';
 const storeKey = () => isDemoRoute() ? DEMO_STORE_KEY : REAL_STORE_KEY;
 let live: BookmarkRecord[] = [];
 let removedRecord: { record: BookmarkRecord; index: number } | undefined;
+let pendingJsonImport: BookmarkRecord[] | undefined;
 let renderedDemo = isDemoRoute();
 
 type RouteMeta = { title: string; description: string; canonicalPath: string; announcement: string };
@@ -52,21 +53,37 @@ function footer() { return `<footer><p>Bookmark Proofbook keeps the reason besid
 function landing() {
   setMetadata();
   APP.innerHTML = `${header()}<main id="main" tabindex="-1">
-    <section class="hero" aria-labelledby="home-title"><div class="hero-copy"><p class="eyebrow">LOCAL BOOKMARK TOOL</p><h1 id="home-title">Save why each link mattered</h1><p class="lede">For people with too many bookmarks to remember, save context and find the resource again.</p><div class="actions"><a class="button moss" href="/?demo=1" data-nav>Try it with sample data</a><span>Opens a sample proofbook with three saved notes.</span></div><ul class="facts"><li>No account required.</li><li>Capture, search, and export work locally.</li><li>Export a readable HTML proofbook.</li></ul><p><a href="#install">Install the browser extension</a></p></div><figure><img src="/proofbook-hero.webp" srcset="/proofbook-hero-600.webp 600w, /proofbook-hero.webp 1200w" sizes="(max-width: 700px) calc(100vw - 32px), 50vw" width="1200" height="800" fetchpriority="high" decoding="async" alt="An archive box of research slips beside moss growing through concrete."/></figure></section>
+    <section class="hero" aria-labelledby="home-title"><div class="hero-copy"><p class="eyebrow">LOCAL BOOKMARK TOOL</p><h1 id="home-title">Save why each link mattered</h1><p class="lede">For people with too many bookmarks to remember, save context and find the resource again.</p><div class="actions"><a class="button moss" href="/?demo=1" data-nav>Try it with sample data</a><span>Opens a sample proofbook with three bookmarks.</span></div><ul class="facts"><li>No account required.</li><li>Capture, search, and export work locally.</li><li>Export a readable HTML proofbook.</li></ul><p><a href="#install">Install the browser extension</a></p></div><figure><img src="/proofbook-hero.webp" srcset="/proofbook-hero-600.webp 600w, /proofbook-hero.webp 1200w" sizes="(max-width: 700px) calc(100vw - 32px), 50vw" width="1200" height="800" fetchpriority="high" decoding="async" alt="An archive box of research slips beside moss growing through concrete."/></figure></section>
     <section class="preview" aria-labelledby="preview-title"><div><p class="eyebrow">BOOKMARK DETAILS</p><h2 id="preview-title">What each bookmark keeps</h2><p>Each bookmark stores your reason, selected words, and a small page extract. It also stores a code that identifies that extract.</p></div><article class="record paper"><p class="status alive">● Checked once</p><h3>Appropriate Uses For SQLite</h3><p><strong>Why I saved it:</strong> Decide when a small local database is the sensible choice.</p><blockquote>SQLite is not directly comparable to client/server SQL database engines.</blockquote><code>extract code · 4fa1c0e7</code></article></section>
-    <section class="how" aria-labelledby="how-title"><p class="eyebrow">THREE STEPS</p><h2 id="how-title">How Bookmark Proofbook works</h2><ol><li><strong>Capture a link.</strong><span>Write why it matters while you still know.</span></li><li><strong>Search your words.</strong><span>Find a source by the reason or extract you saved.</span></li><li><strong>Export your proofbook.</strong><span>Keep a self-contained file you can open anywhere.</span></li></ol></section>
-    <section class="boundary" aria-labelledby="boundary-title"><h2 id="boundary-title">What it does not do</h2><p>It stores a text extract of up to 12,000 characters.</p></section>
+    <section class="how" aria-labelledby="how-title"><p class="eyebrow">THREE STEPS</p><h2 id="how-title">How Bookmark Proofbook works</h2><ol><li><strong>Capture a link.</strong><span>Write why it matters while you still know.</span></li><li><strong>Search your words.</strong><span>Find a source by the reason or extract you saved.</span></li><li><strong>Export your proofbook.</strong><span>Export a readable HTML proofbook.</span></li></ol></section>
+    <section class="boundary" aria-labelledby="boundary-title"><h2 id="boundary-title">Saved extract limit</h2><p>It stores a text extract of up to 12,000 characters.</p></section>
     <section class="install" id="install" aria-labelledby="install-title"><p class="eyebrow">CHROME OR EDGE</p><h2 id="install-title">Install the browser extension</h2><ol><li><a class="button moss" href="/downloads/bookmark-proofbook-extension.zip" download>Download the extension zip</a></li><li>Extract the zip to a folder you can keep.</li><li>Open <code>chrome://extensions</code> or <code>edge://extensions</code> and turn on Developer mode.</li><li>Choose <strong>Load unpacked</strong>, then select the extracted folder.</li></ol><p class="quiet">Keep the folder after installation.</p></section>
   </main>${footer()}`;
+}
+
+function appControls() {
+  return `<div class="toolbar"><button class="button outline" id="import-html">Import browser HTML</button><input id="html-file" type="file" accept="text/html,.html" hidden><button class="button outline" id="import-json">Import proofbook JSON</button><input id="json-file" type="file" accept="application/json,.json" hidden><button class="button outline" id="export-json">Export JSON</button><button class="button moss" id="export-html">Export HTML</button></div>`;
+}
+
+function importPreview() {
+  return '<section class="import-preview" id="json-import-preview" aria-live="polite" aria-atomic="true" hidden></section>';
+}
+
+function captureSection() {
+  return `<section class="capture" aria-labelledby="capture-title"><h2 id="capture-title">Add a bookmark</h2><form id="capture-form"><label>Page URL<input required name="url" type="url" inputmode="url" placeholder="https://example.com/article" aria-describedby="url-help" /><span class="field-help" id="url-help">Use an address that starts with http:// or https://.</span></label><label>Page title<input required name="title" maxlength="300" placeholder="A title you will recognise" /></label><label>Why did this matter?<textarea required name="reason" maxlength="2000" placeholder="Write the reason you expect to forget."></textarea></label><label>Selected words <textarea name="selectedText" maxlength="3000" placeholder="Optional: quote the part that made you save it."></textarea></label><label>Small page extract <textarea name="extract" maxlength="12000" placeholder="Optional: a short extract. The extension fills this for you."></textarea></label><button class="button moss" type="submit">Save this bookmark</button><p id="form-message" role="status" aria-live="polite"></p></form></section>`;
+}
+
+function librarySection(demo = false) {
+  return `<section class="library" aria-labelledby="library-title"><div class="library-head"><div><h2 id="library-title">Saved bookmarks <span id="count" aria-live="polite" aria-atomic="true"></span></h2>${demo ? '' : '<p>Each bookmark keeps its original address and a small local extract.</p>'}</div><label class="search-label">Search your proofbook<input id="search" type="search" placeholder="Try “keyboard” or “database”" autofocus></label></div><div id="records"></div></section>`;
 }
 
 function appView() {
   setMetadata(); load();
   const demo = isDemoRoute();
-  APP.innerHTML = `${header()}${demo ? `<aside class="demo-banner" aria-label="Demo controls"><strong>Demo — sample data, nothing is saved.</strong><button id="reset-demo">Reset demo</button><a href="/app" data-nav>Open my empty proofbook</a></aside>` : ''}<main id="main" tabindex="-1" class="workbench"><section class="workhead"><div><p class="eyebrow">${demo ? 'SAMPLE PROOFBOOK' : 'MY PROOFBOOK'}</p><h1>${demo ? 'Find a saved reason' : 'Start your proofbook'}</h1><p>${demo ? 'Search the note you wrote, not only the page title.' : 'Add a bookmark from the extension, or enter one here.'}</p></div><div class="toolbar"><button class="button outline" id="import-html">Import browser HTML</button><input id="html-file" type="file" accept="text/html,.html" hidden><button class="button outline" id="export-json">Export JSON</button><button class="button moss" id="export-html">Export HTML</button></div></section>
-  <section class="capture" aria-labelledby="capture-title"><h2 id="capture-title">Add a bookmark</h2><form id="capture-form"><label>Page URL<input required name="url" type="url" inputmode="url" placeholder="https://example.com/article" aria-describedby="url-help" /><span class="field-help" id="url-help">Use an address that starts with http:// or https://.</span></label><label>Page title<input required name="title" maxlength="300" placeholder="A title you will recognise" /></label><label>Why did this matter?<textarea required name="reason" maxlength="2000" placeholder="Write the reason you expect to forget."></textarea></label><label>Selected words <textarea name="selectedText" maxlength="3000" placeholder="Optional: quote the part that made you save it."></textarea></label><label>Small page extract <textarea name="extract" maxlength="12000" placeholder="Optional: a short extract. The extension fills this for you."></textarea></label><button class="button moss" type="submit">Save this bookmark</button><p id="form-message" role="status" aria-live="polite"></p></form></section>
-  <section class="library" aria-labelledby="library-title"><div class="library-head"><div><h2 id="library-title">Saved bookmarks <span id="count" aria-live="polite" aria-atomic="true"></span></h2><p>Each bookmark keeps its original address and a small local extract.</p></div><label class="search-label">Search your proofbook<input id="search" type="search" placeholder="Try “keyboard” or “database”" autofocus></label></div><div id="records"></div></section>
-  <div class="action-message" id="action-message" role="status" aria-live="polite"></div></main>${footer()}`;
+  const heading = `<div><p class="eyebrow">${demo ? 'SAMPLE PROOFBOOK' : 'MY PROOFBOOK'}</p><h1>${demo ? 'Find a saved reason' : 'Start your proofbook'}</h1>${demo ? '' : '<p>Add a bookmark from the extension, or enter one here.</p>'}</div>`;
+  const workhead = `<section class="workhead">${heading}${demo ? '' : appControls()}</section>`;
+  const secondary = `<div class="app-secondary">${appControls()}${importPreview()}${captureSection()}</div>`;
+  APP.innerHTML = `${header()}${demo ? `<aside class="demo-banner" aria-label="Demo controls"><strong>Demo — sample data, nothing is saved.</strong><button id="reset-demo">Reset demo</button><a href="/app" data-nav>Open my proofbook</a></aside>` : ''}<main id="main" tabindex="-1" class="workbench${demo ? ' demo-workbench' : ''}">${demo ? `${workhead}${librarySection(true)}${secondary}` : `${workhead}${importPreview()}${captureSection()}${librarySection()}`}<div class="action-message" id="action-message" role="status" aria-live="polite"></div></main>${footer()}`;
   wireApp();
 }
 
@@ -109,7 +126,38 @@ function wireApp() {
   document.querySelector('#export-html')?.addEventListener('click', () => download('bookmark-proofbook.html', exportHtml(live), 'text/html'));
   document.querySelector('#import-html')?.addEventListener('click', () => (document.querySelector('#html-file') as HTMLInputElement).click());
   document.querySelector('#html-file')?.addEventListener('change', async (e) => { const file = (e.target as HTMLInputElement).files?.[0]; if (!file) return; const links = parseBookmarksHtml(await file.text()); const existing = new Set(live.map((r) => r.url)); const added = links.filter((link) => !existing.has(link.url)).map((link) => makeRecord({ ...link, reason: 'Imported from browser bookmarks. Add why this link matters.', selectedText: '', extract: '' })); live = [...added, ...live]; save(); document.querySelector('#form-message')!.textContent = `Imported ${added.length} bookmarks. Add a reason when you revisit one.`; renderRecords(); });
-  document.querySelector('#reset-demo')?.addEventListener('click', () => { localStorage.removeItem('demo:bookmark-proofbook:records'); load(); render(); });
+  document.querySelector('#import-json')?.addEventListener('click', () => (document.querySelector('#json-file') as HTMLInputElement).click());
+  document.querySelector('#json-file')?.addEventListener('change', async (e) => {
+    const input = e.target as HTMLInputElement;
+    const file = input.files?.[0];
+    if (!file) return;
+    const preview = document.querySelector<HTMLElement>('#json-import-preview')!;
+    try {
+      pendingJsonImport = parseProofbookJson(await file.text());
+      const plan = planProofbookImport(live, pendingJsonImport);
+      preview.hidden = false;
+      preview.innerHTML = `<p>Ready to import ${pendingJsonImport.length} bookmarks: ${plan.added} added and ${plan.replaced} replaced. Existing bookmarks with the same address will be replaced.</p><button class="button moss" id="confirm-json-import">Import ${pendingJsonImport.length} bookmarks</button><button class="text-button" id="cancel-json-import">Cancel</button>`;
+      document.querySelector('#confirm-json-import')?.addEventListener('click', () => {
+        if (!pendingJsonImport) return;
+        const confirmed = planProofbookImport(live, pendingJsonImport);
+        live = confirmed.records;
+        save();
+        pendingJsonImport = undefined;
+        preview.hidden = true;
+        preview.textContent = '';
+        document.querySelector('#form-message')!.textContent = `Imported ${confirmed.added} bookmarks and replaced ${confirmed.replaced}.`;
+        renderRecords();
+      });
+      document.querySelector('#cancel-json-import')?.addEventListener('click', () => { pendingJsonImport = undefined; preview.hidden = true; preview.textContent = ''; });
+    } catch (error) {
+      pendingJsonImport = undefined;
+      preview.hidden = false;
+      preview.textContent = error instanceof Error ? error.message : 'Could not read that proofbook JSON file.';
+    } finally {
+      input.value = '';
+    }
+  });
+  document.querySelector('#reset-demo')?.addEventListener('click', () => { pendingJsonImport = undefined; localStorage.removeItem('demo:bookmark-proofbook:records'); load(); render(); });
 }
 function legal(kind: 'privacy' | 'terms') { const privacy = kind === 'privacy'; setMetadata(); APP.innerHTML = `${header()}<main id="main" tabindex="-1" class="legal"><p class="eyebrow">${privacy ? 'PRIVACY' : 'TERMS'}</p><h1>${privacy ? 'Privacy for saved bookmarks' : 'Terms for Bookmark Proofbook'}</h1>${privacy ? `<p>The companion site stores bookmarks in browser local storage. The extension stores bookmarks in extension local storage.</p><p>The companion site does not run analytics or send your bookmarks to a service.</p><h2>What you control</h2><p>You can export bookmarks. Remove has an immediate undo action.</p><h2>Contact</h2><p>Email privacy@sociobot.in for privacy questions.</p>` : `<p>Bookmark Proofbook stores your bookmarks on this device.</p><h2>No warranty</h2><p>Links can change or disappear. Keep an exported proofbook as a copy.</p>`}</main>${footer()}`; }
 function notFound() { setMetadata(); APP.innerHTML = `${header()}<main id="main" tabindex="-1" class="legal"><p class="eyebrow">404</p><h1>This page is not in the proofbook</h1><p>The requested address does not exist.</p><a class="button moss" href="/" data-nav>Return home</a></main>${footer()}`; }

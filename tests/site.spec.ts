@@ -1,6 +1,7 @@
 import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { readFile } from 'node:fs/promises';
+import { exportJson, sampleRecords } from '../src/proofbook';
 
 function recordExternalRequests(page: import('@playwright/test').Page) {
   const external: string[] = [];
@@ -22,7 +23,7 @@ test('@claim:demo-namespace loads an isolated sample workspace without external 
   await expect(page.locator('#count')).toHaveText('(2)');
   await page.getByRole('button', { name: 'Reset demo' }).click();
   await expect(page.locator('#count')).toHaveText('(3)');
-  await page.getByRole('link', { name: 'Open my empty proofbook' }).click();
+  await page.getByRole('link', { name: 'Open my proofbook' }).click();
   await expect(page).toHaveURL('/app');
   await expect.poll(() => page.evaluate(() => localStorage.getItem('demo:bookmark-proofbook:records'))).toBeNull();
   await expect.poll(() => page.evaluate(() => localStorage.getItem('proofbook:records'))).toBeNull();
@@ -60,11 +61,17 @@ test('@claim:save-bookmark-context stores the reason, selected words, extract, a
 });
 
 test('@claim:one-click-demo opens the isolated sample proofbook from the landing page', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');
   await page.getByRole('link', { name: 'Try it with sample data' }).click();
   await expect(page).toHaveURL('/?demo=1');
   await expect(page.getByText('Demo — sample data, nothing is saved.')).toBeVisible();
   await expect(page.locator('#count')).toHaveText('(3)');
+  const firstSample = page.locator('article[data-id="sample-sqlite"]');
+  const box = await firstSample.boundingBox();
+  expect(box).not.toBeNull();
+  expect(box!.y).toBeLessThan(844);
+  expect(box!.y + box!.height).toBeGreaterThan(0);
   await expect.poll(() => page.evaluate(() => localStorage.getItem('demo:bookmark-proofbook:records'))).not.toBeNull();
   await expect.poll(() => page.evaluate(() => localStorage.getItem('proofbook:records'))).toBeNull();
   await page.goBack();
@@ -126,9 +133,10 @@ test('uses bookmark consistently for saved items and proofbook for the collectio
   await page.goto('/app');
   await expect(page.getByRole('heading', { name: 'Your saved bookmarks will appear here' })).toBeVisible();
   const readme = await readFile('README.md', 'utf8');
-  expect(readme).toContain('an empty proofbook at `/app`');
+  expect(readme).toContain('your proofbook at `/app`');
   expect(readme.toLowerCase()).not.toContain('workspace');
   expect(readme.toLowerCase()).not.toContain('saved evidence');
+  expect(readme.toLowerCase()).not.toContain('saved notes');
 });
 
 test('@claim:portable-export downloads a readable standalone proofbook', async ({ page }) => {
@@ -262,6 +270,7 @@ test('publishes route-specific metadata and returns a real 404 response', async 
     await expect(page.locator('meta[name="twitter:title"]')).toHaveAttribute('content', title);
     await expect(page.locator('meta[property="og:description"]')).not.toHaveAttribute('content', '');
     await expect(page.locator('meta[name="twitter:description"]')).not.toHaveAttribute('content', '');
+    await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute('content', 'https://bookmark-proofbook.sociobot.in/social-preview.webp');
   }
   expect((await page.request.get('/missing-proofbook-page')).status()).toBe(404);
   const response = await page.goto('/missing-proofbook-page');
@@ -269,9 +278,13 @@ test('publishes route-specific metadata and returns a real 404 response', async 
   await expect(page.getByRole('heading', { name: 'This page is not in the proofbook' })).toBeVisible();
   await expect(page).toHaveTitle('Page not found — Bookmark Proofbook');
   await expect(page.locator('link[rel="icon"]')).toHaveAttribute('href', '/favicon.svg');
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://bookmark-proofbook.sociobot.in/404');
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex');
   await expect(page.locator('meta[property="og:title"]')).toHaveAttribute('content', 'Page not found — Bookmark Proofbook');
+  await expect(page.locator('meta[property="og:url"]')).toHaveAttribute('content', 'https://bookmark-proofbook.sociobot.in/404');
   await expect(page.locator('meta[name="twitter:title"]')).toHaveAttribute('content', 'Page not found — Bookmark Proofbook');
+  await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute('content', 'https://bookmark-proofbook.sociobot.in/social-preview.webp');
+  expect((await page.request.get('/social-preview.webp')).status()).toBe(200);
 });
 
 test('restores scroll and announces the new route after back navigation', async ({ page }) => {
@@ -302,6 +315,30 @@ test('@claim:browser-html-import imports unique HTTP(S) bookmarks and rejects un
   });
   await expect(page.locator('#count')).toHaveText('(2)');
   await expect(page.locator('#form-message')).toHaveText('Imported 2 bookmarks. Add a reason when you revisit one.');
+});
+
+test('imports a versioned proofbook JSON file after showing additions and replacements', async ({ page }) => {
+  await page.goto('/app');
+  await page.locator('#json-file').setInputFiles({
+    name: 'bookmark-proofbook.json',
+    mimeType: 'application/json',
+    buffer: Buffer.from(exportJson(sampleRecords)),
+  });
+  await expect(page.locator('#json-import-preview')).toContainText('Ready to import 3 bookmarks: 3 added and 0 replaced.');
+  await page.getByRole('button', { name: 'Import 3 bookmarks' }).click();
+  await expect(page.locator('#count')).toHaveText('(3)');
+  expect(JSON.parse(await page.evaluate(() => localStorage.getItem('proofbook:records') || '[]'))).toEqual(sampleRecords);
+});
+
+test('keeps real bookmarks and names the real destination correctly when leaving demo', async ({ page }) => {
+  await page.goto('/app');
+  await page.evaluate((records) => localStorage.setItem('proofbook:records', JSON.stringify(records)), [sampleRecords[1]]);
+  await page.goto('/demo');
+  await expect(page.getByRole('link', { name: 'Open my proofbook' })).toBeVisible();
+  await page.getByRole('link', { name: 'Open my proofbook' }).click();
+  await expect(page).toHaveURL('/app');
+  await expect(page.getByRole('heading', { name: 'How to Meet WCAG 2.2' })).toBeVisible();
+  expect(JSON.parse(await page.evaluate(() => localStorage.getItem('proofbook:records') || '[]'))).toEqual([sampleRecords[1]]);
 });
 
 test('ships immutable caching for hashed assets without making the extension download immutable', async ({ page }) => {

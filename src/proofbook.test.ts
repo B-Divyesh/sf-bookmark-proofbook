@@ -1,4 +1,4 @@
-import { EXTRACT_CHARACTER_LIMIT, LINK_CHECK_LIMIT, dedupeBookmarkLinks, exportHtml, exportJson, extractTextFromHtml, hashText, makeRecord, normalizeHttpUrl, recordsForLinkCheck, sampleRecords, searchRecords } from './proofbook';
+import { EXTRACT_CHARACTER_LIMIT, LINK_CHECK_LIMIT, dedupeBookmarkLinks, exportHtml, exportJson, extractTextFromHtml, hashText, makeRecord, normalizeHttpUrl, parseProofbookJson, planProofbookImport, recordsForLinkCheck, sampleRecords, searchRecords } from './proofbook';
 import { readFile } from 'node:fs/promises';
 import { describe, expect, it } from 'vitest';
 
@@ -28,6 +28,17 @@ describe('Bookmark Proofbook', () => {
     const output = exportJson(sampleRecords);
     expect(output).toContain('Bookmark Proofbook');
     expect(globalThis.fetch).toBe(before);
+  });
+
+  it('validates and losslessly plans a versioned proofbook restore', () => {
+    const imported = parseProofbookJson(exportJson(sampleRecords));
+    expect(imported).toEqual(sampleRecords);
+    const plan = planProofbookImport([{ ...sampleRecords[0], title: 'Older local title' }], imported);
+    expect(plan.added).toBe(2);
+    expect(plan.replaced).toBe(1);
+    expect(plan.records).toEqual(sampleRecords);
+    expect(() => parseProofbookJson('{"format":"Bookmark Proofbook","version":2,"records":[]}')).toThrow('not supported');
+    expect(() => parseProofbookJson('{"format":"Bookmark Proofbook","version":1,"records":[{"url":"javascript:alert(1)"}]}')).toThrow('missing field');
   });
 
   it('@claim:evidence-hash keeps evidence hashes stable for a stored extract', () => {
@@ -80,6 +91,7 @@ describe('Bookmark Proofbook', () => {
       const copy = (await readFile(file, 'utf8')).toLowerCase();
       expect(copy, file).not.toContain('saved evidence');
       expect(copy, file).not.toContain('workspace');
+      expect(copy, file).not.toContain('saved notes');
     }
   });
 });

@@ -21,6 +21,13 @@
     "sandbox": "sample bookmarks; inspect the downloaded standalone HTML and parsed JSON"
   },
   {
+    "id": "lossless-json-import",
+    "claim": "Restore a Bookmark Proofbook JSON backup without losing bookmark fields.",
+    "where": "site and extension import controls, README",
+    "test": "npm run test:extension -- --grep @claim:lossless-json-import",
+    "sandbox": "export the site demo, import it into a clean extension, then compare every stored bookmark field and outgoing requests"
+  },
+  {
     "id": "demo-namespace",
     "claim": "Demo — sample data, nothing is saved.",
     "where": "demo banner",

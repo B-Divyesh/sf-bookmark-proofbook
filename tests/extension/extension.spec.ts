@@ -1,6 +1,6 @@
 import { chromium, expect, test, type BrowserContext, type Page, type Worker } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
-import { mkdtemp, rm } from 'node:fs/promises';
+import { mkdtemp, readFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 
@@ -71,6 +71,30 @@ test('@claim:extension-local-records stores a captured record only in extension 
     const stored = await extension.worker.evaluate(() => chrome.storage.local.get('records'));
     expect(stored.records).toHaveLength(1);
     expect(stored.records[0].reason).toContain('extension local storage');
+    expect(external).toEqual([]);
+  } finally {
+    await closeExtension(extension);
+  }
+});
+
+test('@claim:lossless-json-import exports the sample and restores every field in extension local storage', async () => {
+  const extension = await installExtension();
+  try {
+    const external: string[] = [];
+    extension.context.on('request', (request) => {
+      const hostname = new URL(request.url()).hostname;
+      if (hostname !== '127.0.0.1' && hostname !== 'localhost') external.push(request.url());
+    });
+    await extension.source.goto('http://127.0.0.1:4173/demo');
+    const download = extension.source.waitForEvent('download');
+    await extension.source.getByRole('button', { name: 'Export JSON' }).click();
+    const exportedFile = await download;
+    const path = await exportedFile.path();
+    const exported = JSON.parse(await readFile(path!, 'utf8'));
+    await extension.popup.locator('#json-file').setInputFiles(path!);
+    await expect(extension.popup.locator('#notice')).toContainText('Ready to import 3 bookmarks: 3 added and 0 replaced.');
+    await extension.popup.getByRole('button', { name: 'Import 3 bookmarks' }).click();
+    await expect.poll(() => extension.worker.evaluate(() => chrome.storage.local.get('records'))).toEqual({ records: exported.records });
     expect(external).toEqual([]);
   } finally {
     await closeExtension(extension);

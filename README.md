@@ -3,11 +3,12 @@
 Save why each link mattered. Bookmark Proofbook is for people with too many
 bookmarks to remember. It keeps a reason, selected words, and a small page
 extract beside each link. It also stores a code that identifies that extract.
-Search that context later and export a readable HTML or JSON proofbook.
+Search that context later and export a readable HTML or JSON proofbook. Restore
+a JSON proofbook without losing its bookmark fields.
 
 The Chrome extension captures pages. It reads the active page only after you
 press **Capture this page**. The companion site has an isolated sample at
-`/?demo=1` and an empty proofbook at `/app`.
+`/?demo=1` and your proofbook at `/app`.
 
 ## Run
 
