@@ -48,9 +48,8 @@ every finding in all three adversarial reviews, not only the newest report.
   commands in `.factory/claims.json`, then `npm run lint`, `npm run
   typecheck`, `npm test`, `npm run test:e2e` (30/30), `npm run
   test:extension` (6/6), `npm run build`, and `npm audit --omit=dev`.
-  All passed. Command logs were retained at
-  `/tmp/bookmark-proofbook-claim-*.log` and
-  `/tmp/bookmark-proofbook-clean-*.log` during the work order.
+  All passed. The exact command output was captured in the work-order
+  terminal from `/tmp/bookmark-proofbook-final-clean.Pfec7D`.
 - Production cold checks are retained in `.factory/evidence/polish-3-live/`:
   `live-check.json`, mobile landing/demo screenshots, `verify/verify.json`,
   `axe-live.json`, and `lighthouse.json`.
