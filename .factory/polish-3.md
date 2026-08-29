@@ -1,7 +1,7 @@
 # Polish 3 — cumulative zero-finding repair map
 
-Candidate `9463231156105fb1164a1da4bbb97ad09f7ae6b3` was repaired in
-`8f015cc3b32b9db842d70a68735f02dc93d93e44` and deployed to
+Candidate `9463231156105fb1164a1da4bbb97ad09f7ae6b3` was repaired in the
+series ending at `05d8eccc234146b95e5f6016525ff301daed4f09` and deployed to
 <https://bookmark-proofbook.sociobot.in> on 2026-08-29. This map includes
 every finding in all three adversarial reviews, not only the newest report.
 
@@ -44,7 +44,7 @@ every finding in all three adversarial reviews, not only the newest report.
 
 ## Verification
 
-- A detached clean clone at `8f015cc` ran `npm ci`, each of the 21 exact
+- A detached clean clone at `05d8ecc` ran `npm ci`, each of the 21 exact
   commands in `.factory/claims.json`, then `npm run lint`, `npm run
   typecheck`, `npm test`, `npm run test:e2e` (30/30), `npm run
   test:extension` (6/6), `npm run build`, and `npm audit --omit=dev`.
@@ -55,5 +55,5 @@ every finding in all three adversarial reviews, not only the newest report.
   `live-check.json`, mobile landing/demo screenshots, `verify/verify.json`,
   `axe-live.json`, and `lighthouse.json`.
 - Production JavaScript was byte-identical to the local build:
-  `index-DH3yVw0a.js` SHA-256
-  `7d4d4bfc4afb614d29af1d870594adf1c8a9fbd4d18f2e6025fbda468ab545be`.
+  `index-DbjTQVfj.js` SHA-256
+  `797ce653d6eb6d11fe08499bf6f5a4b20458fc5da48eced499e469995891670a`.

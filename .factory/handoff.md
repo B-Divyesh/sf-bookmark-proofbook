@@ -2,7 +2,7 @@
 
 ## Outcome
 
-Released repair commit: `8f015cc3b32b9db842d70a68735f02dc93d93e44`.
+Released repair commit: `05d8eccc234146b95e5f6016525ff301daed4f09`.
 It is pushed to `main` and deployed through the Static Web Apps work order to
 <https://bookmark-proofbook.sociobot.in>.
 
@@ -43,7 +43,7 @@ available at `/?demo=1` or `/demo`; **Reset demo** recreates the sample and
 
 ## Exact evidence
 
-- Clean detached clone at `8f015cc`: `npm ci`; all **21/21** claim commands;
+- Clean detached clone at `05d8ecc`: `npm ci`; all **21/21** claim commands;
   lint; typecheck; Vitest **12/12**; Playwright site **30/30**; installed MV3
   extension **6/6**; build; and production-dependency audit all passed.
 - Local factory URL check: `.factory/evidence/polish-3-local/verify/verify.json`
@@ -59,10 +59,10 @@ available at `/?demo=1` or `/demo`; **Reset demo** recreates the sample and
 - Live Lighthouse mobile: Performance **100**, Accessibility **100**, Best
   Practices **100**, SEO **100**; LCP **1,401.871 ms**, TBT **0 ms**, CLS **0**
   (`.factory/evidence/polish-3-live/lighthouse.json`).
-- Built initial JavaScript is 22.66 KB raw / 8.10 KB gzip; CSS is 8.43 KB raw /
-  2.58 KB gzip. The responsive hero remains below the 300 KB mobile budget.
+- Built initial JavaScript is 22.82 KB raw / 8.16 KB gzip; CSS is 8.43 KB raw /
+  2.60 KB gzip. The responsive hero remains below the 300 KB mobile budget.
   The production JavaScript is byte-identical to the local build (SHA-256
-  `7d4d4bfc4afb614d29af1d870594adf1c8a9fbd4d18f2e6025fbda468ab545be`).
+  `797ce653d6eb6d11fe08499bf6f5a4b20458fc5da48eced499e469995891670a`).
 
 ## Known gaps and next steps
 
