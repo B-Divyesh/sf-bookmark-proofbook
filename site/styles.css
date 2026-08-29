@@ -585,14 +585,20 @@ summary:focus-visible {
   .preview {
     grid-template-columns: 1fr;
     gap: 28px;
-    padding-top: 36px;
+    padding-top: 28px;
     padding-bottom: 36px;
   }
   .hero h1 {
     letter-spacing: -2px;
   }
   .hero figure {
-    order: -1;
+    order: 1;
+  }
+  .hero .lede {
+    margin: 16px 0;
+  }
+  .hero .facts {
+    margin-top: 20px;
   }
   .how,
   .preview,

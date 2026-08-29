@@ -79,6 +79,18 @@ test('@claim:one-click-demo opens the isolated sample proofbook from the landing
   await expect.poll(() => page.evaluate(() => localStorage.getItem('demo:bookmark-proofbook:records'))).toBeNull();
 });
 
+test('shows all three first-screen facts in the initial 390px landing viewport', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/');
+  const facts = page.locator('.hero .facts li');
+  await expect(facts).toHaveCount(3);
+  const boxes = await facts.evaluateAll((items) => items.map((item) => {
+    const box = item.getBoundingClientRect();
+    return { top: box.top, bottom: box.bottom };
+  }));
+  expect(boxes.every((box) => box.top >= 0 && box.bottom <= 844), JSON.stringify(boxes)).toBe(true);
+});
+
 test('@claim:local-records captures, searches, and exports without sending records to a service', async ({ page }) => {
   const external = recordExternalRequests(page);
   await page.goto('/app');

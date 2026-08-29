@@ -1,1 +1,1 @@
-Save bookmark context, then search and export a local proofbook.
+Save context for every bookmark, then search and export your local proofbook.
