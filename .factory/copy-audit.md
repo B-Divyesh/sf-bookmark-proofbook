@@ -4,6 +4,12 @@ Audited 2026-08-29. The first screen says the job, audience, next action, and
 three facts in one breath. Every sentence is at most 22 words. No banned term
 appears in reader-facing copy.
 
+## Catalog description
+
+| Copy | Words | Result |
+| --- | ---: | --- |
+| Save context for every bookmark, then search and export your local proofbook. | 12 | Verb-first, specific, and within 120 characters |
+
 ## Landing page
 
 | Copy | Words | Result |

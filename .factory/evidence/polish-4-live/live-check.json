@@ -1,0 +1,190 @@
+{
+  "origin": "https://bookmark-proofbook.sociobot.in",
+  "routes": [
+    {
+      "path": "/",
+      "status": 200,
+      "metadata": {
+        "title": "Bookmark Proofbook — Save bookmark context",
+        "lang": "en",
+        "h1": 1,
+        "main": true,
+        "canonical": "https://bookmark-proofbook.sociobot.in/",
+        "ogTitle": "Bookmark Proofbook — Save bookmark context",
+        "ogDescription": "Save why a bookmark mattered, search it later, and export a local proofbook.",
+        "ogUrl": "https://bookmark-proofbook.sociobot.in/",
+        "twitterTitle": "Bookmark Proofbook — Save bookmark context",
+        "twitterDescription": "Save why a bookmark mattered, search it later, and export a local proofbook.",
+        "twitterImage": "https://bookmark-proofbook.sociobot.in/social-preview.webp",
+        "favicon": "/favicon.svg"
+      },
+      "errors": [],
+      "external": [],
+      "axeViolations": []
+    },
+    {
+      "path": "/?demo=1",
+      "status": 200,
+      "metadata": {
+        "title": "Demo — Bookmark Proofbook",
+        "lang": "en",
+        "h1": 1,
+        "main": true,
+        "canonical": "https://bookmark-proofbook.sociobot.in/demo",
+        "ogTitle": "Demo — Bookmark Proofbook",
+        "ogDescription": "Try Bookmark Proofbook with three isolated sample bookmarks.",
+        "ogUrl": "https://bookmark-proofbook.sociobot.in/demo",
+        "twitterTitle": "Demo — Bookmark Proofbook",
+        "twitterDescription": "Try Bookmark Proofbook with three isolated sample bookmarks.",
+        "twitterImage": "https://bookmark-proofbook.sociobot.in/social-preview.webp",
+        "favicon": "/favicon.svg"
+      },
+      "errors": [],
+      "external": [],
+      "axeViolations": []
+    },
+    {
+      "path": "/demo",
+      "status": 200,
+      "metadata": {
+        "title": "Demo — Bookmark Proofbook",
+        "lang": "en",
+        "h1": 1,
+        "main": true,
+        "canonical": "https://bookmark-proofbook.sociobot.in/demo",
+        "ogTitle": "Demo — Bookmark Proofbook",
+        "ogDescription": "Try Bookmark Proofbook with three isolated sample bookmarks.",
+        "ogUrl": "https://bookmark-proofbook.sociobot.in/demo",
+        "twitterTitle": "Demo — Bookmark Proofbook",
+        "twitterDescription": "Try Bookmark Proofbook with three isolated sample bookmarks.",
+        "twitterImage": "https://bookmark-proofbook.sociobot.in/social-preview.webp",
+        "favicon": "/favicon.svg"
+      },
+      "errors": [],
+      "external": [],
+      "axeViolations": []
+    },
+    {
+      "path": "/app",
+      "status": 200,
+      "metadata": {
+        "title": "My proofbook — Bookmark Proofbook",
+        "lang": "en",
+        "h1": 1,
+        "main": true,
+        "canonical": "https://bookmark-proofbook.sociobot.in/app",
+        "ogTitle": "My proofbook — Bookmark Proofbook",
+        "ogDescription": "Add, search, and export bookmarks in your local proofbook.",
+        "ogUrl": "https://bookmark-proofbook.sociobot.in/app",
+        "twitterTitle": "My proofbook — Bookmark Proofbook",
+        "twitterDescription": "Add, search, and export bookmarks in your local proofbook.",
+        "twitterImage": "https://bookmark-proofbook.sociobot.in/social-preview.webp",
+        "favicon": "/favicon.svg"
+      },
+      "errors": [],
+      "external": [],
+      "axeViolations": []
+    },
+    {
+      "path": "/privacy",
+      "status": 200,
+      "metadata": {
+        "title": "Privacy — Bookmark Proofbook",
+        "lang": "en",
+        "h1": 1,
+        "main": true,
+        "canonical": "https://bookmark-proofbook.sociobot.in/privacy",
+        "ogTitle": "Privacy — Bookmark Proofbook",
+        "ogDescription": "Read how Bookmark Proofbook stores bookmarks locally.",
+        "ogUrl": "https://bookmark-proofbook.sociobot.in/privacy",
+        "twitterTitle": "Privacy — Bookmark Proofbook",
+        "twitterDescription": "Read how Bookmark Proofbook stores bookmarks locally.",
+        "twitterImage": "https://bookmark-proofbook.sociobot.in/social-preview.webp",
+        "favicon": "/favicon.svg"
+      },
+      "errors": [],
+      "external": [],
+      "axeViolations": []
+    },
+    {
+      "path": "/terms",
+      "status": 200,
+      "metadata": {
+        "title": "Terms — Bookmark Proofbook",
+        "lang": "en",
+        "h1": 1,
+        "main": true,
+        "canonical": "https://bookmark-proofbook.sociobot.in/terms",
+        "ogTitle": "Terms — Bookmark Proofbook",
+        "ogDescription": "Read the terms for using Bookmark Proofbook.",
+        "ogUrl": "https://bookmark-proofbook.sociobot.in/terms",
+        "twitterTitle": "Terms — Bookmark Proofbook",
+        "twitterDescription": "Read the terms for using Bookmark Proofbook.",
+        "twitterImage": "https://bookmark-proofbook.sociobot.in/social-preview.webp",
+        "favicon": "/favicon.svg"
+      },
+      "errors": [],
+      "external": [],
+      "axeViolations": []
+    },
+    {
+      "path": "/missing-proofbook-page",
+      "status": 404,
+      "metadata": {
+        "title": "Page not found — Bookmark Proofbook",
+        "lang": "en",
+        "h1": 1,
+        "main": true,
+        "canonical": "https://bookmark-proofbook.sociobot.in/404",
+        "ogTitle": "Page not found — Bookmark Proofbook",
+        "ogDescription": "This Bookmark Proofbook page could not be found.",
+        "ogUrl": "https://bookmark-proofbook.sociobot.in/404",
+        "twitterTitle": "Page not found — Bookmark Proofbook",
+        "twitterDescription": "This Bookmark Proofbook page could not be found.",
+        "twitterImage": "https://bookmark-proofbook.sociobot.in/social-preview.webp",
+        "favicon": "/favicon.svg"
+      },
+      "errors": [
+        "Failed to load resource: the server responded with a status of 404 ()"
+      ],
+      "external": [],
+      "axeViolations": []
+    }
+  ],
+  "mobileFacts": [
+    {
+      "text": "No account required.",
+      "top": 503.484375,
+      "bottom": 547.28125
+    },
+    {
+      "text": "Capture, search, and export work locally.",
+      "top": 547.28125,
+      "bottom": 615.875
+    },
+    {
+      "text": "Export a readable HTML proofbook.",
+      "top": 615.875,
+      "bottom": 659.671875
+    }
+  ],
+  "demo": {
+    "url": "https://bookmark-proofbook.sociobot.in/?demo=1",
+    "banner": true,
+    "count": "(3)",
+    "sampleBox": {
+      "x": 16,
+      "y": 466.4078063964844,
+      "width": 358,
+      "height": 428.0469055175781
+    },
+    "demoStore": true,
+    "realStore": false
+  },
+  "history": {
+    "announcementOnDemo": "Demo — Bookmark Proofbook",
+    "scrollBefore": 1100,
+    "restoredScrollY": 1100
+  },
+  "checkedAt": "2026-08-29T01:26:10.418Z"
+}

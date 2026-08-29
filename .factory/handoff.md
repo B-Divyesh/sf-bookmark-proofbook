@@ -1,47 +1,51 @@
-# Bookmark Proofbook — review 4 handoff
+# Bookmark Proofbook — polish 4 handoff
 
-## Review 4 status
+## Released repair
 
-Reviewer-only work completed at 200f0c429fb1b1ca6431ade6ec7b083eb391cd46.
-No product source was changed. .factory/review-4.md records a **FAIL** with
-one minor finding: at 390 × 844, only the first of the three plain
-privacy/local/export fact lines is visible on the initial landing screen.
+Repair commit `e69e96a79eb6f1281f81273f9aff3733ce6a85bf` is pushed to `main`
+and deployed through the Static Web Apps work order to
+<https://bookmark-proofbook.sociobot.in>. Deployment
+`55839741-8999-46d7-9a7e-cf2ce8bc39f8` succeeded.
 
-Verification from a clean clone passed every exact claim command (**21/21**),
-lint, typecheck, Vitest (**12/12**), site Playwright (**30/30**), extension
-Playwright (**6/6**), build, and production-dependency audit. Fresh live
-mobile and desktop checks also covered the demo sandbox, privacy request log,
-offline session, routes, metadata, link crawl, and history focus/scroll.
+The only review-4 defect was F-4-1: two mobile hero facts fell below the
+390 × 844 fold. On small screens the text now precedes the decorative artwork,
+the hero has less vertical space, and the test requires all three facts to be
+fully visible. The catalog description is now the verb-first, 77-character
+sentence: “Save context for every bookmark, then search and export your local
+proofbook.”
 
-**Next step:** compact or reposition the mobile hero so all three fact lines
-appear at 390 × 844, then add a viewport regression. No earlier finding was
-found unfixed.
+`.factory/polish-4.md` maps every finding from reviews 1–4 to its implemented
+repair and current evidence. No earlier finding was reopened.
 
-## Previous release handoff
+## Verification
 
-Released repair commit: `05d8eccc234146b95e5f6016525ff301daed4f09`.
-It is pushed to `main` and deployed through the Static Web Apps work order to
-<https://bookmark-proofbook.sociobot.in>.
+- Fresh clone: `/tmp/bookmark-proofbook-polish-4-clean.9KMQex` ran `npm ci`,
+  all 21 exact `claims.json` commands (all passed), lint, typecheck, Vitest
+  **12/12**, site Playwright **31/31**, extension Playwright **6/6**, build,
+  and `npm audit --omit=dev` (zero vulnerabilities). Claim logs are in
+  `/tmp/bookmark-proofbook-polish-4-claims.IxEIPQ` for this work order.
+- Local URL verifier: `.factory/evidence/polish-4-local/verify/verify.json`
+  records a title, `lang=en`, one h1, main landmark, no missing image alt or
+  unnamed buttons, and no console/page errors. The 390 × 844 landing and demo
+  screenshots are `landing-mobile-first-screen.png` and
+  `demo-mobile-first-screen.png` in that directory.
+- Cold production URL verifier: `.factory/evidence/polish-4-live/verify/verify.json`
+  passed with the same semantic and console checks. Live mobile screenshots are
+  `.factory/evidence/polish-4-live/landing-mobile-first-screen.png` and
+  `.factory/evidence/polish-4-live/demo-mobile-first-screen.png`.
+- Cold live browser recheck: `.factory/evidence/polish-4-live/live-check.json`
+  confirms `/`, `?demo=1`, `/demo`, `/app`, `/privacy`, and `/terms` return
+  200 with route-specific metadata; the unknown route returns a designed 404;
+  all have zero serious/critical Axe findings and no external requests. It also
+  records all three mobile fact bottoms (547.28, 615.88, 659.67) within the
+  844 px viewport, the isolated three-bookmark demo with a sample at y=466.41,
+  and Back restoration from y=1100.
+- Build: `dist/site` was produced. Initial JavaScript is 22.82 kB raw / 8.16
+  kB gzip and CSS is 8.49 kB raw / 2.59 kB gzip. Production serves byte-identical
+  `index-C5aoMG9d.js` with SHA-256
+  `797ce653d6eb6d11fe08499bf6f5a4b20458fc5da48eced499e469995891670a`.
 
-All findings in `.factory/review-1.md`, `.factory/review-2.md`, and
-`.factory/review-3.md` are repaired. The full finding-to-evidence mapping is
-in `.factory/polish-3.md`.
-
-## What changed
-
-- Reworked the isolated demo so sample bookmarks appear in the first viewport;
-  the capture form and archive controls follow the seeded proofbook.
-- Added lossless, confirmed, versioned Bookmark Proofbook JSON restore to the
-  static site and Chrome extension. It validates input, previews added and
-  replaced bookmarks, preserves every field, and keeps all work local.
-- Corrected first-screen and boundary wording, consistent bookmark terms, and
-  the demo exit action for returning visitors.
-- Added route-complete Twitter images and completed the 404 canonical/OG
-  metadata.
-- Added claim and regression coverage for visible demo data, cross-surface JSON
-  restore, truthful demo exit, metadata, and terminology.
-
-## How to run and verify
+## Run and deploy
 
 ```sh
 npm ci
@@ -54,36 +58,14 @@ npm run build
 npm audit --omit=dev
 ```
 
-Run every exact public claim command in `.factory/claims.json`. The demo is
-available at `/?demo=1` or `/demo`; **Reset demo** recreates the sample and
-**Open my proofbook** discards only demo data.
-
-## Exact evidence
-
-- Clean detached clone at `05d8ecc`: `npm ci`; all **21/21** claim commands;
-  lint; typecheck; Vitest **12/12**; Playwright site **30/30**; installed MV3
-  extension **6/6**; build; and production-dependency audit all passed.
-- Local factory URL check: `.factory/evidence/polish-3-local/verify/verify.json`
-  reports `lang=en`, one h1, one main landmark, no missing alt text, no unnamed
-  buttons, and no browser/page errors.
-- Live factory URL check: `.factory/evidence/polish-3-live/verify/verify.json`
-  has the same clean result. Live Axe across `/`, `/demo`, `/app`, `/privacy`,
-  `/terms`, and the designed 404 is zero violations in
-  `.factory/evidence/polish-3-live/axe-live.json`.
-- Cold live route/demo/import/metadata/404 assertions are in
-  `.factory/evidence/polish-3-live/live-check.json`; mobile evidence is
-  `landing-mobile.png` and `demo-mobile.png`.
-- Live Lighthouse mobile: Performance **100**, Accessibility **100**, Best
-  Practices **100**, SEO **100**; LCP **1,401.871 ms**, TBT **0 ms**, CLS **0**
-  (`.factory/evidence/polish-3-live/lighthouse.json`).
-- Built initial JavaScript is 22.82 KB raw / 8.16 KB gzip; CSS is 8.43 KB raw /
-  2.60 KB gzip. The responsive hero remains below the 300 KB mobile budget.
-  The production JavaScript is byte-identical to the local build (SHA-256
-  `797ce653d6eb6d11fe08499bf6f5a4b20458fc5da48eced499e469995891670a`).
+Run every exact command in `.factory/claims.json` after a clean `npm ci`.
+Deploy `dist/site` with the factory Static Web Apps work order. The demo is
+`/?demo=1` or `/demo`; **Reset demo** recreates the sample and **Open my
+proofbook** discards only demo storage.
 
 ## Known gaps and next steps
 
-None. Cold offline reload is intentionally not claimed because the static site
-does not register a service worker; an already opened proofbook remains usable
-when the connection drops, as tested. There is no paid tier or checkout to
-advertise until the factory registers a Sociobot license product.
+None. Cold offline reload is intentionally not claimed; the tested promise is
+that an already-open proofbook continues working after connection loss. There
+is no paid tier or checkout to advertise until the factory registers a
+Sociobot license product.
