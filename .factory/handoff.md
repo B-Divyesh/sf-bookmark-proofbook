@@ -1,74 +1,36 @@
-# Bookmark Proofbook polish 2 handoff
+# Bookmark Proofbook review 3 handoff
 
 ## Outcome
 
-Every finding in `.factory/review-1.md` and `.factory/review-2.md` is repaired
-and rechecked. The final product commit is
-`0788e60c8628b963462e0c8469a1e565e35f0d2f`, pushed to `origin/main` and
-deployed to <https://bookmark-proofbook.sociobot.in>.
+Adversarial review 3 is complete and recorded in `.factory/review-3.md`.
+Verdict: **FAIL** with one blocking, one high, three medium, and two minor
+findings. Product code was not modified.
 
-## What changed
+The blocking issue is demo presentation: after one-click entry, the first
+sample bookmark begins at y=1640 on 390 × 844 and y=1242 on 1440 × 900, so no
+realistic sample data appears in either initial viewport.
 
-- Standardized reader-facing terminology: a saved item is a **bookmark** and
-  the collection/working area is a **proofbook**. This includes the companion
-  site, extension, legal pages, README, demo and claims documentation.
-- Added unit, site, and installed-extension regressions for the terminology.
-- Made demo storage discard on any route exit, including browser Back.
-- Limited search announcements to the bookmark count instead of making the
-  complete result list live.
-- Corrected demo-banner ARIA semantics and removed transient animation opacity,
-  producing zero Axe findings at the mobile viewport.
-- Added a responsive 600 px derivative of the existing original hero artwork.
-  The concrete-and-moss identity and browser-extension artifact class remain
-  unchanged.
+## Verification performed
 
-The complete finding-to-change map is in `.factory/polish-2.md`.
-
-## What was verified
-
-From a clean clone of `0788e60`:
-
-- `npm ci`: PASS, 256 packages, zero audit findings.
-- Every exact `.factory/claims.json` command: PASS, 20/20.
-- `npm run lint`: PASS.
-- `npm run typecheck`: PASS.
-- `npm test`: PASS, 11/11.
-- `npm run test:e2e`: PASS, 28/28.
-- `npm run test:extension`: PASS, 5/5 clean-profile extension tests.
-- `npm audit --omit=dev`: PASS, zero vulnerabilities.
-- `npm run build`: PASS; `dist/site` and the packaged extension zip exist.
-
-The final build is 19.25 KB raw / 7.08 KB gzip JavaScript, 7.63 KB raw /
-2.42 KB gzip CSS, a 22,588-byte mobile hero, and a 115,156-byte desktop hero.
-
-After deployment, a fresh 390 × 844 Chromium context verified the first-screen
-action at y=715, one-click `/?demo=1`, three sample bookmarks, Reset demo,
-separate `demo:` storage, discard on exit, empty `/app`, and no horizontal
-overflow. It also checked every route title/canonical, the HTTP 404, Back to
-scrollY 1100, the polite announcement, 44 px minimum touch targets, the live
-extension zip, zero external requests, and zero console errors.
-
-`verify-url.sh` passed on production. Axe reported zero findings on `/`,
-`/demo`, `/app`, `/privacy`, `/terms`, and the 404. Mobile Lighthouse scored
-Performance 97, Accessibility 100, Best Practices 100, and SEO 100 with LCP
-2,487 ms, CLS 0, and TBT 0 ms. The local and live JavaScript SHA-256 is
-`bf83057e9373cccd25cb4efba76e135cb2d4d9bba84fa0e823207734d8f63663`.
-
-Evidence:
-
-- `.factory/evidence/polish-2-live/check.json`
-- `.factory/evidence/polish-2-live/verify.json`
-- `.factory/evidence/polish-2-live/lighthouse.json`
-- `.factory/evidence/polish-2-live/landing-mobile.png`
-- `.factory/evidence/polish-2-live/demo-mobile.png`
-
-## Run and deploy
-
-Use `npm run dev:site` locally. Run the commands above to verify. `npm run
-build` creates the static site in `dist/site` and the browser-extension zip at
-`dist/site/downloads/bookmark-proofbook-extension.zip`. Deploy only `dist/site`
-with the documented Static Web Apps work-order command.
+- Opened production cold in fresh 390 × 844 and 1440 × 900 Chromium contexts.
+- Exercised demo entry, mutation, Reset, offline search/export, exit, and real
+  data preservation with a same-origin request log.
+- Ran every exact `.factory/claims.json` command from a separate clean clone:
+  20/20 passed.
+- Crawled all site, download, and sample-source links: all returned 200; the
+  designed unknown route returned 404.
+- Checked route metadata, h1 count, landmarks, focus, polite announcements,
+  Back scroll restoration, headers, sitemap, and mobile overflow.
+- Ran live Axe on `/`, `/demo`, `/app`, `/privacy`, `/terms`, and the 404: zero
+  violations. `/opt/fleet/lib/verify-url.sh` passed production.
+- Ran `npm run lint`, `npm run typecheck`, `npm test` (11/11),
+  `npm run test:e2e` (28/28), `npm run test:extension` (5/5), and
+  `npm run build`: all passed.
+- Rechecked every finding from reviews 1 and 2 against production and source;
+  all stated earlier defects remain fixed.
 
 ## Remaining work
 
-None.
+Resolve F-3-1 through F-3-7 in `.factory/review-3.md`, add the specified
+regressions, and repeat the cold review and clean-clone claim run. No deploy was
+performed during this review.
