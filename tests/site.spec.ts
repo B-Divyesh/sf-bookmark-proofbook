@@ -264,6 +264,11 @@ test('keeps the skip link first, shows a designed focus ring, and preserves 44px
   await expect(page.getByRole('link', { name: 'BOOKMARK PROOFBOOK' })).toBeFocused();
   const navHeights = await page.locator('.site-header nav a').evaluateAll((links) => links.map((link) => link.getBoundingClientRect().height));
   expect(navHeights.every((height) => height >= 44)).toBe(true);
+  const installLink = page.getByRole('link', { name: 'Install the browser extension' });
+  const installTarget = await installLink.boundingBox();
+  expect(installTarget).not.toBeNull();
+  expect(installTarget!.width).toBeGreaterThanOrEqual(44);
+  expect(installTarget!.height).toBeGreaterThanOrEqual(44);
   await page.goto('/demo');
   const controls = page.locator('.demo-banner a, .demo-banner button, .record h3 a, .record .delete, footer a');
   const sizes = await controls.evaluateAll((elements) => elements.map((element) => {

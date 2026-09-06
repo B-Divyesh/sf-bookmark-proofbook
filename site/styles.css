@@ -175,6 +175,11 @@ footer {
   border-bottom: 1px solid var(--ink);
   padding: 9px 0;
 }
+.install-jump {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
 .hero figure {
   margin: 0;
   position: relative;
