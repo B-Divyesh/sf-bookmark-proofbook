@@ -1,14 +1,14 @@
-# Bookmark Proofbook — verification 5 handoff
+# Bookmark Proofbook — strict review 8 handoff
 
 ## Result
 
 **PASS.** Zero findings and zero untested public claims.
 
 The reviewed implementation is
-`9b76d91854223bb9a8044e65097dc278eab267cc`. The reporting/documentation
-revision is `c23d0e68dc800f5e9d49be19e2ac049b6e828645`; its difference from the
-implementation is repair evidence and handoff material only. The live product
-at <https://bookmark-proofbook.sociobot.in> byte-matches the clean build,
+`9b76d91854223bb9a8044e65097dc278eab267cc`. The documentation baseline is
+`2fee51b27a15fa87f5817d4adb43781aa9f89889`; its difference from the
+implementation is evidence and report material only. The live product at
+<https://bookmark-proofbook.sociobot.in> byte-matches the clean build,
 including the downloadable extension zip.
 
 ## What was verified
@@ -19,7 +19,8 @@ including the downloadable extension zip.
 - A real bookmark survived sample entry, changes, reset, and demo exit. The
   sample banner remained visible while using the final form action; demo data
   was discarded and real data was unchanged.
-- All 23 exact commands in `.factory/claims.json` passed from a clean clone.
+- All 23 exact commands in `.factory/claims.json` passed separately from the
+  clean checkout.
   `npm run lint`, `npm run typecheck`, `npm test` (12), `npm run test:e2e`
   (33), `npm run test:extension` (7), `npm audit --omit=dev`, and `npm run
   build` passed.
@@ -28,7 +29,7 @@ including the downloadable extension zip.
   requests, offline use after load, links, legal pages, invalid input,
   recovery, and exact HTTP 404 behavior were checked.
 - Fresh Lighthouse JSON: 100 Performance, 100 Accessibility, 100 Best
-  Practices, 100 SEO; LCP 1.40 s, CLS 0, TBT 0 ms, 127,931 bytes transferred.
+  Practices, 100 SEO; LCP 1.399 s, CLS 0, TBT 3 ms, 127,994 bytes transferred.
 
 ## How to verify again
 
@@ -52,5 +53,5 @@ to the separate real `proofbook:records` namespace.
 No product defect or paid offer is present. A future one-time paid unlock still
 depends on separate billing registration and must not be advertised until then.
 
-Full evidence and earlier-finding disposition are in
-`.factory/verification-5.md`.
+Full evidence and every earlier-finding disposition are in
+`.factory/review-8.md`.

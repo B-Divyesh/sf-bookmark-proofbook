@@ -1,0 +1,31 @@
+{
+  "claimCount": 23,
+  "uniqueDeclared": 23,
+  "tagCounts": {
+    "save-bookmark-context": 1,
+    "search-saved-context": 1,
+    "portable-export": 1,
+    "lossless-json-import": 1,
+    "demo-namespace": 1,
+    "one-click-demo": 1,
+    "no-account-required": 1,
+    "local-records": 1,
+    "offline-session": 1,
+    "current-price": 1,
+    "no-record-sync": 1,
+    "no-analytics": 1,
+    "explicit-page-read": 1,
+    "extension-local-records": 1,
+    "extract-cap": 1,
+    "link-check-limit": 1,
+    "link-health-results": 1,
+    "packaged-extension": 1,
+    "unpacked-install": 1,
+    "reversible-delete": 1,
+    "http-links-only": 1,
+    "browser-html-import": 1,
+    "evidence-hash": 1
+  },
+  "undeclaredTags": [],
+  "allExactlyOnce": true
+}

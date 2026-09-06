@@ -1,0 +1,44 @@
+[
+  {
+    "command": "npm run lint",
+    "status": 0,
+    "passed": true,
+    "durationMs": 1780
+  },
+  {
+    "command": "npm run typecheck",
+    "status": 0,
+    "passed": true,
+    "durationMs": 2253
+  },
+  {
+    "command": "npm test",
+    "status": 0,
+    "passed": true,
+    "durationMs": 1212
+  },
+  {
+    "command": "npm run test:e2e",
+    "status": 0,
+    "passed": true,
+    "durationMs": 17418
+  },
+  {
+    "command": "npm run test:extension",
+    "status": 0,
+    "passed": true,
+    "durationMs": 23165
+  },
+  {
+    "command": "npm audit --omit=dev",
+    "status": 0,
+    "passed": true,
+    "durationMs": 478
+  },
+  {
+    "command": "npm run build",
+    "status": 0,
+    "passed": true,
+    "durationMs": 1891
+  }
+]

@@ -1,0 +1,122 @@
+[
+  {
+    "url": "https://bookmark-proofbook.sociobot.in/",
+    "status": 200,
+    "contentType": "text/html",
+    "cacheControl": "public, must-revalidate, max-age=30",
+    "csp": "default-src 'self'; img-src 'self' data: blob:; style-src 'self'; script-src 'self'; connect-src 'self' https://api.sociobot.in; font-src 'self' data:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self' https://api.sociobot.in",
+    "hsts": "max-age=10886400; includeSubDomains; preload",
+    "nosniff": "nosniff",
+    "referrerPolicy": "strict-origin-when-cross-origin"
+  },
+  {
+    "url": "https://bookmark-proofbook.sociobot.in/demo",
+    "status": 200,
+    "contentType": "text/html",
+    "cacheControl": "public, must-revalidate, max-age=30",
+    "csp": "default-src 'self'; img-src 'self' data: blob:; style-src 'self'; script-src 'self'; connect-src 'self' https://api.sociobot.in; font-src 'self' data:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self' https://api.sociobot.in",
+    "hsts": "max-age=10886400; includeSubDomains; preload",
+    "nosniff": "nosniff",
+    "referrerPolicy": "strict-origin-when-cross-origin"
+  },
+  {
+    "url": "https://bookmark-proofbook.sociobot.in/app",
+    "status": 200,
+    "contentType": "text/html",
+    "cacheControl": "public, must-revalidate, max-age=30",
+    "csp": "default-src 'self'; img-src 'self' data: blob:; style-src 'self'; script-src 'self'; connect-src 'self' https://api.sociobot.in; font-src 'self' data:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self' https://api.sociobot.in",
+    "hsts": "max-age=10886400; includeSubDomains; preload",
+    "nosniff": "nosniff",
+    "referrerPolicy": "strict-origin-when-cross-origin"
+  },
+  {
+    "url": "https://bookmark-proofbook.sociobot.in/privacy",
+    "status": 200,
+    "contentType": "text/html",
+    "cacheControl": "public, must-revalidate, max-age=30",
+    "csp": "default-src 'self'; img-src 'self' data: blob:; style-src 'self'; script-src 'self'; connect-src 'self' https://api.sociobot.in; font-src 'self' data:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self' https://api.sociobot.in",
+    "hsts": "max-age=10886400; includeSubDomains; preload",
+    "nosniff": "nosniff",
+    "referrerPolicy": "strict-origin-when-cross-origin"
+  },
+  {
+    "url": "https://bookmark-proofbook.sociobot.in/terms",
+    "status": 200,
+    "contentType": "text/html",
+    "cacheControl": "public, must-revalidate, max-age=30",
+    "csp": "default-src 'self'; img-src 'self' data: blob:; style-src 'self'; script-src 'self'; connect-src 'self' https://api.sociobot.in; font-src 'self' data:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self' https://api.sociobot.in",
+    "hsts": "max-age=10886400; includeSubDomains; preload",
+    "nosniff": "nosniff",
+    "referrerPolicy": "strict-origin-when-cross-origin"
+  },
+  {
+    "url": "https://bookmark-proofbook.sociobot.in/robots.txt",
+    "status": 200,
+    "contentType": "text/plain",
+    "cacheControl": "public, must-revalidate, max-age=30",
+    "csp": "default-src 'self'; img-src 'self' data: blob:; style-src 'self'; script-src 'self'; connect-src 'self' https://api.sociobot.in; font-src 'self' data:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self' https://api.sociobot.in",
+    "hsts": "max-age=10886400; includeSubDomains; preload",
+    "nosniff": "nosniff",
+    "referrerPolicy": "strict-origin-when-cross-origin"
+  },
+  {
+    "url": "https://bookmark-proofbook.sociobot.in/sitemap.xml",
+    "status": 200,
+    "contentType": "text/xml",
+    "cacheControl": "public, must-revalidate, max-age=30",
+    "csp": "default-src 'self'; img-src 'self' data: blob:; style-src 'self'; script-src 'self'; connect-src 'self' https://api.sociobot.in; font-src 'self' data:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self' https://api.sociobot.in",
+    "hsts": "max-age=10886400; includeSubDomains; preload",
+    "nosniff": "nosniff",
+    "referrerPolicy": "strict-origin-when-cross-origin"
+  },
+  {
+    "url": "https://bookmark-proofbook.sociobot.in/social-preview.webp",
+    "status": 200,
+    "contentType": "image/webp",
+    "cacheControl": "public, must-revalidate, max-age=30",
+    "csp": "default-src 'self'; img-src 'self' data: blob:; style-src 'self'; script-src 'self'; connect-src 'self' https://api.sociobot.in; font-src 'self' data:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self' https://api.sociobot.in",
+    "hsts": "max-age=10886400; includeSubDomains; preload",
+    "nosniff": "nosniff",
+    "referrerPolicy": "strict-origin-when-cross-origin"
+  },
+  {
+    "url": "https://bookmark-proofbook.sociobot.in/downloads/bookmark-proofbook-extension.zip",
+    "status": 200,
+    "contentType": "application/zip",
+    "cacheControl": "public, max-age=600, must-revalidate",
+    "csp": "default-src 'self'; img-src 'self' data: blob:; style-src 'self'; script-src 'self'; connect-src 'self' https://api.sociobot.in; font-src 'self' data:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self' https://api.sociobot.in",
+    "hsts": "max-age=10886400; includeSubDomains; preload",
+    "nosniff": "nosniff",
+    "referrerPolicy": "strict-origin-when-cross-origin"
+  },
+  {
+    "url": "https://www.sqlite.org/whentouse.html",
+    "status": 200,
+    "contentType": "text/html; charset=utf-8",
+    "cacheControl": "max-age=120",
+    "csp": null,
+    "hsts": null,
+    "nosniff": null,
+    "referrerPolicy": null
+  },
+  {
+    "url": "https://www.w3.org/WAI/WCAG22/quickref/",
+    "status": 200,
+    "contentType": "text/html; charset=utf-8",
+    "cacheControl": "public, s-maxage=2592001",
+    "csp": "frame-ancestors 'self' https://cms.w3.org/ https://cms-dev.w3.org/; upgrade-insecure-requests",
+    "hsts": "max-age=15552000; includeSubdomains; preload",
+    "nosniff": "nosniff",
+    "referrerPolicy": null
+  },
+  {
+    "url": "https://web.dev/articles/howbrowserswork",
+    "status": 200,
+    "contentType": "text/html; charset=utf-8",
+    "cacheControl": "no-cache, must-revalidate",
+    "csp": "base-uri 'self'; object-src 'none'; script-src 'strict-dynamic' 'unsafe-inline' https: http: 'nonce-bAagRqKvkMiAWPSi+13XsEXm1vPsUI' 'unsafe-eval'; frame-ancestors 'self' https://developers.google.com/_d/analytics-iframe; report-uri https://csp.withgoogle.com/csp/devsite/v2",
+    "hsts": "max-age=63072000; includeSubdomains; preload",
+    "nosniff": "nosniff",
+    "referrerPolicy": null
+  }
+]

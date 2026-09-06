@@ -1,0 +1,257 @@
+{
+  "checkedAt": "2026-09-06T06:30:11.976Z",
+  "base": "https://bookmark-proofbook.sociobot.in",
+  "desktop": {
+    "status": 200,
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "headline": "Save why each link mattered",
+    "audience": "For people with too many bookmarks to remember, save context and find the resource again.",
+    "action": "Try it with sample data",
+    "actionBox": {
+      "x": 154,
+      "y": 448.25,
+      "width": 253.5625,
+      "height": 46.796875
+    },
+    "facts": [
+      {
+        "text": "Bookmarks are stored in this browser.",
+        "top": 529.046875,
+        "bottom": 572.84375
+      },
+      {
+        "text": "An opened proofbook works offline.",
+        "top": 572.84375,
+        "bottom": 616.640625
+      },
+      {
+        "text": "Free during this release.",
+        "top": 616.640625,
+        "bottom": 660.4375
+      }
+    ],
+    "installBox": {
+      "x": 154,
+      "y": 676.4375,
+      "width": 279.359375,
+      "height": 44
+    },
+    "scrollWidth": 1440
+  },
+  "phone": {
+    "status": 200,
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "headline": "Save why each link mattered",
+    "audience": "For people with too many bookmarks to remember, save context and find the resource again.",
+    "action": "Try it with sample data",
+    "actionBox": {
+      "x": 16,
+      "y": 380.40625,
+      "width": 253.5625,
+      "height": 46.796875
+    },
+    "facts": [
+      {
+        "text": "Bookmarks are stored in this browser.",
+        "top": 503.484375,
+        "bottom": 547.28125
+      },
+      {
+        "text": "An opened proofbook works offline.",
+        "top": 547.28125,
+        "bottom": 591.078125
+      },
+      {
+        "text": "Free during this release.",
+        "top": 591.078125,
+        "bottom": 634.875
+      }
+    ],
+    "installBox": {
+      "x": 16,
+      "y": 650.875,
+      "width": 279.359375,
+      "height": 44
+    },
+    "scrollWidth": 390
+  },
+  "demo": {
+    "urlAfterOneClick": "https://bookmark-proofbook.sociobot.in/?demo=1",
+    "bannerText": "Demo — sample data, nothing is saved.\nReset demo\nOpen my proofbook",
+    "initialCount": "(3)",
+    "firstSampleBox": {
+      "x": 16,
+      "y": 405.2052307128906,
+      "width": 358,
+      "height": 428.0468444824219
+    },
+    "initialKeys": [
+      "demo:bookmark-proofbook:records",
+      "proofbook:records"
+    ],
+    "stickyBannerBox": {
+      "x": 0,
+      "y": 0,
+      "width": 390,
+      "height": 70.390625
+    },
+    "addedCount": "(4)",
+    "storedAdded": {
+      "url": "https://example.com/review-eight",
+      "title": "Review eight bookmark",
+      "reason": "Recover the migration decision later.",
+      "selectedText": "Use a local archive with a stable format.",
+      "extract": "The exported proofbook retains the saved context.",
+      "id": "82e0303c-235c-4263-9815-db0c9e936c83",
+      "contentHash": "c8c81515",
+      "createdAt": "2026-09-06T06:30:14.679Z",
+      "health": "unchecked"
+    },
+    "searchFound": true,
+    "removedCount": "(3)",
+    "undoCount": "(4)",
+    "resetCount": "(3)",
+    "realAfterResetUnchanged": true,
+    "offlineSearchFound": true,
+    "offlineExportName": "bookmark-proofbook.html",
+    "demoRemovedOnExit": true,
+    "realUnchangedOnExit": true
+  },
+  "routes": [
+    {
+      "route": "/",
+      "status": 200,
+      "title": "Bookmark Proofbook — Save bookmark context",
+      "lang": "en",
+      "h1": 1,
+      "main": 1,
+      "missingAlt": 0,
+      "canonical": "https://bookmark-proofbook.sociobot.in/",
+      "twitterImage": "https://bookmark-proofbook.sociobot.in/social-preview.webp",
+      "privacyEmail": false,
+      "horizontalOverflow": false,
+      "axeViolations": [],
+      "undersized": []
+    },
+    {
+      "route": "/demo",
+      "status": 200,
+      "title": "Demo — Bookmark Proofbook",
+      "lang": "en",
+      "h1": 1,
+      "main": 1,
+      "missingAlt": 0,
+      "canonical": "https://bookmark-proofbook.sociobot.in/demo",
+      "twitterImage": "https://bookmark-proofbook.sociobot.in/social-preview.webp",
+      "privacyEmail": false,
+      "horizontalOverflow": false,
+      "axeViolations": [],
+      "undersized": []
+    },
+    {
+      "route": "/app",
+      "status": 200,
+      "title": "My proofbook — Bookmark Proofbook",
+      "lang": "en",
+      "h1": 1,
+      "main": 1,
+      "missingAlt": 0,
+      "canonical": "https://bookmark-proofbook.sociobot.in/app",
+      "twitterImage": "https://bookmark-proofbook.sociobot.in/social-preview.webp",
+      "privacyEmail": false,
+      "horizontalOverflow": false,
+      "axeViolations": [],
+      "undersized": []
+    },
+    {
+      "route": "/privacy",
+      "status": 200,
+      "title": "Privacy — Bookmark Proofbook",
+      "lang": "en",
+      "h1": 1,
+      "main": 1,
+      "missingAlt": 0,
+      "canonical": "https://bookmark-proofbook.sociobot.in/privacy",
+      "twitterImage": "https://bookmark-proofbook.sociobot.in/social-preview.webp",
+      "privacyEmail": true,
+      "horizontalOverflow": false,
+      "axeViolations": [],
+      "undersized": []
+    },
+    {
+      "route": "/terms",
+      "status": 200,
+      "title": "Terms — Bookmark Proofbook",
+      "lang": "en",
+      "h1": 1,
+      "main": 1,
+      "missingAlt": 0,
+      "canonical": "https://bookmark-proofbook.sociobot.in/terms",
+      "twitterImage": "https://bookmark-proofbook.sociobot.in/social-preview.webp",
+      "privacyEmail": false,
+      "horizontalOverflow": false,
+      "axeViolations": [],
+      "undersized": []
+    },
+    {
+      "route": "/missing-review-eight",
+      "status": 404,
+      "title": "Page not found — Bookmark Proofbook",
+      "lang": "en",
+      "h1": 1,
+      "main": 1,
+      "missingAlt": 0,
+      "canonical": "https://bookmark-proofbook.sociobot.in/404",
+      "twitterImage": "https://bookmark-proofbook.sociobot.in/social-preview.webp",
+      "privacyEmail": false,
+      "horizontalOverflow": false,
+      "axeViolations": [],
+      "undersized": []
+    }
+  ],
+  "keyboard": {
+    "first": {
+      "text": "Skip to main content",
+      "outline": "rgb(167, 70, 44) solid 4px"
+    },
+    "afterEnter": {
+      "id": "main",
+      "tag": "MAIN"
+    }
+  },
+  "reducedMotion": {
+    "animationDuration": "1e-05s",
+    "transitionDuration": "1e-05s"
+  },
+  "recovery": {
+    "invalid": {
+      "focused": true,
+      "message": "Enter a web address that starts with http:// or https://.",
+      "count": "(0)",
+      "stored": null
+    },
+    "corrupt": {
+      "count": "(0)",
+      "stored": null,
+      "emptyHeading": true
+    }
+  },
+  "history": {
+    "scrollY": 1100,
+    "focused": "Save why each link mattered",
+    "announcement": "Bookmark Proofbook"
+  },
+  "externalRequests": [],
+  "consoleErrors": [],
+  "pageErrors": [],
+  "offlineScope": {
+    "serviceWorkerRegistrations": 0,
+    "manifestLinks": 0
+  }
+}

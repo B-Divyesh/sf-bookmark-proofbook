@@ -1,0 +1,163 @@
+[
+  {
+    "id": "save-bookmark-context",
+    "command": "npm run test:e2e -- --grep @claim:save-bookmark-context",
+    "status": 0,
+    "passed": true,
+    "durationMs": 6569
+  },
+  {
+    "id": "search-saved-context",
+    "command": "npm run test:e2e -- --grep @claim:search-saved-context",
+    "status": 0,
+    "passed": true,
+    "durationMs": 5954
+  },
+  {
+    "id": "portable-export",
+    "command": "npm run test:e2e -- --grep @claim:portable-export",
+    "status": 0,
+    "passed": true,
+    "durationMs": 6093
+  },
+  {
+    "id": "lossless-json-import",
+    "command": "npm run test:extension -- --grep @claim:lossless-json-import",
+    "status": 0,
+    "passed": true,
+    "durationMs": 7730
+  },
+  {
+    "id": "demo-namespace",
+    "command": "npm run test:e2e -- --grep @claim:demo-namespace",
+    "status": 0,
+    "passed": true,
+    "durationMs": 7077
+  },
+  {
+    "id": "one-click-demo",
+    "command": "npm run test:e2e -- --grep @claim:one-click-demo",
+    "status": 0,
+    "passed": true,
+    "durationMs": 6138
+  },
+  {
+    "id": "no-account-required",
+    "command": "npm run test:e2e -- --grep @claim:no-account-required",
+    "status": 0,
+    "passed": true,
+    "durationMs": 5081
+  },
+  {
+    "id": "local-records",
+    "command": "npm run test:e2e -- --grep @claim:local-records",
+    "status": 0,
+    "passed": true,
+    "durationMs": 6075
+  },
+  {
+    "id": "offline-session",
+    "command": "npm run test:e2e -- --grep @claim:offline-session",
+    "status": 0,
+    "passed": true,
+    "durationMs": 5028
+  },
+  {
+    "id": "current-price",
+    "command": "npm run test:e2e -- --grep @claim:current-price",
+    "status": 0,
+    "passed": true,
+    "durationMs": 5208
+  },
+  {
+    "id": "no-record-sync",
+    "command": "npm run test:e2e -- --grep @claim:no-record-sync",
+    "status": 0,
+    "passed": true,
+    "durationMs": 6080
+  },
+  {
+    "id": "no-analytics",
+    "command": "npm run test:e2e -- --grep @claim:no-analytics",
+    "status": 0,
+    "passed": true,
+    "durationMs": 4991
+  },
+  {
+    "id": "explicit-page-read",
+    "command": "npm run test:extension -- --grep @claim:explicit-page-read",
+    "status": 0,
+    "passed": true,
+    "durationMs": 11934
+  },
+  {
+    "id": "extension-local-records",
+    "command": "npm run test:extension -- --grep @claim:extension-local-records",
+    "status": 0,
+    "passed": true,
+    "durationMs": 6697
+  },
+  {
+    "id": "extract-cap",
+    "command": "npm test -- --testNamePattern @claim:extract-cap",
+    "status": 0,
+    "passed": true,
+    "durationMs": 1255
+  },
+  {
+    "id": "link-check-limit",
+    "command": "npm run test:extension -- --grep @claim:link-check-limit",
+    "status": 0,
+    "passed": true,
+    "durationMs": 6824
+  },
+  {
+    "id": "link-health-results",
+    "command": "npm run test:extension -- --grep @claim:link-health-results",
+    "status": 0,
+    "passed": true,
+    "durationMs": 6743
+  },
+  {
+    "id": "packaged-extension",
+    "command": "npm run test:e2e -- --grep @claim:packaged-extension",
+    "status": 0,
+    "passed": true,
+    "durationMs": 4937
+  },
+  {
+    "id": "unpacked-install",
+    "command": "npm run test:extension -- --grep @claim:unpacked-install",
+    "status": 0,
+    "passed": true,
+    "durationMs": 9798
+  },
+  {
+    "id": "reversible-delete",
+    "command": "npm run test:e2e -- --grep @claim:reversible-delete",
+    "status": 0,
+    "passed": true,
+    "durationMs": 6861
+  },
+  {
+    "id": "http-links-only",
+    "command": "npm run test:e2e -- --grep @claim:http-links-only",
+    "status": 0,
+    "passed": true,
+    "durationMs": 5055
+  },
+  {
+    "id": "browser-html-import",
+    "command": "npm run test:e2e -- --grep @claim:browser-html-import",
+    "status": 0,
+    "passed": true,
+    "durationMs": 4903
+  },
+  {
+    "id": "evidence-hash",
+    "command": "npm test -- --testNamePattern @claim:evidence-hash",
+    "status": 0,
+    "passed": true,
+    "durationMs": 1198
+  }
+]

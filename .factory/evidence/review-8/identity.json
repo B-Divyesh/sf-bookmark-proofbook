@@ -1,0 +1,79 @@
+{
+  "implementationCandidate": "9b76d91854223bb9a8044e65097dc278eab267cc",
+  "documentationHead": "2fee51b27a15fa87f5817d4adb43781aa9f89889",
+  "htmlAssets": {
+    "js": "/assets/index-CIAPU3-z.js",
+    "css": "/assets/index-DtepYCax.css"
+  },
+  "compared": [
+    {
+      "asset": "/assets/index-CIAPU3-z.js",
+      "liveBytes": 22841,
+      "localBytes": 22841,
+      "liveSha256": "714dff7d5591259d6f6028ded250c9ee36d0c105ffb94e7de5fd0f4e36aba826",
+      "localSha256": "714dff7d5591259d6f6028ded250c9ee36d0c105ffb94e7de5fd0f4e36aba826",
+      "identical": true,
+      "status": 200,
+      "cacheControl": "public, max-age=31536000, immutable"
+    },
+    {
+      "asset": "/assets/index-DtepYCax.css",
+      "liveBytes": 8800,
+      "localBytes": 8800,
+      "liveSha256": "3fad828b68a3eb1b2f00fe35480c03729458a839f6edd2bdd7bf0cb1d540f521",
+      "localSha256": "3fad828b68a3eb1b2f00fe35480c03729458a839f6edd2bdd7bf0cb1d540f521",
+      "identical": true,
+      "status": 200,
+      "cacheControl": "public, max-age=31536000, immutable"
+    },
+    {
+      "asset": "/proofbook-hero-600.webp",
+      "liveBytes": 22588,
+      "localBytes": 22588,
+      "liveSha256": "22ecbdc1c51aa48214a2c3ba75df997f562d313f2758a6ba37b68c8d1b5a9f89",
+      "localSha256": "22ecbdc1c51aa48214a2c3ba75df997f562d313f2758a6ba37b68c8d1b5a9f89",
+      "identical": true,
+      "status": 200,
+      "cacheControl": "public, must-revalidate, max-age=30"
+    },
+    {
+      "asset": "/proofbook-hero.webp",
+      "liveBytes": 115156,
+      "localBytes": 115156,
+      "liveSha256": "4aec68af8426de65d674b0e1632313da20c308e324e7c3db18896e0b17db8558",
+      "localSha256": "4aec68af8426de65d674b0e1632313da20c308e324e7c3db18896e0b17db8558",
+      "identical": true,
+      "status": 200,
+      "cacheControl": "public, must-revalidate, max-age=30"
+    },
+    {
+      "asset": "/social-preview.webp",
+      "liveBytes": 91170,
+      "localBytes": 91170,
+      "liveSha256": "41655d9505fffec70e7c75f933c398c38bac09acfef044bf61fe675fdb8fd850",
+      "localSha256": "41655d9505fffec70e7c75f933c398c38bac09acfef044bf61fe675fdb8fd850",
+      "identical": true,
+      "status": 200,
+      "cacheControl": "public, must-revalidate, max-age=30"
+    },
+    {
+      "asset": "/favicon.svg",
+      "liveBytes": 360,
+      "localBytes": 360,
+      "liveSha256": "e866aed183cc816321d2b4f22791f5c9f50860563e2b45352c1fb987e95936ba",
+      "localSha256": "e866aed183cc816321d2b4f22791f5c9f50860563e2b45352c1fb987e95936ba",
+      "identical": true,
+      "status": 200,
+      "cacheControl": "public, must-revalidate, max-age=30"
+    }
+  ],
+  "extension": {
+    "liveZipBytes": 292819,
+    "localZipBytes": 292819,
+    "fileCount": 15,
+    "payloadIdentical": true,
+    "liveZipSha256": "4838fdf6bf552bbada969ea1644acfda1931a0bd07f553ef2562c6b29a17a1d7",
+    "localZipSha256": "4838fdf6bf552bbada969ea1644acfda1931a0bd07f553ef2562c6b29a17a1d7",
+    "zipIdentical": true
+  }
+}
