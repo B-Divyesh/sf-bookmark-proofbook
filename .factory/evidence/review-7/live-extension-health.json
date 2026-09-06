@@ -1,0 +1,16 @@
+{
+  "beforeExplicitRequestCount": 0,
+  "requestCount": 3,
+  "states": [
+    "alive",
+    "changed",
+    "unreachable"
+  ],
+  "checkedAt": [
+    "2026-09-06T05:31:24.435Z",
+    "2026-09-06T05:31:24.435Z",
+    "2026-09-06T05:31:24.196Z"
+  ],
+  "started": 1788672684101,
+  "pass": true
+}

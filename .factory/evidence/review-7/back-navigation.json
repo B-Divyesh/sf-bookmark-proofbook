@@ -1,0 +1,16 @@
+{
+  "method": "Exact shipped regression: DOM activation avoids changing scroll before navigation",
+  "before": 1100,
+  "forward": {
+    "url": "https://bookmark-proofbook.sociobot.in/demo",
+    "announcement": "Demo — Bookmark Proofbook",
+    "active": "H1"
+  },
+  "after": {
+    "url": "https://bookmark-proofbook.sociobot.in/",
+    "y": 1100,
+    "active": "H1",
+    "announcement": "Bookmark Proofbook"
+  },
+  "pass": true
+}

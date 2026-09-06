@@ -1,0 +1,25 @@
+{
+  "checks": [
+    {
+      "name": "malformed JSON gives recovery message and stores nothing",
+      "ok": true,
+      "message": "This is not a valid Bookmark Proofbook JSON file: the file is not JSON."
+    },
+    {
+      "name": "valid JSON previews changes before mutation",
+      "ok": true
+    },
+    {
+      "name": "cancelled JSON import leaves data unchanged",
+      "ok": true
+    },
+    {
+      "name": "site JSON restore keeps every sample field",
+      "ok": true
+    }
+  ],
+  "summary": {
+    "passed": 4,
+    "failed": 0
+  }
+}

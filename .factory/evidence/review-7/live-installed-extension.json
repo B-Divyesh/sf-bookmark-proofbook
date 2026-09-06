@@ -1,0 +1,126 @@
+{
+  "checks": [
+    {
+      "name": "live package identity",
+      "ok": true,
+      "manifest": {
+        "action": {
+          "default_popup": "popup.html",
+          "default_title": "Bookmark Proofbook"
+        },
+        "background": {
+          "service_worker": "background.js"
+        },
+        "description": "Save why a bookmark mattered, search its context, and export your proofbook.",
+        "host_permissions": [
+          "<all_urls>"
+        ],
+        "manifest_version": 3,
+        "name": "Bookmark Proofbook",
+        "permissions": [
+          "storage",
+          "activeTab",
+          "scripting"
+        ],
+        "version": "1.0.2"
+      }
+    },
+    {
+      "name": "clean initial extension storage",
+      "ok": true
+    },
+    {
+      "name": "capture form absent before action",
+      "ok": true
+    },
+    {
+      "name": "explicit capture reads selected text",
+      "ok": true
+    },
+    {
+      "name": "capture does not store before save",
+      "ok": true
+    },
+    {
+      "name": "live installed capture stores complete bookmark locally",
+      "ok": true,
+      "stored": [
+        {
+          "contentHash": "78852a84",
+          "createdAt": "2026-09-06T05:30:53.374Z",
+          "extract": "Bookmark Proofbook — Save bookmark context Skip to main content BOOKMARK PROOFBOOK Demo My proofbook Privacy LOCAL BOOKMARK TOOL Save why each link mattered For people with too many bookmarks to remember, save context and find the resource again. Try it with sample data Opens a sample proofbook with three bookmarks. Bookmarks are stored in this browser. An opened proofbook works offline. Free during this release. Install the browser extension BOOKMARK DETAILS What each bookmark keeps Each bookmark stores your reason, selected words, and a small page extract. It also stores a code that identifies that extract. ● Checked once Appropriate Uses For SQLite Why I saved it: Decide when a small local database is the sensible choice. SQLite is not directly comparable to client/server SQL database engines. extract code · 4fa1c0e7 THREE STEPS How Bookmark Proofbook works Capture a link. Write why it matters while you still know. Search your words. Find a source by the reason or extract you saved. Export your proofbook. Export a readable HTML proofbook. Saved extract limit It stores a text extract of up to 12,000 characters. CHROME OR EDGE Install the browser extension Download the extension zip Extract the zip to a folder you can keep. Open chrome://extensions or edge://extensions and turn on Developer mode. Choose Load unpacked , then select the extracted folder. Keep the folder after installation. Bookmark Proofbook keeps the reason beside the link. Privacy Terms Built by Param Factory · v1.0.2",
+          "health": "unchecked",
+          "id": "d5c314be-b2e3-4f1f-911a-17d285a99acd",
+          "reason": "Keep the live source for review seven.",
+          "selectedText": "Save why each link mattered",
+          "title": "Bookmark Proofbook — Save bookmark context",
+          "url": "https://bookmark-proofbook.sociobot.in/"
+        }
+      ]
+    },
+    {
+      "name": "live installed search finds reason",
+      "ok": true
+    },
+    {
+      "name": "live installed JSON export contains bookmark",
+      "ok": true
+    },
+    {
+      "name": "live installed HTML export is readable and script-free",
+      "ok": true
+    },
+    {
+      "name": "saved links not contacted before explicit check",
+      "ok": true,
+      "before": []
+    },
+    {
+      "name": "live installed health check records all outcomes and times",
+      "ok": false,
+      "health": [
+        {
+          "health": "changed",
+          "checkedAt": "2026-09-06T05:30:58.539Z"
+        },
+        {
+          "health": "changed",
+          "checkedAt": "2026-09-06T05:30:58.539Z"
+        },
+        {
+          "health": "unreachable",
+          "checkedAt": "2026-09-06T05:30:58.538Z"
+        }
+      ]
+    },
+    {
+      "name": "live installed popup has no serious or critical Axe findings",
+      "ok": true,
+      "violations": []
+    }
+  ],
+  "requests": [],
+  "errors": [],
+  "summary": {
+    "passed": 12,
+    "failed": 0,
+    "total": 12
+  },
+  "initialHealthProbeNote": "The initial manual probe used the correct extract but an incorrect hand-written hash; changed was correct for that seed. The corrected product-computed-hash probe is in live-extension-health.json.",
+  "correctedHealthProbe": {
+    "beforeExplicitRequestCount": 0,
+    "requestCount": 3,
+    "states": [
+      "alive",
+      "changed",
+      "unreachable"
+    ],
+    "checkedAt": [
+      "2026-09-06T05:31:24.435Z",
+      "2026-09-06T05:31:24.435Z",
+      "2026-09-06T05:31:24.196Z"
+    ],
+    "started": 1788672684101,
+    "pass": true
+  }
+}

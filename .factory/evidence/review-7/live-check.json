@@ -1,0 +1,535 @@
+{
+  "checks": [
+    {
+      "name": "desktop cold page status/title/job/audience/action",
+      "ok": true,
+      "first": {
+        "title": "Bookmark Proofbook — Save bookmark context",
+        "h1": "Save why each link mattered",
+        "lede": "For people with too many bookmarks to remember, save context and find the resource again.",
+        "action": "Try it with sample data",
+        "after": "Opens a sample proofbook with three bookmarks.",
+        "facts": [
+          {
+            "text": "Bookmarks are stored in this browser.",
+            "rect": {
+              "top": 529.046875,
+              "bottom": 572.84375
+            }
+          },
+          {
+            "text": "An opened proofbook works offline.",
+            "rect": {
+              "top": 572.84375,
+              "bottom": 616.640625
+            }
+          },
+          {
+            "text": "Free during this release.",
+            "rect": {
+              "top": 616.640625,
+              "bottom": 660.4375
+            }
+          }
+        ],
+        "scrollY": 0
+      }
+    },
+    {
+      "name": "desktop cold page console clean",
+      "ok": true,
+      "consoleErrors": []
+    },
+    {
+      "name": "phone cold page status/title/job/audience/action",
+      "ok": true,
+      "first": {
+        "title": "Bookmark Proofbook — Save bookmark context",
+        "h1": "Save why each link mattered",
+        "lede": "For people with too many bookmarks to remember, save context and find the resource again.",
+        "action": "Try it with sample data",
+        "after": "Opens a sample proofbook with three bookmarks.",
+        "facts": [
+          {
+            "text": "Bookmarks are stored in this browser.",
+            "rect": {
+              "top": 503.484375,
+              "bottom": 547.28125
+            }
+          },
+          {
+            "text": "An opened proofbook works offline.",
+            "rect": {
+              "top": 547.28125,
+              "bottom": 591.078125
+            }
+          },
+          {
+            "text": "Free during this release.",
+            "rect": {
+              "top": 591.078125,
+              "bottom": 634.875
+            }
+          }
+        ],
+        "scrollY": 0
+      }
+    },
+    {
+      "name": "phone cold page console clean",
+      "ok": true,
+      "consoleErrors": []
+    },
+    {
+      "name": "phone three facts above fold",
+      "ok": true,
+      "facts": [
+        {
+          "text": "Bookmarks are stored in this browser.",
+          "rect": {
+            "top": 503.484375,
+            "bottom": 547.28125
+          }
+        },
+        {
+          "text": "An opened proofbook works offline.",
+          "rect": {
+            "top": 547.28125,
+            "bottom": 591.078125
+          }
+        },
+        {
+          "text": "Free during this release.",
+          "rect": {
+            "top": 591.078125,
+            "bottom": 634.875
+          }
+        }
+      ]
+    },
+    {
+      "name": "one click opens populated demo",
+      "ok": true,
+      "demoUrl": "https://bookmark-proofbook.sociobot.in/?demo=1",
+      "count0": "(3)",
+      "sampleTitles": [
+        "Appropriate Uses For SQLite ↗",
+        "How to Meet WCAG 2.2 ↗",
+        "How browsers work ↗"
+      ],
+      "firstBox": {
+        "x": 16,
+        "y": 405.48162841796875,
+        "width": 358,
+        "height": 428.046875
+      }
+    },
+    {
+      "name": "persistent sample label initial",
+      "ok": true
+    },
+    {
+      "name": "sample label and controls stay visible after scroll",
+      "ok": true,
+      "bannerBox": {
+        "x": 0,
+        "y": 0,
+        "width": 390,
+        "height": 70.390625
+      },
+      "scrollY": 2210
+    },
+    {
+      "name": "realistic demo addition stores full context separately",
+      "ok": true,
+      "count4": "(4)",
+      "realKey": "[{\"id\":\"real-seed\",\"url\":\"https://example.com/real\",\"title\":\"Real bookmark\",\"reason\":\"Must survive demo\",\"selectedText\":\"\",\"extract\":\"\",\"contentHash\":\"811c9dc5\",\"health\":\"unchecked\",\"createdAt\":\"2026-09-06T00:00:00.000Z\"}]"
+    },
+    {
+      "name": "remove changes sample count",
+      "ok": true
+    },
+    {
+      "name": "undo restores sample count",
+      "ok": true
+    },
+    {
+      "name": "search finds saved reason",
+      "ok": true
+    },
+    {
+      "name": "opened proofbook searches offline",
+      "ok": true
+    },
+    {
+      "name": "opened proofbook exports offline",
+      "ok": true
+    },
+    {
+      "name": "reset returns exactly three samples",
+      "ok": true
+    },
+    {
+      "name": "demo exit removes sample and preserves real byte-for-byte",
+      "ok": true,
+      "url": "https://bookmark-proofbook.sociobot.in/app"
+    },
+    {
+      "name": "demo workflow has no third-party requests",
+      "ok": true,
+      "thirdParty": []
+    },
+    {
+      "name": "demo workflow console clean",
+      "ok": true,
+      "errors": []
+    },
+    {
+      "name": "invalid URL rejected with focus and no storage",
+      "ok": true
+    },
+    {
+      "name": "extract input enforces 12000 boundary",
+      "ok": true,
+      "length": 12000
+    },
+    {
+      "name": "saved extract remains capped",
+      "ok": true,
+      "length": 12000
+    },
+    {
+      "name": "corrupt local storage recovers to empty state",
+      "ok": true
+    },
+    {
+      "name": "route / status/structure/metadata/a11y",
+      "ok": true,
+      "status": 200,
+      "info": {
+        "title": "Bookmark Proofbook — Save bookmark context",
+        "lang": "en",
+        "h1": 1,
+        "main": 1,
+        "header": 1,
+        "footer": 1,
+        "canonical": "https://bookmark-proofbook.sociobot.in/",
+        "skip": true
+      },
+      "axe": [],
+      "consoleErrors": []
+    },
+    {
+      "name": "route /demo status/structure/metadata/a11y",
+      "ok": true,
+      "status": 200,
+      "info": {
+        "title": "Demo — Bookmark Proofbook",
+        "lang": "en",
+        "h1": 1,
+        "main": 1,
+        "header": 1,
+        "footer": 1,
+        "canonical": "https://bookmark-proofbook.sociobot.in/demo",
+        "skip": true
+      },
+      "axe": [],
+      "consoleErrors": []
+    },
+    {
+      "name": "route /app status/structure/metadata/a11y",
+      "ok": true,
+      "status": 200,
+      "info": {
+        "title": "My proofbook — Bookmark Proofbook",
+        "lang": "en",
+        "h1": 1,
+        "main": 1,
+        "header": 1,
+        "footer": 1,
+        "canonical": "https://bookmark-proofbook.sociobot.in/app",
+        "skip": true
+      },
+      "axe": [],
+      "consoleErrors": []
+    },
+    {
+      "name": "route /privacy status/structure/metadata/a11y",
+      "ok": true,
+      "status": 200,
+      "info": {
+        "title": "Privacy — Bookmark Proofbook",
+        "lang": "en",
+        "h1": 1,
+        "main": 1,
+        "header": 1,
+        "footer": 1,
+        "canonical": "https://bookmark-proofbook.sociobot.in/privacy",
+        "skip": true
+      },
+      "axe": [],
+      "consoleErrors": []
+    },
+    {
+      "name": "route /terms status/structure/metadata/a11y",
+      "ok": true,
+      "status": 200,
+      "info": {
+        "title": "Terms — Bookmark Proofbook",
+        "lang": "en",
+        "h1": 1,
+        "main": 1,
+        "header": 1,
+        "footer": 1,
+        "canonical": "https://bookmark-proofbook.sociobot.in/terms",
+        "skip": true
+      },
+      "axe": [],
+      "consoleErrors": []
+    },
+    {
+      "name": "route /missing-review-seven status/structure/metadata/a11y",
+      "ok": true,
+      "status": 404,
+      "info": {
+        "title": "Page not found — Bookmark Proofbook",
+        "lang": "en",
+        "h1": 1,
+        "main": 1,
+        "header": 1,
+        "footer": 1,
+        "canonical": "https://bookmark-proofbook.sociobot.in/404",
+        "skip": true,
+        "robots": "noindex"
+      },
+      "axe": [],
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 404 ()"
+      ]
+    },
+    {
+      "name": "skip link is first and visibly focuses main",
+      "ok": true,
+      "skipFocus": {
+        "text": "Skip to main content",
+        "outline": "4px"
+      },
+      "mainFocused": true
+    },
+    {
+      "name": "Back restores scroll, h1 focus, and route announcement",
+      "ok": true,
+      "back": {
+        "url": "https://bookmark-proofbook.sociobot.in/",
+        "y": 1100,
+        "active": "H1",
+        "announcement": "Bookmark Proofbook"
+      },
+      "note": "Initial combined-context probe activated an off-screen header link physically, which scrolled the source page before its click handler saved history. The isolated exact regression passed; see back-navigation.json.",
+      "initialCombinedContextProbe": {
+        "y": 0,
+        "h1": "H1"
+      },
+      "method": "Exact shipped regression: DOM activation avoids changing scroll before navigation"
+    },
+    {
+      "name": "reduced motion removes record motion",
+      "ok": true,
+      "animationDuration": "1e-05s"
+    },
+    {
+      "name": "200% text has no horizontal overflow and retains job/action",
+      "ok": true,
+      "overflow": {
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "h1": "Save why each link mattered",
+        "action": "Try it with sample data"
+      }
+    }
+  ],
+  "errors": [],
+  "requests": [],
+  "firstScreens": {
+    "desktop": {
+      "title": "Bookmark Proofbook — Save bookmark context",
+      "h1": "Save why each link mattered",
+      "lede": "For people with too many bookmarks to remember, save context and find the resource again.",
+      "action": "Try it with sample data",
+      "after": "Opens a sample proofbook with three bookmarks.",
+      "facts": [
+        {
+          "text": "Bookmarks are stored in this browser.",
+          "rect": {
+            "top": 529.046875,
+            "bottom": 572.84375
+          }
+        },
+        {
+          "text": "An opened proofbook works offline.",
+          "rect": {
+            "top": 572.84375,
+            "bottom": 616.640625
+          }
+        },
+        {
+          "text": "Free during this release.",
+          "rect": {
+            "top": 616.640625,
+            "bottom": 660.4375
+          }
+        }
+      ],
+      "scrollY": 0
+    },
+    "phone": {
+      "title": "Bookmark Proofbook — Save bookmark context",
+      "h1": "Save why each link mattered",
+      "lede": "For people with too many bookmarks to remember, save context and find the resource again.",
+      "action": "Try it with sample data",
+      "after": "Opens a sample proofbook with three bookmarks.",
+      "facts": [
+        {
+          "text": "Bookmarks are stored in this browser.",
+          "rect": {
+            "top": 503.484375,
+            "bottom": 547.28125
+          }
+        },
+        {
+          "text": "An opened proofbook works offline.",
+          "rect": {
+            "top": 547.28125,
+            "bottom": 591.078125
+          }
+        },
+        {
+          "text": "Free during this release.",
+          "rect": {
+            "top": 591.078125,
+            "bottom": 634.875
+          }
+        }
+      ],
+      "scrollY": 0
+    }
+  },
+  "routes": {
+    "/": {
+      "status": 200,
+      "info": {
+        "title": "Bookmark Proofbook — Save bookmark context",
+        "lang": "en",
+        "h1": 1,
+        "main": 1,
+        "header": 1,
+        "footer": 1,
+        "canonical": "https://bookmark-proofbook.sociobot.in/",
+        "skip": true
+      },
+      "consoleErrors": []
+    },
+    "/demo": {
+      "status": 200,
+      "info": {
+        "title": "Demo — Bookmark Proofbook",
+        "lang": "en",
+        "h1": 1,
+        "main": 1,
+        "header": 1,
+        "footer": 1,
+        "canonical": "https://bookmark-proofbook.sociobot.in/demo",
+        "skip": true
+      },
+      "consoleErrors": []
+    },
+    "/app": {
+      "status": 200,
+      "info": {
+        "title": "My proofbook — Bookmark Proofbook",
+        "lang": "en",
+        "h1": 1,
+        "main": 1,
+        "header": 1,
+        "footer": 1,
+        "canonical": "https://bookmark-proofbook.sociobot.in/app",
+        "skip": true
+      },
+      "consoleErrors": []
+    },
+    "/privacy": {
+      "status": 200,
+      "info": {
+        "title": "Privacy — Bookmark Proofbook",
+        "lang": "en",
+        "h1": 1,
+        "main": 1,
+        "header": 1,
+        "footer": 1,
+        "canonical": "https://bookmark-proofbook.sociobot.in/privacy",
+        "skip": true
+      },
+      "consoleErrors": []
+    },
+    "/terms": {
+      "status": 200,
+      "info": {
+        "title": "Terms — Bookmark Proofbook",
+        "lang": "en",
+        "h1": 1,
+        "main": 1,
+        "header": 1,
+        "footer": 1,
+        "canonical": "https://bookmark-proofbook.sociobot.in/terms",
+        "skip": true
+      },
+      "consoleErrors": []
+    },
+    "/missing-review-seven": {
+      "status": 404,
+      "info": {
+        "title": "Page not found — Bookmark Proofbook",
+        "lang": "en",
+        "h1": 1,
+        "main": 1,
+        "header": 1,
+        "footer": 1,
+        "canonical": "https://bookmark-proofbook.sociobot.in/404",
+        "skip": true,
+        "robots": "noindex"
+      },
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 404 ()"
+      ]
+    }
+  },
+  "axe": {
+    "/": [],
+    "/demo": [],
+    "/app": [],
+    "/privacy": [],
+    "/terms": [],
+    "/missing-review-seven": []
+  },
+  "summary": {
+    "passed": 32,
+    "failed": 0,
+    "total": 32
+  },
+  "correctedBackNavigation": {
+    "method": "Exact shipped regression: DOM activation avoids changing scroll before navigation",
+    "before": 1100,
+    "forward": {
+      "url": "https://bookmark-proofbook.sociobot.in/demo",
+      "announcement": "Demo — Bookmark Proofbook",
+      "active": "H1"
+    },
+    "after": {
+      "url": "https://bookmark-proofbook.sociobot.in/",
+      "y": 1100,
+      "active": "H1",
+      "announcement": "Bookmark Proofbook"
+    },
+    "pass": true
+  }
+}

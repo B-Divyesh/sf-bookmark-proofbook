@@ -1,0 +1,22 @@
+{
+  "checks": [
+    {
+      "name": "live extension imports unique HTTP(S) browser bookmarks",
+      "ok": true,
+      "urls": [
+        "https://example.com/",
+        "https://www.w3.org/"
+      ],
+      "notice": "Imported 2 bookmarks."
+    },
+    {
+      "name": "live extension malformed JSON reports error without data loss",
+      "ok": true,
+      "message": "This is not a valid Bookmark Proofbook JSON file: the file is not JSON."
+    }
+  ],
+  "summary": {
+    "passed": 2,
+    "failed": 0
+  }
+}

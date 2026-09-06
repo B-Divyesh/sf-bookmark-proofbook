@@ -1,0 +1,57 @@
+{
+  "cleanHead": "72a5f37c2bf035ce5121f789eaa678b051dace22",
+  "sourceStatus": "",
+  "results": [
+    {
+      "command": "npm run lint",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationSeconds": 1.7,
+      "outputTail": "\n> bookmark-proofbook@1.0.2 lint\n> eslint .\n\n"
+    },
+    {
+      "command": "npm run typecheck",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationSeconds": 2.26,
+      "outputTail": "\n> bookmark-proofbook@1.0.2 typecheck\n> tsc --noEmit\n\n"
+    },
+    {
+      "command": "npm test",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationSeconds": 1.16,
+      "outputTail": "\n> bookmark-proofbook@1.0.2 test\n> vitest run\n\n\n RUN  v3.2.7 /tmp/bookmark-proofbook-review-7-clean.LXVG98\n\n ✓ src/proofbook.test.ts (12 tests) 28ms\n\n Test Files  1 passed (1)\n      Tests  12 passed (12)\n   Start at  05:29:45\n   Duration  557ms (transform 100ms, setup 0ms, collect 77ms, tests 28ms, environment 0ms, prepare 97ms)\n\n"
+    },
+    {
+      "command": "npm run test:e2e",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationSeconds": 16.98,
+      "outputTail": "\n> bookmark-proofbook@1.0.2 test:e2e\n> playwright test\n\n\nRunning 33 tests using 1 worker\n·································\n  33 passed (15.8s)\n[WebServer] (node:6325) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)\n[WebServer] (node:6345) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)\n[WebServer] (node:6375) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)\n(node:6387) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:6387) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+    },
+    {
+      "command": "npm run test:extension",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationSeconds": 21.89,
+      "outputTail": "\n> bookmark-proofbook@1.0.2 test:extension\n> xvfb-run -a playwright test --config playwright.extension.config.ts\n\n[WebServer] (node:6878) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)\n[WebServer] (node:6897) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)\n[WebServer] (node:6928) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)\n\nRunning 7 tests using 1 worker\n(node:6940) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:6940) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n·······\n  7 passed (20.5s)\n"
+    },
+    {
+      "command": "npm run build",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationSeconds": 1.78,
+      "outputTail": "\n> bookmark-proofbook@1.0.2 build\n> npm run build:site\n\n\n> bookmark-proofbook@1.0.2 build:site\n> npm run build:extension && vite build --config vite.site.config.ts && node scripts/package-site.mjs\n\n\n> bookmark-proofbook@1.0.2 build:extension\n> wxt zip\n\n[log] \nWXT 0.21.4\n[info] Building chrome-mv3 for production with Vite 6.4.3\n\u001b[?25l\r⠋ Preparing...\u001b[K\r⠋ [1/2] background\u001b[K\r⠙ [1/2] background\u001b[K\r⠙ [2/2] popup\u001b[K\r⠹ [2/2] popup\u001b[K\r⠸ [2/2] popup\u001b[K\r\u001b[K\u001b[?25h\r\u001b[K\u001b[?25h[success] Built extension in 358 ms\n  ├─ .output/chrome-mv3/manifest.json              370 B    \n  ├─ .output/chrome-mv3/404.html                   2.06 kB  \n  ├─ .output/chrome-mv3/popup.html                 362 B    \n  ├─ .output/chrome-mv3/background.js              1.61 kB  \n  ├─ .output/chrome-mv3/chunks/popup-Xggq60NC.js   12.68 kB \n  ├─ .output/chrome-mv3/404.css                    1.72 kB  \n  ├─ .output/chrome-mv3/assets/popup-CLfZSbwh.css  9.34 kB  \n  ├─ .output/chrome-mv3/apple-touch-icon.png       50.98 kB \n  ├─ .output/chrome-mv3/favicon.svg                360 B    \n  ├─ .output/chrome-mv3/proofbook-hero-600.webp    22.59 kB \n  ├─ .output/chrome-mv3/proofbook-hero.webp        115.16 kB\n  ├─ .output/chrome-mv3/robots.txt                 23 B     \n  ├─ .output/chrome-mv3/sitemap.xml                449 B    \n  ├─ .output/chrome-mv3/social-preview.webp        91.17 kB \n  └─ .output/chrome-mv3/staticwebapp.config.json   968 B    \nΣ Total size: 309.84 kB                          \n[info] Zipping extension...\n[success] Zipped extension in 48 ms\n  └─ .output/bookmark-proofbook-1.0.2-chrome.zip  292.81 kB\nΣ Total size: 292.81 kB                         \n[success] Finished in 610 ms\nvite v6.4.3 building for production...\ntransforming...\n✓ 5 modules transformed.\nrendering chunks...\ncomputing gzip size...\n../dist/site/index.html                  1.78 kB │ gzip: 0.62 kB\n../dist/site/assets/index-C3174DPF.css   8.73 kB │ gzip: 2.66 kB\n../dist/site/assets/index-C8VCL8U4.js   22.82 kB │ gzip: 8.18 kB\n✓ built in 143ms\n"
+    },
+    {
+      "command": "npm audit --omit=dev",
+      "status": "PASS",
+      "exitCode": 0,
+      "durationSeconds": 0.47,
+      "outputTail": "found 0 vulnerabilities\n"
+    }
+  ],
+  "passed": 7,
+  "failed": 0
+}

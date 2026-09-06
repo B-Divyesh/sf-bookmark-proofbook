@@ -1,29 +1,28 @@
-# Bookmark Proofbook — verification 4 handoff
+# Bookmark Proofbook — strict review 7 handoff
 
 ## Result
 
-Independent verification is complete. **PASS** with zero findings and zero
-untested public claims.
+**FAIL.** Finding count: **1**. Untested public claim count: **0**.
 
-The deployed product at <https://bookmark-proofbook.sociobot.in> completes the
-real bookmark-context job on phone, desktop, and as an installed extension.
-No product code was changed during verification.
+No product code changed. The strict review found one minor accessibility
+defect: on a 390 px phone, the landing-page **Install the browser extension**
+link has a 279.36 × 19 px target instead of the required minimum 44 px height.
+See `.factory/review-7.md`.
 
 ## Versions
 
-- Implementation reviewed and deployed: `324ce5b57a9135799831939b13c7d2126bf29cbd`
-- Documentation candidate reviewed: `0b929b5ccb46b9343afa9d2c7d344d5b22c335c2`
+- Implementation reviewed and live: `324ce5b57a9135799831939b13c7d2126bf29cbd`
+- Documentation baseline reviewed: `72a5f37c2bf035ce5121f789eaa678b051dace22`
 - Product version: 1.0.2
-- Full verification report: `.factory/verification-4.md`
+- Live URL: <https://bookmark-proofbook.sociobot.in>
 
-The live JS, CSS, hero image, and every unpacked extension file match the clean
-candidate build. Later commits before this verification changed documentation
-and evidence only.
+Commits after the implementation candidate contain documentation and evidence
+only. Live JavaScript, CSS, both hero images, and the unpacked extension match
+the clean candidate build.
 
 ## Verification completed
 
-- Fresh clone plus `npm ci`
-- All 23 exact `.factory/claims.json` commands: PASS
+- All 23 exact claim commands: PASS from a clean clone
 - `npm run lint`: PASS
 - `npm run typecheck`: PASS
 - `npm test`: PASS — 12 tests
@@ -31,33 +30,19 @@ and evidence only.
 - `npm run test:extension`: PASS — 7 installed-extension tests
 - `npm run build`: PASS — `dist/site` and extension zip produced
 - `npm audit --omit=dev`: PASS — zero vulnerabilities
-- Live URL verifier: PASS — no console errors and required structure present
-- Live routes and 404 Axe checks: zero violations
-- Downloaded live extension: capture, search, export, link results, timestamps,
-  local storage, and accessibility passed in a fresh Chromium profile
-- Live Lighthouse: 100 Performance, 100 Accessibility, 100 Best Practices,
-  100 SEO; LCP 1.4 s, CLS 0, TBT 10 ms, 125 KiB transfer
+- Live phone, desktop, demo, legal, 404, keyboard, focus, reduced-motion,
+  offline, import/export, reset, isolation, malformed-data, and recovery flows
+- Downloaded live MV3 extension in a clean Chromium profile
+- Axe across all routes and 404: zero violations; popup: no serious/critical
+- Factory URL verifier: PASS, no console errors
+- Lighthouse: 100/100/100/100; LCP 1.38 s, CLS 0, TBT 1 ms
 
-## Live job evidence
+## Required next step
 
-The initial phone and desktop screens state the job, audience, first action,
-browser-local storage, opened-session offline limit, and current free price.
-One click opens three realistic bookmarks. The sample label and reset/exit
-controls stay visible while scrolling. Adding, removing, undoing, resetting,
-and leaving the sample do not change seeded real data.
+Increase the landing install link target to at least 44 px high and add it to
+the phone target regression. Then rerun the 23 claim commands, full quality
+gates, live phone target sweep, URL verifier, and Lighthouse before declaring
+PASS.
 
-Normal, invalid, boundary, and recovery checks passed. The opened proofbook
-continued to search and export after connection loss. All product and sample
-links returned 200. The designed missing route correctly returned HTTP 404.
-
-## Known limits
-
-- Cold offline reload is not supported or claimed. Only an already opened
-  proofbook continues after connection loss.
-- Installation uses the documented download, extract, Developer mode, and
-  **Load unpacked** path.
-- This release is free and advertises no paid checkout.
-- There is no backend, account, sync service, runtime AI, or analytics. Backend
-  tenancy, persistence, health, and 429 checks do not apply.
-
-No acceptance work remains.
+There is no backend, account, paid checkout, sync service, runtime AI, or
+analytics. Backend tenant, restart, health, and 429 checks do not apply.
