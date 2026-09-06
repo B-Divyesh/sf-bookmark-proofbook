@@ -1,6 +1,6 @@
 # Copy audit
 
-Audited 2026-08-29. The first screen says the job, audience, next action, and
+Audited 2026-09-06. The first screen says the job, audience, next action, and
 three facts in one breath. Every sentence is at most 22 words. No banned term
 appears in reader-facing copy.
 
@@ -19,9 +19,9 @@ appears in reader-facing copy.
 | For people with too many bookmarks to remember, save context and find the resource again. | 15 | Audience and outcome |
 | Try it with sample data | 5 | Primary action |
 | Opens a sample proofbook with three bookmarks. | 7 | Explains the action; item term is consistent |
-| No account required. | 3 | Tested claim |
-| Capture, search, and export work locally. | 6 | Tested claim |
-| Export a readable HTML proofbook. | 5 | Tested claim |
+| Bookmarks are stored in this browser. | 6 | Tested privacy fact |
+| An opened proofbook works offline. | 5 | Tested opened-session offline fact |
+| Free during this release. | 4 | Tested price fact |
 | Install the browser extension | 4 | Secondary action |
 | BOOKMARK DETAILS | 2 | Specific label |
 | What each bookmark keeps | 4 | Section heading |
@@ -48,6 +48,7 @@ appears in reader-facing copy.
 | Choose Load unpacked, then select the extracted folder. | 8 | Installation instruction |
 | Keep the folder after installation. | 5 | Installation instruction |
 | Bookmark Proofbook keeps the reason beside the link. | 8 | Product-specific footer |
+| Built by Param Factory · v1.0.2 | 6 | Attribution and version |
 
 ## Proofbook, extension, and legal copy
 
@@ -66,6 +67,20 @@ appears in reader-facing copy.
 | The companion site does not run analytics or send your bookmarks to a service. | 13 | Tested claims |
 | You can export bookmarks. | 4 | Tested claim |
 | Restore a JSON proofbook without losing its bookmark fields. | 10 | Tested claim |
+
+## Extension manifest
+
+| Copy | Words | Result |
+| --- | ---: | --- |
+| Save why a bookmark mattered, search its context, and export your proofbook. | 12 | Tested capture, search, and export outcomes; no durability claim |
+
+## README additions
+
+| Copy | Words | Result |
+| --- | ---: | --- |
+| A link check saves reachable, changed, or unreachable results and the time checked. | 13 | Tested against three deterministic outcomes |
+| An opened proofbook works offline after its page has loaded. | 10 | Tested after connection loss |
+| Free during this release. | 4 | Tested core flow without payment or locked controls |
 
 ## Terminology
 

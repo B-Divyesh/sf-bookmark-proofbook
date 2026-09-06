@@ -34,7 +34,8 @@ The generated zip is `dist/site/downloads/bookmark-proofbook-extension.zip`.
 
 ```sh
 npm test
-npx tsc --noEmit
+npm run lint
+npm run typecheck
 npm run test:e2e
 npm run test:extension
 npm run build
@@ -71,8 +72,10 @@ extension local storage.
 
 Each saved page extract is capped at 12,000 characters. The extension contacts
 saved addresses only after you press **Check links**. Each check processes at
-most 25 bookmarks. Remove has an immediate undo action in both the site and
-extension. An opened proofbook keeps working if the connection drops.
+most 25 bookmarks. A link check saves reachable, changed, or unreachable
+results and the time checked. Remove has an immediate undo action in both the
+site and extension. An opened proofbook works offline after its page has
+loaded. Free during this release.
 
 ## License
 

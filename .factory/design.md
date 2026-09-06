@@ -41,6 +41,10 @@ archive without lowering text contrast. Link health has static text and icons, n
 `prefers-reduced-motion`, transitions are removed and the stamp appears
 instantly.
 
+The sample-data strip stays fixed to the top edge while the demo scrolls. Its
+compact lichen surface keeps the sandbox state, reset, and exit visible without
+covering the bookmark content.
+
 ## Artwork prompt sheet
 
 Subject: a physical archive box of bookmarked research slips and a web page

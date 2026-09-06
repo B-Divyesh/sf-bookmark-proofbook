@@ -3,6 +3,7 @@ import AxeBuilder from '@axe-core/playwright';
 import { mkdtemp, readFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
+import { extractTextFromHtml, hashText } from '../../src/proofbook';
 
 type InstalledExtension = {
   context: BrowserContext;
@@ -37,9 +38,11 @@ async function closeExtension(extension: InstalledExtension) {
   await rm(extension.profile, { recursive: true, force: true });
 }
 
-test('@claim:unpacked-install @claim:explicit-page-read loads the MV3 artifact and reads the page only after capture', async () => {
+test('@claim:unpacked-install @claim:explicit-page-read loads the MV3 artifact and completes its advertised local flow', async () => {
   const extension = await installExtension();
   try {
+    const manifestDescription = await extension.worker.evaluate(() => chrome.runtime.getManifest().description);
+    expect(manifestDescription).not.toMatch(/durable|with each bookmark/i);
     await extension.source.locator('h1').selectText();
     await expect(extension.popup.locator('#reason-form')).toHaveCount(0);
     expect(await extension.worker.evaluate(() => chrome.storage.local.get('records'))).toEqual({});
@@ -51,6 +54,22 @@ test('@claim:unpacked-install @claim:explicit-page-read loads the MV3 artifact a
     const stored = await extension.worker.evaluate(() => chrome.storage.local.get('records'));
     expect(stored.records).toHaveLength(1);
     expect(stored.records[0].selectedText).toBe('Save why each link mattered');
+    expect(stored.records[0].reason).toBe('Keep the source for a release review.');
+    expect(stored.records[0].extract.length).toBeGreaterThan(100);
+    await extension.popup.getByLabel('Search saved context').fill('release review');
+    await expect(extension.popup.getByRole('heading', { name: 'Bookmark Proofbook — Save bookmark context' })).toBeVisible();
+    const jsonDownload = extension.popup.waitForEvent('download');
+    await extension.popup.getByRole('button', { name: 'Export JSON' }).click();
+    const jsonFile = await jsonDownload;
+    const json = JSON.parse(await readFile((await jsonFile.path())!, 'utf8'));
+    expect(json.records).toHaveLength(1);
+    expect(json.records[0].reason).toBe('Keep the source for a release review.');
+    const htmlDownload = extension.popup.waitForEvent('download');
+    await extension.popup.getByRole('button', { name: 'Export HTML' }).click();
+    const htmlFile = await htmlDownload;
+    const html = await readFile((await htmlFile.path())!, 'utf8');
+    expect(html).toContain('Keep the source for a release review.');
+    expect(html).not.toContain('<script');
   } finally {
     await closeExtension(extension);
   }
@@ -129,6 +148,68 @@ test('@claim:link-check-limit contacts no saved address before Check links and c
     const stored = (await extension.worker.evaluate(() => chrome.storage.local.get('records'))).records;
     expect(stored).toHaveLength(26);
     expect(stored[25].health).toBe('unchecked');
+  } finally {
+    await closeExtension(extension);
+  }
+});
+
+test('@claim:link-health-results saves reachable, changed, and unreachable outcomes with check times', async () => {
+  const extension = await installExtension();
+  try {
+    const reachableUrl = 'http://127.0.0.1:4173/robots.txt?link-health=reachable';
+    const fixtureResponse = await fetch(reachableUrl);
+    expect(fixtureResponse.ok).toBe(true);
+    const currentExtract = extractTextFromHtml(await fixtureResponse.text());
+    const records = [
+      {
+        id: 'health-reachable',
+        url: reachableUrl,
+        title: 'Reachable fixture',
+        reason: 'Confirm an unchanged page stays reachable.',
+        selectedText: '',
+        extract: currentExtract,
+        contentHash: hashText(currentExtract),
+        createdAt: '2026-08-28T00:00:00.000Z',
+        health: 'unchecked',
+      },
+      {
+        id: 'health-changed',
+        url: 'http://127.0.0.1:4173/robots.txt?link-health=changed',
+        title: 'Changed fixture',
+        reason: 'Confirm changed page text is reported.',
+        selectedText: '',
+        extract: 'Text saved before the fixture changed.',
+        contentHash: hashText('Text saved before the fixture changed.'),
+        createdAt: '2026-08-28T00:00:00.000Z',
+        health: 'unchecked',
+      },
+      {
+        id: 'health-unreachable',
+        url: 'http://127.0.0.1:1/unreachable',
+        title: 'Unreachable fixture',
+        reason: 'Confirm a failed request is reported.',
+        selectedText: '',
+        extract: 'Previously saved page text.',
+        contentHash: hashText('Previously saved page text.'),
+        createdAt: '2026-08-28T00:00:00.000Z',
+        health: 'unchecked',
+      },
+    ];
+    await extension.worker.evaluate((seed) => chrome.storage.local.set({ records: seed }), records);
+    await extension.popup.reload();
+    const checkStartedAt = Date.now();
+    await extension.popup.getByRole('button', { name: 'Check links' }).click();
+    await expect(extension.popup.locator('#notice')).toContainText('Checked 3 links.');
+    await expect(extension.popup.locator('.status.alive')).toHaveText('● Reachable when checked');
+    await expect(extension.popup.locator('.status.changed')).toHaveText('● Page changed');
+    await expect(extension.popup.locator('.status.unreachable')).toHaveText('● Could not reach page');
+    const stored = (await extension.worker.evaluate(() => chrome.storage.local.get('records'))).records;
+    expect(stored.map((record: { health: string }) => record.health)).toEqual(['alive', 'changed', 'unreachable']);
+    for (const record of stored) {
+      expect(typeof record.checkedAt).toBe('string');
+      expect(Date.parse(record.checkedAt)).toBeGreaterThanOrEqual(checkStartedAt);
+      expect(Date.parse(record.checkedAt)).toBeLessThanOrEqual(Date.now());
+    }
   } finally {
     await closeExtension(extension);
   }

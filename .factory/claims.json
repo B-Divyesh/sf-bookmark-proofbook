@@ -44,7 +44,7 @@
   {
     "id": "no-account-required",
     "claim": "No account required.",
-    "where": "landing facts, README",
+    "where": "README",
     "test": "npm run test:e2e -- --grep @claim:no-account-required",
     "sandbox": "create and export a demo bookmark without authentication or an external request"
   },
@@ -57,10 +57,17 @@
   },
   {
     "id": "offline-session",
-    "claim": "The opened proofbook keeps working if the connection drops.",
-    "where": ".factory/demo.md, README",
+    "claim": "An opened proofbook works offline after its page has loaded.",
+    "where": "landing facts, .factory/demo.md, README",
     "test": "npm run test:e2e -- --grep @claim:offline-session",
     "sandbox": "open demo first, set the browser offline, then search and export"
+  },
+  {
+    "id": "current-price",
+    "claim": "Free during this release.",
+    "where": "landing facts",
+    "test": "npm run test:e2e -- --grep @claim:current-price",
+    "sandbox": "fresh landing and demo; save, search, and export a bookmark without authentication, payment, billing requests, or locked controls"
   },
   {
     "id": "no-record-sync",
@@ -103,6 +110,13 @@
     "where": "extension, README",
     "test": "npm run test:extension -- --grep @claim:link-check-limit",
     "sandbox": "clean installed extension with 26 local fixture bookmarks; count requests and stored health states"
+  },
+  {
+    "id": "link-health-results",
+    "claim": "A link check saves reachable, changed, or unreachable results and the time checked.",
+    "where": "extension link-check results",
+    "test": "npm run test:extension -- --grep @claim:link-health-results",
+    "sandbox": "clean installed extension with deterministic local reachable, changed, and closed-port fixtures; assert rendered and stored states plus valid check times"
   },
   {
     "id": "packaged-extension",

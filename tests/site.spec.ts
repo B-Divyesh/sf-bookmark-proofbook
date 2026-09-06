@@ -84,11 +84,50 @@ test('shows all three first-screen facts in the initial 390px landing viewport',
   await page.goto('/');
   const facts = page.locator('.hero .facts li');
   await expect(facts).toHaveCount(3);
+  await expect(facts).toHaveText([
+    'Bookmarks are stored in this browser.',
+    'An opened proofbook works offline.',
+    'Free during this release.',
+  ]);
   const boxes = await facts.evaluateAll((items) => items.map((item) => {
     const box = item.getBoundingClientRect();
     return { top: box.top, bottom: box.bottom };
   }));
   expect(boxes.every((box) => box.top >= 0 && box.bottom <= 844), JSON.stringify(boxes)).toBe(true);
+});
+
+test('keeps the demo label and exit controls visible at the final form action', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/demo');
+  await page.getByRole('button', { name: 'Save this bookmark' }).scrollIntoViewIfNeeded();
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBeGreaterThan(500);
+  const banner = page.locator('.demo-banner');
+  await expect(banner.getByText('Demo — sample data, nothing is saved.')).toBeVisible();
+  await expect(banner.getByRole('button', { name: 'Reset demo' })).toBeVisible();
+  await expect(banner.getByRole('link', { name: 'Open my proofbook' })).toBeVisible();
+  const box = await banner.boundingBox();
+  expect(box).not.toBeNull();
+  expect(box!.y).toBeGreaterThanOrEqual(0);
+  expect(box!.y + box!.height).toBeLessThanOrEqual(844);
+});
+
+test('@claim:current-price saves, finds, and exports a bookmark without payment', async ({ page }) => {
+  const external = recordExternalRequests(page);
+  await page.goto('/');
+  await expect(page.locator('.facts')).toContainText('Free during this release.');
+  await page.getByRole('link', { name: 'Try it with sample data' }).click();
+  await page.getByLabel('Page URL').fill('https://example.com/free-release');
+  await page.getByLabel('Page title').fill('Free release check');
+  await page.getByLabel('Why did this matter?').fill('Confirm the complete core flow needs no payment.');
+  await page.getByRole('button', { name: 'Save this bookmark' }).click();
+  await page.getByLabel('Search your proofbook').fill('complete core flow');
+  await expect(page.getByRole('heading', { name: 'Free release check' })).toBeVisible();
+  const download = page.waitForEvent('download');
+  await page.getByRole('button', { name: 'Export JSON' }).click();
+  const exported = JSON.parse(await readFile((await (await download).path())!, 'utf8'));
+  expect(exported.records.some((record: { title: string }) => record.title === 'Free release check')).toBe(true);
+  await expect(page.locator('a[href*="checkout"], [data-license-required]')).toHaveCount(0);
+  expect(external).toEqual([]);
 });
 
 test('@claim:local-records captures, searches, and exports without sending records to a service', async ({ page }) => {

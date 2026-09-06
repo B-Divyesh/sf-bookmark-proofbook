@@ -9,7 +9,9 @@ Use **Reset demo** to discard and recreate the sample. **Open my proofbook**
 discards the demo namespace, then opens `/app`. The real proofbook uses the
 separate `proofbook:records` key and never reads demo storage.
 
+The demo label and both controls stay visible while the proofbook scrolls.
+
 The demo does not call a network service during normal capture, search, or
-export. The opened proofbook keeps working if the connection drops; it does
-not claim to reload while offline because this static site does not install a
-service worker.
+export. An opened proofbook works offline after its page has loaded. It does
+not claim an offline reload because this static site does not install a service
+worker.
