@@ -1,9 +1,13 @@
 # Save bookmark context — strict review 7 — FAIL
 
-**Product:** Bookmark Proofbook  
-**Live URL:** <https://bookmark-proofbook.sociobot.in>  
-**Reviewed:** 2026-09-06  
-**Implementation candidate:** `324ce5b57a9135799831939b13c7d2126bf29cbd`  
+**Product:** Bookmark Proofbook
+
+**Live URL:** <https://bookmark-proofbook.sociobot.in>
+
+**Reviewed:** 2026-09-06
+
+**Implementation candidate:** `324ce5b57a9135799831939b13c7d2126bf29cbd`
+
 **Documentation baseline:** `72a5f37c2bf035ce5121f789eaa678b051dace22`
 
 ## Verdict
