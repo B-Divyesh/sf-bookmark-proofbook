@@ -1,48 +1,49 @@
-# Bookmark Proofbook — strict review 7 handoff
+# Bookmark Proofbook — repair 4 handoff
 
 ## Result
 
-**FAIL.** Finding count: **1**. Untested public claim count: **0**.
+**PASS.** Strict review finding F-7-1 is fixed and no current or earlier
+finding remains open.
 
-No product code changed. The strict review found one minor accessibility
-defect: on a 390 px phone, the landing-page **Install the browser extension**
-link has a 279.36 × 19 px target instead of the required minimum 44 px height.
-See `.factory/review-7.md`.
+The deployed implementation is
+`9b76d91477ff7fda3fd068ad8bd775ef4d82bbf4` (`fix: enlarge mobile extension
+install target`). The prior review/documentation baseline was
+`e1b941b84bda2cfee36448913e6acd249c8ba04a`. Repair evidence is documented in
+`2417cc55f799eab545ce94b95a2b461275853d50`; this handoff is later
+documentation-only work.
 
-## Versions
+## What changed
 
-- Implementation reviewed and live: `324ce5b57a9135799831939b13c7d2126bf29cbd`
-- Documentation baseline reviewed: `72a5f37c2bf035ce5121f789eaa678b051dace22`
-- Product version: 1.0.2
-- Live URL: <https://bookmark-proofbook.sociobot.in>
+The landing **Install the browser extension** link is now a 44 px-high inline
+flex touch target. The existing 390 px target regression now measures that
+real rendered link in addition to the header, demo, bookmark, and footer
+controls. The live phone target is 279.36 × 44 CSS px.
 
-Commits after the implementation candidate contain documentation and evidence
-only. Live JavaScript, CSS, both hero images, and the unpacked extension match
-the clean candidate build.
+## How verified
 
-## Verification completed
+- Fresh clone: `npm ci` and all 23 exact declared claim commands passed.
+- `npm run lint`, `npm run typecheck`, `npm test` (12), `npm run test:e2e`
+  (33), `npm run test:extension` (7), `npm audit --omit=dev`, and
+  `npm run build` passed.
+- Local and HTTPS `verify-url.sh` passed. Live Axe found zero violations on
+  all public routes and the designed 404.
+- Fresh HTTPS phone and desktop browsers showed the job, audience, and
+  **Try it with sample data** action before scrolling. The phone contains all
+  three required facts and the 44 px install target.
+- The live one-click sample showed a realistic bookmark, Reset restored three
+  bookmarks, the sample label stayed visible while using the final form
+  action, and demo exit changed neither real data nor retained demo data.
+- Lighthouse on HTTPS: 100 performance, accessibility, best practices, and
+  SEO; LCP 1.35 s, CLS 0, TBT 0 ms.
 
-- All 23 exact claim commands: PASS from a clean clone
-- `npm run lint`: PASS
-- `npm run typecheck`: PASS
-- `npm test`: PASS — 12 tests
-- `npm run test:e2e`: PASS — 33 tests
-- `npm run test:extension`: PASS — 7 installed-extension tests
-- `npm run build`: PASS — `dist/site` and extension zip produced
-- `npm audit --omit=dev`: PASS — zero vulnerabilities
-- Live phone, desktop, demo, legal, 404, keyboard, focus, reduced-motion,
-  offline, import/export, reset, isolation, malformed-data, and recovery flows
-- Downloaded live MV3 extension in a clean Chromium profile
-- Axe across all routes and 404: zero violations; popup: no serious/critical
-- Factory URL verifier: PASS, no console errors
-- Lighthouse: 100/100/100/100; LCP 1.38 s, CLS 0, TBT 1 ms
+## Deploy
 
-## Required next step
+`npm run build` created `dist/site`, then the existing Static Web Apps product
+configuration deployed it to production. The canonical HTTPS URL now serves
+the repaired asset.
 
-Increase the landing install link target to at least 44 px high and add it to
-the phone target regression. Then rerun the 23 claim commands, full quality
-gates, live phone target sweep, URL verifier, and Lighthouse before declaring
-PASS.
+## Remaining
 
-There is no backend, account, paid checkout, sync service, runtime AI, or
-analytics. Backend tenant, restart, health, and 429 checks do not apply.
+No product defect is known. The free release has no advertised paid offer.
+Any future one-time paid unlock depends on separate Sociobot billing
+registration; no billing path or credentials were added.
