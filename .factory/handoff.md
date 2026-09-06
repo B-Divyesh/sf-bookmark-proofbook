@@ -1,49 +1,56 @@
-# Bookmark Proofbook — repair 4 handoff
+# Bookmark Proofbook — verification 5 handoff
 
 ## Result
 
-**PASS.** Strict review finding F-7-1 is fixed and no current or earlier
-finding remains open.
+**PASS.** Zero findings and zero untested public claims.
 
-The deployed implementation is
-`9b76d91477ff7fda3fd068ad8bd775ef4d82bbf4` (`fix: enlarge mobile extension
-install target`). The prior review/documentation baseline was
-`e1b941b84bda2cfee36448913e6acd249c8ba04a`. Repair evidence is documented in
-`2417cc55f799eab545ce94b95a2b461275853d50`; this handoff is later
-documentation-only work.
+The reviewed implementation is
+`9b76d91854223bb9a8044e65097dc278eab267cc`. The reporting/documentation
+revision is `c23d0e68dc800f5e9d49be19e2ac049b6e828645`; its difference from the
+implementation is repair evidence and handoff material only. The live product
+at <https://bookmark-proofbook.sociobot.in> byte-matches the clean build,
+including the downloadable extension zip.
 
-## What changed
+## What was verified
 
-The landing **Install the browser extension** link is now a 44 px-high inline
-flex touch target. The existing 390 px target regression now measures that
-real rendered link in addition to the header, demo, bookmark, and footer
-controls. The live phone target is 279.36 × 44 CSS px.
+- Fresh phone and desktop first screens say the job, audience, and **Try it
+  with sample data** action before scrolling. The phone install link is
+  279.36 × 44 px.
+- A real bookmark survived sample entry, changes, reset, and demo exit. The
+  sample banner remained visible while using the final form action; demo data
+  was discarded and real data was unchanged.
+- All 23 exact commands in `.factory/claims.json` passed from a clean clone.
+  `npm run lint`, `npm run typecheck`, `npm test` (12), `npm run test:e2e`
+  (33), `npm run test:extension` (7), `npm audit --omit=dev`, and `npm run
+  build` passed.
+- HTTPS URL verification and Axe on all public routes plus the designed 404
+  found no issue. Keyboard skip focus, reduced motion, no third-party
+  requests, offline use after load, links, legal pages, invalid input,
+  recovery, and exact HTTP 404 behavior were checked.
+- Fresh Lighthouse JSON: 100 Performance, 100 Accessibility, 100 Best
+  Practices, 100 SEO; LCP 1.40 s, CLS 0, TBT 0 ms, 127,931 bytes transferred.
 
-## How verified
+## How to verify again
 
-- Fresh clone: `npm ci` and all 23 exact declared claim commands passed.
-- `npm run lint`, `npm run typecheck`, `npm test` (12), `npm run test:e2e`
-  (33), `npm run test:extension` (7), `npm audit --omit=dev`, and
-  `npm run build` passed.
-- Local and HTTPS `verify-url.sh` passed. Live Axe found zero violations on
-  all public routes and the designed 404.
-- Fresh HTTPS phone and desktop browsers showed the job, audience, and
-  **Try it with sample data** action before scrolling. The phone contains all
-  three required facts and the 44 px install target.
-- The live one-click sample showed a realistic bookmark, Reset restored three
-  bookmarks, the sample label stayed visible while using the final form
-  action, and demo exit changed neither real data nor retained demo data.
-- Lighthouse on HTTPS: 100 performance, accessibility, best practices, and
-  SEO; LCP 1.35 s, CLS 0, TBT 0 ms.
+```sh
+npm ci
+npm run lint
+npm run typecheck
+npm test
+npm run test:e2e
+npm run test:extension
+npm audit --omit=dev
+npm run build
+```
 
-## Deploy
-
-`npm run build` created `dist/site`, then the existing Static Web Apps product
-configuration deployed it to production. The canonical HTTPS URL now serves
-the repaired asset.
+Then run every exact command in `.factory/claims.json`. The one-click sandbox
+is `/?demo=1` or `/demo`; it uses `demo:bookmark-proofbook:records` and exits
+to the separate real `proofbook:records` namespace.
 
 ## Remaining
 
-No product defect is known. The free release has no advertised paid offer.
-Any future one-time paid unlock depends on separate Sociobot billing
-registration; no billing path or credentials were added.
+No product defect or paid offer is present. A future one-time paid unlock still
+depends on separate billing registration and must not be advertised until then.
+
+Full evidence and earlier-finding disposition are in
+`.factory/verification-5.md`.
