@@ -1,0 +1,144 @@
+{
+  "url": "https://bookmark-proofbook.sociobot.in",
+  "checkedAt": "2026-09-06T04:21:40.617Z",
+  "failures": 0,
+  "results": [
+    {
+      "name": "fresh desktop first screen states job, audience, and first action",
+      "status": "PASS",
+      "detail": {
+        "headline": "Save why each link mattered",
+        "audience": "For people with too many bookmarks to remember, save context and find the resource again.",
+        "action": "Try it with sample data"
+      }
+    },
+    {
+      "name": "fresh phone first screen includes privacy, offline, and price facts",
+      "status": "PASS",
+      "detail": {
+        "facts": [
+          {
+            "text": "Bookmarks are stored in this browser.",
+            "top": 503.484375,
+            "bottom": 547.28125
+          },
+          {
+            "text": "An opened proofbook works offline.",
+            "top": 547.28125,
+            "bottom": 591.078125
+          },
+          {
+            "text": "Free during this release.",
+            "top": 591.078125,
+            "bottom": 634.875
+          }
+        ],
+        "action": {
+          "x": 16,
+          "y": 380.40625,
+          "width": 253.5625,
+          "height": 46.796875
+        }
+      }
+    },
+    {
+      "name": "one-click phone demo is populated, persistent, resettable, and isolated from real data",
+      "status": "PASS",
+      "detail": {
+        "firstSampleTop": 404.90625,
+        "banner": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 70.390625
+        },
+        "externalRequests": 0
+      }
+    },
+    {
+      "name": "invalid address, extract boundary, corrupt storage, and invalid JSON recover on live app",
+      "status": "PASS",
+      "detail": {
+        "validation": "Enter a web address that starts with http:// or https://.",
+        "storedExtractLength": 12000,
+        "invalidJsonMessage": "This is not a valid Bookmark Proofbook JSON file: the file is not JSON."
+      }
+    },
+    {
+      "name": "opened demo remains searchable and exportable after connection loss",
+      "status": "PASS",
+      "detail": "bookmark-proofbook.html"
+    },
+    {
+      "name": "no site service worker or cold-offline promise is present",
+      "status": "PASS",
+      "detail": {
+        "registrations": 0,
+        "manifest": false
+      }
+    },
+    {
+      "name": "keyboard starts at skip link and route history restores focus, announcement, and scroll",
+      "status": "PASS",
+      "detail": {
+        "outline": "4px",
+        "restoredScrollY": 1100
+      }
+    },
+    {
+      "name": "public routes, legal pages, metadata, accessibility, reduced motion, and 404 are correct",
+      "status": "PASS",
+      "detail": {
+        "routes": [
+          {
+            "path": "/",
+            "status": 200,
+            "title": "Bookmark Proofbook — Save bookmark context",
+            "axeViolations": 0
+          },
+          {
+            "path": "/demo",
+            "status": 200,
+            "title": "Demo — Bookmark Proofbook",
+            "axeViolations": 0
+          },
+          {
+            "path": "/app",
+            "status": 200,
+            "title": "My proofbook — Bookmark Proofbook",
+            "axeViolations": 0
+          },
+          {
+            "path": "/privacy",
+            "status": 200,
+            "title": "Privacy — Bookmark Proofbook",
+            "axeViolations": 0
+          },
+          {
+            "path": "/terms",
+            "status": 200,
+            "title": "Terms — Bookmark Proofbook",
+            "axeViolations": 0
+          },
+          {
+            "path": "/missing-verification-4-page",
+            "status": 404,
+            "title": "Page not found — Bookmark Proofbook",
+            "axeViolations": 0
+          }
+        ],
+        "reducedMotionDuration": "1e-05s",
+        "minTargetHeight": 44
+      }
+    },
+    {
+      "name": "text enlarged to 200 percent retains content without horizontal overflow",
+      "status": "PASS",
+      "detail": {
+        "scroll": 390,
+        "client": 390
+      }
+    }
+  ],
+  "note": "Three harness-only failures in live-check-harness-initial.json were rerun with independent history, expected-404 filtering, and CSP bypass only for user-style text-resize simulation."
+}

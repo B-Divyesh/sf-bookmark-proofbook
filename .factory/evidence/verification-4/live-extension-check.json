@@ -1,0 +1,31 @@
+{
+  "status": "PASS",
+  "artifactUrl": "https://bookmark-proofbook.sociobot.in/downloads/bookmark-proofbook-extension.zip",
+  "manifestVersion": "1.0.2",
+  "manifestDescription": "Save why a bookmark mattered, search its context, and export your proofbook.",
+  "capture": {
+    "selectedText": "Selected source words",
+    "storedLocally": true,
+    "search": true,
+    "jsonExport": true,
+    "htmlExport": true
+  },
+  "linkHealth": [
+    {
+      "title": "Reachable",
+      "health": "alive",
+      "checkedAt": "2026-09-06T04:22:09.686Z"
+    },
+    {
+      "title": "Changed",
+      "health": "changed",
+      "checkedAt": "2026-09-06T04:22:09.686Z"
+    },
+    {
+      "title": "Unreachable",
+      "health": "unreachable",
+      "checkedAt": "2026-09-06T04:22:09.684Z"
+    }
+  ],
+  "seriousOrCriticalAxe": 0
+}

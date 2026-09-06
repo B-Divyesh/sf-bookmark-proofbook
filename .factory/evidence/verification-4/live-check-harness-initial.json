@@ -1,0 +1,96 @@
+{
+  "url": "https://bookmark-proofbook.sociobot.in",
+  "checkedAt": "2026-09-06T04:20:49.584Z",
+  "failures": 3,
+  "results": [
+    {
+      "name": "fresh desktop first screen states job, audience, and first action",
+      "status": "PASS",
+      "detail": {
+        "headline": "Save why each link mattered",
+        "audience": "For people with too many bookmarks to remember, save context and find the resource again.",
+        "action": "Try it with sample data"
+      }
+    },
+    {
+      "name": "fresh phone first screen includes privacy, offline, and price facts",
+      "status": "PASS",
+      "detail": {
+        "facts": [
+          {
+            "text": "Bookmarks are stored in this browser.",
+            "top": 503.484375,
+            "bottom": 547.28125
+          },
+          {
+            "text": "An opened proofbook works offline.",
+            "top": 547.28125,
+            "bottom": 591.078125
+          },
+          {
+            "text": "Free during this release.",
+            "top": 591.078125,
+            "bottom": 634.875
+          }
+        ],
+        "action": {
+          "x": 16,
+          "y": 380.40625,
+          "width": 253.5625,
+          "height": 46.796875
+        }
+      }
+    },
+    {
+      "name": "keyboard starts at skip link and route history restores focus, announcement, and scroll",
+      "status": "FAIL",
+      "detail": "Error: scroll 0\n    at assert (file:///tmp/bookmark-proofbook-verify-4-clean.yPRDEE/[eval1]:12:53)\n    at file:///tmp/bookmark-proofbook-verify-4-clean.yPRDEE/[eval1]:58:45\n    at async check (file:///tmp/bookmark-proofbook-verify-4-clean.yPRDEE/[eval1]:9:24)\n    at async file:///tmp/bookmark-proofbook-verify-4-clean.yPRDEE/[eval1]:48:1"
+    },
+    {
+      "name": "one-click phone demo is populated, persistent, resettable, and isolated from real data",
+      "status": "PASS",
+      "detail": {
+        "firstSampleTop": 404.90625,
+        "banner": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 70.390625
+        },
+        "externalRequests": 0
+      }
+    },
+    {
+      "name": "invalid address, extract boundary, corrupt storage, and invalid JSON recover on live app",
+      "status": "PASS",
+      "detail": {
+        "validation": "Enter a web address that starts with http:// or https://.",
+        "storedExtractLength": 12000,
+        "invalidJsonMessage": "This is not a valid Bookmark Proofbook JSON file: the file is not JSON."
+      }
+    },
+    {
+      "name": "opened demo remains searchable and exportable after connection loss",
+      "status": "PASS",
+      "detail": "bookmark-proofbook.html"
+    },
+    {
+      "name": "public routes, legal pages, metadata, accessibility, reduced motion, and 404 are correct",
+      "status": "FAIL",
+      "detail": "Error: /missing-verification-4-page errors Failed to load resource: the server responded with a status of 404 ()\n    at assert (file:///tmp/bookmark-proofbook-verify-4-clean.yPRDEE/[eval1]:12:53)\n    at file:///tmp/bookmark-proofbook-verify-4-clean.yPRDEE/[eval1]:134:135\n    at async check (file:///tmp/bookmark-proofbook-verify-4-clean.yPRDEE/[eval1]:9:24)\n    at async file:///tmp/bookmark-proofbook-verify-4-clean.yPRDEE/[eval1]:127:1"
+    },
+    {
+      "name": "text enlarged to 200 percent retains content without horizontal overflow",
+      "status": "FAIL",
+      "detail": "page.addStyleTag: Applying inline style violates the following Content Security Policy directive 'style-src 'self''. Either the 'unsafe-inline' keyword, a hash ('sha256-KlCYbEmqvnBbculBqHu3I/M/XisMbqzLCipr/JQkQ0Y='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked.\n    at /tmp/bookmark-proofbook-verify-4-clean.yPRDEE/[eval1]:146:14\n    at async check (/tmp/bookmark-proofbook-verify-4-clean.yPRDEE/[eval1]:9:24)\n    at async file:///tmp/bookmark-proofbook-verify-4-clean.yPRDEE/[eval1]:144:1"
+    },
+    {
+      "name": "no site service worker or cold-offline promise is present",
+      "status": "PASS",
+      "detail": {
+        "registrations": 0,
+        "manifest": false
+      }
+    }
+  ]
+}
